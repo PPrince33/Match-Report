@@ -53,13 +53,49 @@ if comp:
         lineup_data1 = lineup_data1[['player_name', 'player_id', 'jersey_number']]
         jersey_data1 = lineup_data1.copy()
 
+
+
+
+
+        # Assuming event_df is your DataFrame and you're accessing the tactics' lineup
+        lineup0 = event_df.at[0, 'tactics']['lineup']
+        # List to hold extracted player information
+        player_info0 = []
+        # Iterate over each player in the lineup
+        for player in lineup0:
+            player_details0 = {
+                'name': player['player']['name'],
+                'position': player['position']['name'],
+                'jersey_number': player['jersey_number']
+            }
+            player_info0.append(player_details0)
+        # Create a DataFrame from the player information
+        startingXI0 = pd.DataFrame(player_info0)
+
+        # Assuming event_df is your DataFrame and you're accessing the tactics' lineup
+        lineup1 = event_df.at[1, 'tactics']['lineup']
+        # List to hold extracted player information
+        player_info1 = []
+        # Iterate over each player in the lineup
+        for player in lineup1:
+            player_details1 = {
+                'name': player['player']['name'],
+                'position': player['position']['name'],
+                'jersey_number': player['jersey_number']
+            }
+            player_info1.append(player_details1)
+        # Create a DataFrame from the player information
+        startingXI1 = pd.DataFrame(player_info1)
+
+
+
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(f"{team_name0}")
-            st.dataframe(team_name0)
+            st.dataframe(startingXI0)
         with col2:
             st.subheader(f"{team_name1}")
-            st.dataframe(team_name1)
+            st.dataframe(startingXI1)
         
         # Pass data
         pass_df0 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name0)]
