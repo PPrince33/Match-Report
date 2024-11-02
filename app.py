@@ -206,7 +206,80 @@ if comp:
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         fig, ax = pitch.draw(figsize=(16, 11), constrained_layout=True, tight_layout=False)
         fig.set_facecolor("black")
+        # Filter passes where 'pass_outcome' is null for both DataFrames
+        completed_passes_team0 = pass_df0[pass_df0['pass_outcome'].isnull()]
+        completed_passes_team1 = pass_df1[pass_df1['pass_outcome'].isnull()]       
         
+                
+                
+        # Unique options for Part_of_pitch and player for both DataFrames
+        part_of_pitch_options0 = ['All'] + completed_passes_team0['Part_of_pitch'].unique().tolist()
+        part_of_pitch_options1 = ['All'] + completed_passes_team1['Part_of_pitch'].unique().tolist()
+        player_options0 = ['All'] + completed_passes_team0['player'].unique().tolist()
+        player_options1 = ['All'] + completed_passes_team1['player'].unique().tolist()
+        
+        # Team 1 filters (completed_passes_team1)
+        st.sidebar.subheader(f"{team_name0} Filters")
+        part_of_pitch_selected0 = st.sidebar.selectbox(f"Select Part of Pitch {team_name0}", options=part_of_pitch_options0)
+        players_selected0 = st.sidebar.selectbox(f"Select Player(s) {team_name0}", options=player_options0)
+        minute_slider0 = st.sidebar.slider(f"Select Minute Range {team_name0}", min_value=int(completed_passes_team0['minute'].min()), max_value=int(completed_passes_team0['minute'].max()), value=(int(completed_passes_team0['minute'].min()), int(completed_passes_team0['minute'].max())))
+        
+        # Team 2 filters (completed_passes_team2)
+        st.sidebar.subheader(f"{team_name1} Filters")
+        part_of_pitch_selected1 = st.sidebar.selectbox(f"Select Part of Pitch {team_name1}", options=part_of_pitch_options1)
+        players_selected1 = st.sidebar.selectbox(f"Select Player(s) {team_name1}", options=player_options1)
+        minute_slider1 = st.sidebar.slider(f"Select Minute Range {team_name1}", min_value=int(completed_passes_team1['minute'].min()), max_value=int(completed_passes_team1['minute'].max()), value=(int(completed_passes_team1['minute'].min()), int(completed_passes_team1['minute'].max())))
+        
+        # Apply filters to completed_passes_team1 based on selected Part of Pitch and Players
+        if part_of_pitch_selected0 != 'All':
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['Part_of_pitch'] == part_of_pitch_selected0]
+        if players_selected0 != 'All':
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['player'] == players_selected0]
+        
+        # Filter based on minute range for Team 1
+        completed_passes_team0 = completed_passes_team0[(completed_passes_team0['minute'] >= minute_slider0[0]) & (completed_passes_team0['minute'] <= minute_slider0[1])]
+        
+        # Apply filters to completed_passes_team2 based on selected Part of Pitch and Players
+        if part_of_pitch_selected1 != 'All':
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['Part_of_pitch'] == part_of_pitch_selected1]
+        if players_selected1 != 'All':
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['player'] == players_selected1]
+        
+        # Filter based on minute range for Team 2
+        completed_passes_team1 = completed_passes_team1[(completed_passes_team1['minute'] >= minute_slider1[0]) & (completed_passes_team1['minute'] <= minute_slider1[1])]
+        
+        # Initialize the pitch settings
+        pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
+        
+        # Streamlit layout for side-by-side pitch maps
+        col1, col2 = st.columns(2)
+        
+        # Plot for Team 1 with filters applied
+        with col1:
+            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
+            fig.set_facecolor("black")
+            # Draw lines for each pass
+            for idx, row in completed_passes_team0.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white',linestyle='--', linewidth=1)  # Line between passes
+            ax.scatter(completed_passes_team0['X'], completed_passes_team0['Y'], color='green', label="Start")
+            ax.scatter(completed_passes_team0['endX'], completed_passes_team0['endY'], color='red', label="End")
+            ax.legend(loc="upper left")
+            st.pyplot(fig)
+        
+        # Plot for Team 2 with filters applied
+        with col2:
+            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
+            fig.set_facecolor("black")
+            # Draw lines for each pass
+            for idx, row in completed_passes_team1.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
+            ax.scatter(completed_passes_team1['X'], completed_passes_team1['Y'], color='green', label="Start")
+            ax.scatter(completed_passes_team1['endX'], completed_passes_team1['endY'], color='red', label="End")
+            ax.legend(loc="upper left")
+            st.pyplot(fig)
+        
+        st.markdown("**Note:** Mapping only includes completed passes.")
+ 
         
         
         
