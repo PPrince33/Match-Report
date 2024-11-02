@@ -154,6 +154,8 @@ if comp:
             pitch0.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), c='#161A30',
                     fontweight='light', va='center', ha='center', size=15, ax=ax0)
             
+        
+        
         ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         
@@ -175,8 +177,10 @@ if comp:
         
         for _, row in avg_locations1.iterrows():
             pitch1.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), c='#161A30',
-                    fontweight='light', va='center', ha='center', size=15, ax=ax0)
+                    fontweight='light', va='center', ha='center', size=15, ax=ax1)
 
+        
+        
         ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         # Display the plots
