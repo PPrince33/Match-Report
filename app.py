@@ -39,8 +39,9 @@ if comp:
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         fig, ax = pitch.draw(figsize=(16, 11), constrained_layout=True, tight_layout=False)
         fig.set_facecolor("black")
-        
-        st.header("Starting XI")
+
+        st.header("Line-ups")
+        st.subheader("Starting XI")
         team_name0 = event_df.at[0, 'team']    
         team_name1 = event_df.at[1, 'team']
         
@@ -129,6 +130,7 @@ if comp:
         #st.subheader(f"{team_name1} Substitutions")
         #st.dataframe(sub_players1)
         firstsub1 = sub_players1[sub_players1['minute'].notnull()]['minute'].min() if not sub_players1.empty else None
+        st.header(f"{team_name0}")
         col1, col2 = st.columns(2)
         with col1:
             #st.subheader(f"{team_name0} Substitutions")
