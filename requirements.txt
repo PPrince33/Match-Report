@@ -1,0 +1,8 @@
+numpy
+streamlit
+pandas
+plotly
+statsbombpy
+mplsoccer
+matplotlib
+Pillow
