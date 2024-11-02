@@ -134,7 +134,7 @@ if comp:
 
         
         # Set up the pitch for Team 0
-        pitch0 = Pitch(pitch_type='statsbomb', pitch_color='#FFDC02', line_color='black')
+        pitch0 = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='#A9A9A9')
         fig0, ax0 = pitch0.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
         fig0.set_facecolor("black")
         
@@ -142,23 +142,22 @@ if comp:
         pass_lines0 = pitch0.lines(pass_between0['X'], pass_between0['Y'],
                                    pass_between0['X_end'], pass_between0['Y_end'],
                                    lw=0.7 * pass_between0['pass_count'],
-                                   color="#193375", zorder=0.7, ax=ax0)
+                                   color="white", zorder=0.7, ax=ax0)
         
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
                                       s=30 * avg_locations0['count'].values,
-                                      color='#19AE47', edgecolors='black', linewidth=1, ax=ax0)
+                                      color='#19AE47', edgecolors='green', linewidth=1, ax=ax0)
         
         # Annotate the plot for Team 0
         for passer_jersey_no, row in avg_locations0.iterrows():
             pitch0.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax0)
         
-        ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
-                       fontsize=20, fontweight='bold', pad=20)
+        ax0.subheader(f'{team_name0} Passing Network', color='white')
         
         # Set up the pitch for Team 1 (similar process as for Team 0)
-        pitch1 = Pitch(pitch_type='statsbomb', pitch_color='#FFDC02', line_color='black')
+        pitch1 = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='#A9A9A9')
         fig1, ax1 = pitch1.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
         fig1.set_facecolor("black")
         
@@ -171,16 +170,14 @@ if comp:
         # Plot the average locations for Team 1
         pass_nodes1 = pitch1.scatter(avg_locations1['X'], avg_locations1['Y'],
                                       s=30 * avg_locations1['count'].values,
-                                      color='#19AE47', edgecolors='black', linewidth=1, ax=ax1)
+                                      color='#19AE47', edgecolors='green', linewidth=1, ax=ax1)
         
         # Annotate the plot for Team 1
         for passer_jersey_no, row in avg_locations1.iterrows():
             pitch1.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax1)
         
-        ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
-                       fontsize=20, fontweight='bold', pad=20)
-
+        ax1.subheader(f'{team_name1} Passing Network', color='white')
         # Display the plots
         st.pyplot(fig0)
         st.pyplot(fig1)
