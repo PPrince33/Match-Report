@@ -64,7 +64,7 @@ if comp:
         # Pass data
         pass_df0 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name0)]
         pass_df1 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name1)]
-        
+        pass_table=pd.DataFrame(columns=[team_name0,team_name1])
         # Filter completed passes where 'pass_outcome' is null
         completed_passes_team0 = pass_df0[pass_df0['pass_outcome'].isnull()]
         completed_passes_team1 = pass_df1[pass_df1['pass_outcome'].isnull()]
