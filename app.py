@@ -163,14 +163,14 @@ if comp:
         pass_between0.rename(columns={'id': 'pass_count'}, inplace=True)
 
         pass_between0=pd.merge(pass_between0,avg_locations0,on='passer_jersey_no',how='left')
-        avg_locations0=avg_locations0.rename_axis('recipient_jersey_no')
+        avg_locations0=avg_locations0.rename(columns={'passer_jersey_no':'recipient_jersey_no'})
         pass_between0=pd.merge(pass_between0,avg_locations0,on='recipient_jersey_no',suffixes=['','_end'],how='left')
 
         pass_between1 = successful1.groupby(['passer_jersey_no', 'recipient_jersey_no']).id.count().reset_index()
         pass_between1.rename(columns={'id': 'pass_count'}, inplace=True)
         
         pass_between1=pd.merge(pass_between1,avg_locations1,on='passer_jersey_no',how='left')
-        avg_locations1=avg_locations1.rename_axis('recipient_jersey_no')
+        avg_locations1=avg_locations1.rename(columns={'passer_jersey_no':'recipient_jersey_no'})
         pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'],how='left')
 
 
