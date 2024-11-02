@@ -347,5 +347,5 @@ if comp:
 
         
         
-        st.dataframe(pass_table, height=500)
+        st.dataframe(pass_table)
         #st.markdown(f"<div style='display: flex; justify-content: center;'>{pass_table.to_html(index=False)}</div>",unsafe_allow_html=True)
