@@ -187,7 +187,7 @@ if comp:
                                    lw= pass_between0['pass_count'],
                                    color="white", zorder=0.7, ax=ax0)
 
-        st.dataframe(pass_between0)
+        
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
                                       s=30 * avg_locations0['count'].values,
@@ -257,17 +257,20 @@ if comp:
         part_of_pitch_options1 = ['All'] + completed_passes_team1['Part_of_pitch'].unique().tolist()
         player_options0 = ['All'] + completed_passes_team0['player'].unique().tolist()
         player_options1 = ['All'] + completed_passes_team1['player'].unique().tolist()
-        
+        pass_type0=['All'] + completed_passes_team0.pass_type.unique()
+        pass_type1=['All'] + completed_passes_team1.pass_type.unique()
         # Team 1 filters (completed_passes_team1)
         st.sidebar.subheader(f"{team_name0} Filters")
         part_of_pitch_selected0 = st.sidebar.selectbox(f"Select Part of Pitch {team_name0}", options=part_of_pitch_options0)
         players_selected0 = st.sidebar.selectbox(f"Select Player(s) {team_name0}", options=player_options0)
+        pass_type_selected0 = st.sidebar.selectbox(f"Select Pass Type {team_name0}", options=pass_type0)
         minute_slider0 = st.sidebar.slider(f"Select Minute Range {team_name0}", min_value=int(completed_passes_team0['minute'].min()), max_value=int(completed_passes_team0['minute'].max()), value=(int(completed_passes_team0['minute'].min()), int(completed_passes_team0['minute'].max())))
         
         # Team 2 filters (completed_passes_team2)
         st.sidebar.subheader(f"{team_name1} Filters")
         part_of_pitch_selected1 = st.sidebar.selectbox(f"Select Part of Pitch {team_name1}", options=part_of_pitch_options1)
         players_selected1 = st.sidebar.selectbox(f"Select Player(s) {team_name1}", options=player_options1)
+        pass_type_selected1 = st.sidebar.selectbox(f"Select Pass Type {team_name1}", options=pass_type1)
         minute_slider1 = st.sidebar.slider(f"Select Minute Range {team_name1}", min_value=int(completed_passes_team1['minute'].min()), max_value=int(completed_passes_team1['minute'].max()), value=(int(completed_passes_team1['minute'].min()), int(completed_passes_team1['minute'].max())))
         
         # Apply filters to completed_passes_team1 based on selected Part of Pitch and Players
@@ -285,6 +288,10 @@ if comp:
         if players_selected1 != 'All':
             completed_passes_team1 = completed_passes_team1[completed_passes_team1['player'] == players_selected1]
         
+        if pass_type_selected0 != 'All':
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'] == pass_type_selected0]
+        if pass_type_selected1 != 'All':
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'] == pass_type_selected1]     
         # Filter based on minute range for Team 2
         completed_passes_team1 = completed_passes_team1[(completed_passes_team1['minute'] >= minute_slider1[0]) & (completed_passes_team1['minute'] <= minute_slider1[1])]
         
