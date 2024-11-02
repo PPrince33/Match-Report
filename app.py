@@ -78,16 +78,16 @@ if comp:
         sub_players0 = subs0[['minute', 'player', 'player_id']]
         sub_players0 = pd.merge(sub_players0, jersey_data0, on='player_id', how='left')
         sub_players0 = sub_players0[['minute', 'player', 'jersey_number']]
-        st.subheader(f"{team_name0} Substitutions")
-        st.dataframe(sub_players0)
+        #st.subheader(f"{team_name0} Substitutions")
+        #st.dataframe(sub_players0)
         firstsub0 = sub_players0[sub_players0['minute'].notnull()]['minute'].min() if not sub_players0.empty else None
         
         subs1 = event_df[(event_df['type'] == 'Substitution') & (event_df['team'] == team_name1)]
         sub_players1 = subs1[['minute', 'player', 'player_id']]
         sub_players1 = pd.merge(sub_players1, jersey_data1, on='player_id', how='left')
         sub_players1 = sub_players1[['minute', 'player', 'jersey_number']]
-        st.subheader(f"{team_name1} Substitutions")
-        st.dataframe(sub_players1)
+        #st.subheader(f"{team_name1} Substitutions")
+        #st.dataframe(sub_players1)
         firstsub1 = sub_players1[sub_players1['minute'].notnull()]['minute'].min() if not sub_players1.empty else None
         col1, col2 = st.columns(2)
         with col1:
