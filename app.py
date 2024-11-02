@@ -289,7 +289,7 @@ if comp:
             completed_passes_team1 = completed_passes_team1[completed_passes_team1['player'] == players_selected1]
         
         if pass_type_selected0 != 'All':
-            completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'] == pass_type_selected0]
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['pass_type'] == pass_type_selected0]
         if pass_type_selected1 != 'All':
             completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'] == pass_type_selected1]     
         # Filter based on minute range for Team 2
