@@ -198,8 +198,7 @@ if comp:
             
         
         
-        #ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
-                       fontsize=20, fontweight='bold', pad=20)
+        #ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',fontsize=20, fontweight='bold', pad=20)
         
         # Set up the pitch for Team 1 (similar process as for Team 0)
         pitch1 = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='#A9A9A9')
@@ -223,8 +222,7 @@ if comp:
 
         
         
-        #ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
-                       fontsize=20, fontweight='bold', pad=20)
+        #ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',fontsize=20, fontweight='bold', pad=20)
         # Display the plots
         
         col1, col2 = st.columns(2)
