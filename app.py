@@ -344,10 +344,74 @@ if comp:
                 ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
             ax.legend(loc="upper left")
             st.pyplot(fig)
+
+        # Initialize the pitch settings
+        pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         
+        # Streamlit layout for side-by-side pitch maps
+        st.subheader("Unsuccessful Passes")
+        col1, col2 = st.columns(2)
+
+
         
+        # Plot for Team 1 with filters applied
+        with col1:
+            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
+            fig.set_facecolor("black")
+            # Draw lines for each pass
+            ax.scatter(incompleted_passes_team0['X'], incompleted_passes_team0['Y'], color='green', label="Start")
+            ax.scatter(incompleted_passes_team0['endX'], incompleted_passes_team0['endY'], color='red', label="End")
+            
+            for idx, row in incompleted_passes_team0.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white',linestyle='--', linewidth=1)  # Line between passes
+            ax.legend(loc="upper left")
+            st.pyplot(fig)
+        
+        # Plot for Team 2 with filters applied
+        with col2:
+            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
+            fig.set_facecolor("black")
+            # Draw lines for each pass
+            ax.scatter(incompleted_passes_team1['X'], incompleted_passes_team1['Y'], color='green', label="Start")
+            ax.scatter(incompleted_passes_team1['endX'], incompleted_passes_team1['endY'], color='red', label="End")
+            
+            for idx, row in incompleted_passes_team1.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
+            ax.legend(loc="upper left")
+            st.pyplot(fig)
+
+
+
  
-          #Create an empty DataFrame for pass tables
+         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        #Create an empty DataFrame for pass tables
         completed_pass_table = pd.DataFrame()
         incompleted_pass_table = pd.DataFrame()
         
@@ -419,42 +483,6 @@ if comp:
                 
         
                 
-        # Initialize the pitch settings
-        pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
-        
-        # Streamlit layout for side-by-side pitch maps
-        st.subheader("Unsuccessful Passes")
-        col1, col2 = st.columns(2)
-
-
-        
-        # Plot for Team 1 with filters applied
-        with col1:
-            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
-            fig.set_facecolor("black")
-            # Draw lines for each pass
-            ax.scatter(incompleted_passes_team0['X'], incompleted_passes_team0['Y'], color='green', label="Start")
-            ax.scatter(incompleted_passes_team0['endX'], incompleted_passes_team0['endY'], color='red', label="End")
-            
-            for idx, row in incompleted_passes_team0.iterrows():
-                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white',linestyle='--', linewidth=1)  # Line between passes
-            ax.legend(loc="upper left")
-            st.pyplot(fig)
-        
-        # Plot for Team 2 with filters applied
-        with col2:
-            fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
-            fig.set_facecolor("black")
-            # Draw lines for each pass
-            ax.scatter(incompleted_passes_team1['X'], incompleted_passes_team1['Y'], color='green', label="Start")
-            ax.scatter(incompleted_passes_team1['endX'], incompleted_passes_team1['endY'], color='red', label="End")
-            
-            for idx, row in incompleted_passes_team1.iterrows():
-                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
-            ax.legend(loc="upper left")
-            st.pyplot(fig)
-
-
 
         # Display the completed pass table
         st.subheader("Completed Pass Table")
