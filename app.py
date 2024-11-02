@@ -183,9 +183,10 @@ if comp:
         # Plot the passing lines for Team 0
         pass_lines0 = pitch0.lines(pass_between0['X'], pass_between0['Y'],
                                    pass_between0['X_end'], pass_between0['Y_end'],
-                                   lw= 2*pass_between0['pass_count'],
+                                   lw= pass_between0['pass_count'],
                                    color="white", zorder=0.7, ax=ax0)
-        
+
+        st.dataframe(pass_between0)
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
                                       s=30 * avg_locations0['count'].values,
