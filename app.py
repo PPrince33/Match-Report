@@ -154,7 +154,7 @@ if comp:
             pitch0.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax0)
         
-        ax0.set_title(f'{team_nameo} Passing Network', color='white', va='center', ha='center',
+        ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         
         # Set up the pitch for Team 1 (similar process as for Team 0)
