@@ -50,15 +50,15 @@ if comp:
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(f"{team_name0}")
-            #st.dataframe(lineup_data0)
-            st.markdown(
+            st.dataframe(lineup_data0)
+            #st.markdown(
     f'<div style="text-align: center;">{lineup_data0.to_html(index=False)}</div>',
     unsafe_allow_html=True
 )
         with col2:
             st.subheader(f"{team_name1}")
-            #st.dataframe(lineup_data1)
-            st.markdown(
+            st.dataframe(lineup_data1)
+            #st.markdown(
     f'<div style="text-align: center;">{lineup_data1.to_html(index=False)}</div>',
     unsafe_allow_html=True
 )
@@ -175,8 +175,8 @@ if comp:
 
         
         st.subheader("Pass Analysis")
-        #st.dataframe(pass_table)
-        st.markdown(
+        st.dataframe(pass_table)
+        #st.markdown(
     f'<div style="text-align: center;">{pass_table.to_html(index=False)}</div>',
     unsafe_allow_html=True
 )
