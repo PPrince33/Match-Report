@@ -90,8 +90,8 @@ if comp:
 
         
 
-        successful0.rename(columns={'player_id':'passer_id','player_nickname':'passer_nickname','jersey_number':'passer_jersey_no'},inplace=True)
-        successful1.rename(columns={'player_id':'passer_id','player_nickname':'passer_nickname','jersey_number':'passer_jersey_no'},inplace=True)
+        successful0.rename(columns={'player_id':'passer_id','player_name':'passer_name','jersey_number':'passer_jersey_no'},inplace=True)
+        successful1.rename(columns={'player_id':'passer_id','player_name':'passer_name','jersey_number':'passer_jersey_no'},inplace=True)
         
         jersey_data0.rename(columns={'player_id':'pass_recipient_id'},inplace=True)
         jersey_data1.rename(columns={'player_id':'pass_recipient_id'},inplace=True)
@@ -99,8 +99,8 @@ if comp:
         successful0=pd.merge(successful0,jersey_data0,on='pass_recipient_id')
         successful1=pd.merge(successful1,jersey_data1,on='pass_recipient_id')
        
-        successful0.rename(columns={'player_nickname':'recipient_nickname','jersey_number':'recipient_jersey_no'},inplace=True)
-        successful1.rename(columns={'player_nickname':'recipient_nickname','jersey_number':'recipient_jersey_no'},inplace=True)
+        successful0.rename(columns={'player_name':'recipient_name','jersey_number':'recipient_jersey_no'},inplace=True)
+        successful1.rename(columns={'player_name':'recipient_name','jersey_number':'recipient_jersey_no'},inplace=True)
 
 
 
