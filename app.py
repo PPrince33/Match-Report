@@ -282,38 +282,37 @@ if comp:
         pass_type_selected1 = st.sidebar.multiselect(f"Select Pass Type {team_name1}", options=pass_type1)
         minute_slider1 = st.sidebar.slider(f"Select Minute Range {team_name1}", min_value=int(completed_passes_team1['minute'].min()), max_value=int(completed_passes_team1['minute'].max()), value=(int(completed_passes_team1['minute'].min()), int(completed_passes_team1['minute'].max())))
         
-        # Apply filters to completed_passes_team1 based on selected Part of Pitch and Players
-        if part_of_pitch_selected0 != 'All':
-            completed_passes_team0 = completed_passes_team0[completed_passes_team0['Part_of_pitch'] == part_of_pitch_selected0]
-            incompleted_passes_team0=incompleted_passes_team0[incompleted_passes_team0['Part_of_pitch'] == part_of_pitch_selected0]
-            
-
-        if players_selected0 != 'All':
-            completed_passes_team0 = completed_passes_team0[completed_passes_team0['player'] == players_selected0]
-            incompleted_passes_team0=incompleted_passes_team0[incompleted_passes_team0['player'] == players_selected0]
-                  
-        # Filter based on minute range for Team 1
+        # Apply filters to completed_passes_team0 based on selected Part of Pitch, Players, and Pass Type
+        if part_of_pitch_selected0:  # Only filter if there are selected items
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['Part_of_pitch'].isin(part_of_pitch_selected0)]
+            incompleted_passes_team0 = incompleted_passes_team0[incompleted_passes_team0['Part_of_pitch'].isin(part_of_pitch_selected0)]
+        
+        if players_selected0:
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['player'].isin(players_selected0)]
+            incompleted_passes_team0 = incompleted_passes_team0[incompleted_passes_team0['player'].isin(players_selected0)]
+        
+        if pass_type_selected0:
+            completed_passes_team0 = completed_passes_team0[completed_passes_team0['pass_type'].isin(pass_type_selected0)]
+            incompleted_passes_team0 = incompleted_passes_team0[incompleted_passes_team0['pass_type'].isin(pass_type_selected0)]
+        
+        # Filter based on minute range for Team 0
         completed_passes_team0 = completed_passes_team0[(completed_passes_team0['minute'] >= minute_slider0[0]) & (completed_passes_team0['minute'] <= minute_slider0[1])]
         incompleted_passes_team0 = incompleted_passes_team0[(incompleted_passes_team0['minute'] >= minute_slider0[0]) & (incompleted_passes_team0['minute'] <= minute_slider0[1])]
         
-        # Apply filters to completed_passes_team2 based on selected Part of Pitch and Players
-        if part_of_pitch_selected1 != 'All':
-            completed_passes_team1 = completed_passes_team1[completed_passes_team1['Part_of_pitch'] == part_of_pitch_selected1]
-            incompleted_passes_team1=incompleted_passes_team1[incompleted_passes_team1['Part_of_pitch'] == part_of_pitch_selected1]
-            
-        if players_selected1 != 'All':
-            completed_passes_team1 = completed_passes_team1[completed_passes_team1['player'] == players_selected1]
-            incompleted_passes_team1=incompleted_passes_team1[incompleted_passes_team1['player'] == part_of_pitch_selected1]
-            
-        if pass_type_selected0 != 'All':
-            completed_passes_team0 = completed_passes_team0[completed_passes_team0['pass_type'] == pass_type_selected0]
-            incompleted_passes_team0=incompleted_passes_team0[incompleted_passes_team0['pass_type'] == pass_type_selected0]
-            
-        if pass_type_selected1 != 'All':
-            completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'] == pass_type_selected1]
-            incompleted_passes_team1=incompleted_passes_team1[incompleted_passes_team1['pass_type'] == pass_type_selected1]
-            
-        # Filter based on minute range for Team 2
+        # Apply filters to completed_passes_team1 based on selected Part of Pitch, Players, and Pass Type
+        if part_of_pitch_selected1:
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['Part_of_pitch'].isin(part_of_pitch_selected1)]
+            incompleted_passes_team1 = incompleted_passes_team1[incompleted_passes_team1['Part_of_pitch'].isin(part_of_pitch_selected1)]
+        
+        if players_selected1:
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['player'].isin(players_selected1)]
+            incompleted_passes_team1 = incompleted_passes_team1[incompleted_passes_team1['player'].isin(players_selected1)]
+        
+        if pass_type_selected1:
+            completed_passes_team1 = completed_passes_team1[completed_passes_team1['pass_type'].isin(pass_type_selected1)]
+            incompleted_passes_team1 = incompleted_passes_team1[incompleted_passes_team1['pass_type'].isin(pass_type_selected1)]
+        
+        # Filter based on minute range for Team 1
         completed_passes_team1 = completed_passes_team1[(completed_passes_team1['minute'] >= minute_slider1[0]) & (completed_passes_team1['minute'] <= minute_slider1[1])]
         incompleted_passes_team1 = incompleted_passes_team1[(incompleted_passes_team1['minute'] >= minute_slider1[0]) & (incompleted_passes_team1['minute'] <= minute_slider1[1])]
         
