@@ -186,7 +186,7 @@ if comp:
                                    lw= pass_between0['pass_count'],
                                    color="white", zorder=0.7, ax=ax0)
 
-        st.dataframe(pass_between0)
+        st.dataframe(successful0)
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
                                       s=30 * avg_locations0['count'].values,
