@@ -174,7 +174,7 @@ if comp:
         pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'])
 
 
-        
+        st.subheader("Pass Analysis")
         # Set up the pitch for Team 0
         pitch0 = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='#A9A9A9')
         fig0, ax0 = pitch0.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
@@ -344,7 +344,7 @@ if comp:
 
 
         
-        st.subheader("Pass Analysis")
+        
         #st.dataframe(pass_table)
         st.markdown(
     f"<div style='display: flex; justify-content: center;'>{pass_table.to_html(index=False)}</div>",
