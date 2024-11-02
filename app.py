@@ -297,10 +297,11 @@ if comp:
             fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
             fig.set_facecolor("black")
             # Draw lines for each pass
-            for idx, row in completed_passes_team0.iterrows():
-                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white',linestyle='--', linewidth=1)  # Line between passes
             ax.scatter(completed_passes_team0['X'], completed_passes_team0['Y'], color='green', label="Start")
             ax.scatter(completed_passes_team0['endX'], completed_passes_team0['endY'], color='red', label="End")
+            
+            for idx, row in completed_passes_team0.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white',linestyle='--', linewidth=1)  # Line between passes
             ax.legend(loc="upper left")
             st.pyplot(fig)
         
@@ -309,10 +310,11 @@ if comp:
             fig, ax = pitch.draw(figsize=(8, 6), constrained_layout=True, tight_layout=False)
             fig.set_facecolor("black")
             # Draw lines for each pass
-            for idx, row in completed_passes_team1.iterrows():
-                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
             ax.scatter(completed_passes_team1['X'], completed_passes_team1['Y'], color='green', label="Start")
             ax.scatter(completed_passes_team1['endX'], completed_passes_team1['endY'], color='red', label="End")
+            
+            for idx, row in completed_passes_team1.iterrows():
+                ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
             ax.legend(loc="upper left")
             st.pyplot(fig)
         
