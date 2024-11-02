@@ -33,6 +33,9 @@ if comp:
         
         
         
+
+
+
         
         
         
@@ -67,11 +70,12 @@ if comp:
         #Adding Jersey Number To Successful Passes
         
         # Filter passes where 'pass_outcome' is null for both DataFrames
-        completed_passes_team1 = pass_df0[pass_df0['pass_outcome'].isnull()]
-        completed_passes_team2 = pass_df1[pass_df1['pass_outcome'].isnull()]
+        completed_passes_team0 = pass_df0[pass_df0['pass_outcome'].isnull()]
+        completed_passes_team1 = pass_df1[pass_df1['pass_outcome'].isnull()]
         
-        successful0=pd.merge(completed_passes_team0,lineup_data0,on='player_id',how='left')
-        successful1=pd.merge(completed_passes_team1,lineup_data1,on='player_id',how='left')
+        # Merge successful passes with lineup data
+        successful0 = pd.merge(completed_passes_team0, lineup_data0, on='player_id', how='left')
+        successful1 = pd.merge(completed_passes_team1, lineup_data1, on='player_id', how='left')
 
         #First Substitution
         subs0=event_df[(event_df['type']=='Substitution')&(event_df['team']==team_name0)]
