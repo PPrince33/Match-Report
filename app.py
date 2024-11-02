@@ -236,8 +236,10 @@ if comp:
         
         col1, col2 = st.columns(2)
         with col1:
+            st.subheader(f'{team_name0}')
             st.pyplot(fig0)
         with col2:
+            st.subheader(f'{team_name1}')
             st.pyplot(fig1)
         
         
