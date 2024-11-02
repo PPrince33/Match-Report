@@ -179,7 +179,8 @@ if comp:
         pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'],how='left')
         avg_locations1=avg_locations1.rename(columns={'recipient_jersey_no':'passer_jersey_no'})
 
-        st.subheader("Pass Analysis")
+        st.header("Pass Analysis")
+        st.subheader("Pass Network")
         # Set up the pitch for Team 0
         pitch0 = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='#A9A9A9')
         fig0, ax0 = pitch0.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
