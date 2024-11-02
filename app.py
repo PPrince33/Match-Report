@@ -130,7 +130,7 @@ if comp:
         #st.subheader(f"{team_name1} Substitutions")
         #st.dataframe(sub_players1)
         firstsub1 = sub_players1[sub_players1['minute'].notnull()]['minute'].min() if not sub_players1.empty else None
-        st.header(f"{team_name0}")
+        st.header("Substitutions")
         col1, col2 = st.columns(2)
         with col1:
             #st.subheader(f"{team_name0} Substitutions")
