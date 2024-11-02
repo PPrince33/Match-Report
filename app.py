@@ -193,8 +193,8 @@ if comp:
         
         # Annotate the plot for Team 0
         for _, row in avg_locations0.iterrows():
-            pitch0.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='#161A30',
-                    fontweight='light', va='center', ha='center', size=15, ax=ax0)
+            pitch0.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='black',
+                    fontweight='bold', va='center', ha='center', size=10, ax=ax0)
             
         
         
@@ -218,8 +218,8 @@ if comp:
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax1)
         
         for _, row in avg_locations1.iterrows():
-            pitch1.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='#161A30',
-                    fontweight='light', va='center', ha='center', size=15, ax=ax1)
+            pitch1.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='black',
+                    fontweight='bold', va='center', ha='center', size=10, ax=ax1)
 
         
         
