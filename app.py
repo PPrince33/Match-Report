@@ -73,16 +73,16 @@ if comp:
         player_options1 = ['All'] + completed_passes_team2['player'].unique().tolist()
         
         # Team 1 filters (completed_passes_team1)
-        st.sidebar.subheader("Team 1 Filters")
-        part_of_pitch_selected0 = st.sidebar.selectbox("Select Part of Pitch (Team 1)", options=part_of_pitch_options0)
-        players_selected0 = st.sidebar.selectbox("Select Player(s) (Team 1)", options=player_options0)
-        minute_slider0 = st.sidebar.slider("Select Minute Range (Team 1)", min_value=int(completed_passes_team1['minute'].min()), max_value=int(completed_passes_team1['minute'].max()), value=(int(completed_passes_team1['minute'].min()), int(completed_passes_team1['minute'].max())))
+        st.sidebar.subheader(f"{team_name0} Filters")
+        part_of_pitch_selected0 = st.sidebar.selectbox(f"Select Part of Pitch {team_name0}", options=part_of_pitch_options0)
+        players_selected0 = st.sidebar.selectbox(f"Select Player(s) {team_name0}", options=player_options0)
+        minute_slider0 = st.sidebar.slider(f"Select Minute Range {team_name0}", min_value=int(completed_passes_team1['minute'].min()), max_value=int(completed_passes_team1['minute'].max()), value=(int(completed_passes_team1['minute'].min()), int(completed_passes_team1['minute'].max())))
         
         # Team 2 filters (completed_passes_team2)
-        st.sidebar.subheader("Team 2 Filters")
-        part_of_pitch_selected1 = st.sidebar.selectbox("Select Part of Pitch (Team 2)", options=part_of_pitch_options1)
-        players_selected1 = st.sidebar.selectbox("Select Player(s) (Team 2)", options=player_options1)
-        minute_slider1 = st.sidebar.slider("Select Minute Range (Team 2)", min_value=int(completed_passes_team2['minute'].min()), max_value=int(completed_passes_team2['minute'].max()), value=(int(completed_passes_team2['minute'].min()), int(completed_passes_team2['minute'].max())))
+        st.sidebar.subheader(f"{team_name1} Filters")
+        part_of_pitch_selected1 = st.sidebar.selectbox(f"Select Part of Pitch {team_name1}", options=part_of_pitch_options1)
+        players_selected1 = st.sidebar.selectbox(f"Select Player(s) {team_name1}", options=player_options1)
+        minute_slider1 = st.sidebar.slider(f"Select Minute Range {team_name1}", min_value=int(completed_passes_team2['minute'].min()), max_value=int(completed_passes_team2['minute'].max()), value=(int(completed_passes_team2['minute'].min()), int(completed_passes_team2['minute'].max())))
         
         # Apply filters to completed_passes_team1 based on selected Part of Pitch and Players
         if part_of_pitch_selected0 != 'All':
