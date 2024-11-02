@@ -379,6 +379,73 @@ if comp:
                 ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
             ax.legend(loc="upper left")
             st.pyplot(fig)
+   
         
+        # Create an empty DataFrame for pass tables
+        completed_pass_table = pd.DataFrame()
+        incompleted_pass_table = pd.DataFrame()
         
+        # Completed Pass counts
+        completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()].id.count()
+        completed_pass_count1 = pass_df1[pass_df1['pass_outcome'].isnull()].id.count()
+        completed_pass_table.loc['Completed Pass', team_name0] = completed_pass_count0
+        completed_pass_table.loc['Completed Pass', team_name1] = completed_pass_count1
         
+        # Pass type counts for completed passes
+        pass_type_counts0 = pass_df0['pass_type'].value_counts()
+        for pass_type, count in pass_type_counts0.items():
+            completed_pass_table.loc[pass_type, team_name0] = count
+        
+        pass_type_counts1 = pass_df1['pass_type'].value_counts()
+        for pass_type, count in pass_type_counts1.items():
+            completed_pass_table.loc[pass_type, team_name1] = count
+        
+        # Pass outcome counts for completed passes
+        pass_outcome_counts0 = pass_df0['pass_outcome'].value_counts()
+        for outcome, count in pass_outcome_counts0.items():
+            completed_pass_table.loc[outcome, team_name0] = count
+        
+        pass_outcome_counts1 = pass_df1['pass_outcome'].value_counts()
+        for outcome, count in pass_outcome_counts1.items():
+            completed_pass_table.loc[outcome, team_name1] = count
+        
+        # Fill NaN values in completed pass table and reset index
+        completed_pass_table = completed_pass_table.fillna(0).reset_index().rename(columns={'index': 'Particular'})
+        
+        # Incompleted Pass counts
+        incompleted_pass_count0 = pass_df0[pass_df0['pass_outcome'].notnull()].id.count()
+        incompleted_pass_count1 = pass_df1[pass_df1['pass_outcome'].notnull()].id.count()
+        incompleted_pass_table.loc['Incompleted Pass', team_name0] = incompleted_pass_count0
+        incompleted_pass_table.loc['Incompleted Pass', team_name1] = incompleted_pass_count1
+        
+        # Pass type counts for incomplete passes
+        inpass_type_counts0 = pass_df0[pass_df0['pass_outcome'].notnull()]['pass_type'].value_counts()
+        for pass_type, count in inpass_type_counts0.items():
+            incompleted_pass_table.loc[pass_type, team_name0] = count
+        
+        inpass_type_counts1 = pass_df1[pass_df1['pass_outcome'].notnull()]['pass_type'].value_counts()
+        for pass_type, count in inpass_type_counts1.items():
+            incompleted_pass_table.loc[pass_type, team_name1] = count
+        
+        # Pass outcome counts for incomplete passes
+        inpass_outcome_counts0 = pass_df0[pass_df0['pass_outcome'].notnull()]['pass_outcome'].value_counts()
+        for outcome, count in inpass_outcome_counts0.items():
+            incompleted_pass_table.loc[outcome, team_name0] = count
+        
+        inpass_outcome_counts1 = pass_df1[pass_df1['pass_outcome'].notnull()]['pass_outcome'].value_counts()
+        for outcome, count in inpass_outcome_counts1.items():
+            incompleted_pass_table.loc[outcome, team_name1] = count
+        
+        # Fill NaN values in incomplete pass table and reset index
+        incompleted_pass_table = incompleted_pass_table.fillna(0).reset_index().rename(columns={'index': 'Particular'})
+        
+        # Display the completed pass table
+        st.subheader("Completed Pass Table")
+        st.dataframe(completed_pass_table)
+        
+        # Display the incomplete pass table
+        st.subheader("Incomplete Pass Table")
+        st.dataframe(incompleted_pass_table)
+        
+                
+                
