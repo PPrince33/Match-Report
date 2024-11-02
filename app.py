@@ -168,10 +168,7 @@ if comp:
 
         
         st.subheader("Pass Analysis")
-        st.markdown(
-    f'<div style="text-align: center;">{pass_table.to_html(index=False)}</div>',
-    unsafe_allow_html=True
-)
+        st.dataframe(pass_table)
         
         
 
