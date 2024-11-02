@@ -127,10 +127,10 @@ if comp:
         firstsub1 = sub_players1[sub_players1['minute'].notnull()]['minute'].min() if not sub_players1.empty else None
         col1, col2 = st.columns(2)
         with col1:
-            st.subheader(f"{team_name0} Substitutions")
+            #st.subheader(f"{team_name0} Substitutions")
             st.dataframe(sub_players0)
         with col2:
-            st.subheader(f"{team_name1} Substitutions")
+            #st.subheader(f"{team_name1} Substitutions")
             st.dataframe(sub_players1)
         # Pass Network Before First Substitution
         if firstsub0 is not None:
@@ -198,7 +198,7 @@ if comp:
             
         
         
-        ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
+        #ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         
         # Set up the pitch for Team 1 (similar process as for Team 0)
@@ -223,11 +223,24 @@ if comp:
 
         
         
-        ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
+        #ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         # Display the plots
-        st.pyplot(fig0)
-        st.pyplot(fig1)
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.pyplot(fig0)
+        with col2:
+            st.pyplot(fig1)
+        
+        
+        
+        
+        
+        
+        
+        
+        
        
         
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
