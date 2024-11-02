@@ -144,8 +144,8 @@ if comp:
         jersey_data0.rename(columns={'player_id': 'pass_recipient_id'}, inplace=True)
         jersey_data1.rename(columns={'player_id': 'pass_recipient_id'}, inplace=True)
         
-        successful0 = pd.merge(successful0, jersey_data0, on='pass_recipient_id')
-        successful1 = pd.merge(successful1, jersey_data1, on='pass_recipient_id')
+        successful0 = pd.merge(successful0, jersey_data0, on='pass_recipient_id',how='left')
+        successful1 = pd.merge(successful1, jersey_data1, on='pass_recipient_id',how='left')
 
         successful0.rename(columns={'player_name': 'recipient_name', 'jersey_number': 'recipient_jersey_no'}, inplace=True)
         successful1.rename(columns={'player_name': 'recipient_name', 'jersey_number': 'recipient_jersey_no'}, inplace=True)
@@ -162,16 +162,16 @@ if comp:
         pass_between0 = successful0.groupby(['passer_jersey_no', 'recipient_jersey_no']).id.count().reset_index()
         pass_between0.rename(columns={'id': 'pass_count'}, inplace=True)
 
-        pass_between0=pd.merge(pass_between0,avg_locations0,on='passer_jersey_no')
+        pass_between0=pd.merge(pass_between0,avg_locations0,on='passer_jersey_no',how='left')
         avg_locations0=avg_locations0.rename_axis('recipient_jersey_no')
-        pass_between0=pd.merge(pass_between0,avg_locations0,on='recipient_jersey_no',suffixes=['','_end'])
+        pass_between0=pd.merge(pass_between0,avg_locations0,on='recipient_jersey_no',suffixes=['','_end'],how='left')
 
         pass_between1 = successful1.groupby(['passer_jersey_no', 'recipient_jersey_no']).id.count().reset_index()
         pass_between1.rename(columns={'id': 'pass_count'}, inplace=True)
         
-        pass_between1=pd.merge(pass_between1,avg_locations1,on='passer_jersey_no')
+        pass_between1=pd.merge(pass_between1,avg_locations1,on='passer_jersey_no',how='left')
         avg_locations1=avg_locations1.rename_axis('recipient_jersey_no')
-        pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'])
+        pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'],how='left')
 
 
         st.subheader("Pass Analysis")
