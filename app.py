@@ -132,7 +132,7 @@ if comp:
             ax.legend(loc="upper left")
             st.pyplot(fig)
         
-        
+        st.markdown("**Note:** Mapping only includes completed passes.")
 
         
         #Pass Table
