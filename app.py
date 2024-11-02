@@ -439,13 +439,16 @@ if comp:
         # Fill NaN values in incomplete pass table and reset index
         incompleted_pass_table = incompleted_pass_table.fillna(0).reset_index().rename(columns={'index': 'Particular'})
         
-        # Display the completed pass table
-        st.subheader("Completed Pass Table")
-        st.dataframe(completed_pass_table)
+        # Display the tables side by side
+        col1, col2 = st.columns(2)
         
-        # Display the incomplete pass table
-        st.subheader("Incomplete Pass Table")
-        st.dataframe(incompleted_pass_table)
+        with col1:
+            st.subheader("Completed Pass Table")
+            st.dataframe(completed_pass_table)
         
+        with col2:
+            st.subheader("Incomplete Pass Table")
+            st.dataframe(incompleted_pass_table)
+                
                 
                 
