@@ -141,17 +141,17 @@ if comp:
         # Plot the passing lines for Team 0
         pass_lines0 = pitch0.lines(pass_between0['X'], pass_between0['Y'],
                                    pass_between0['X_end'], pass_between0['Y_end'],
-                                   lw=0.7 * pass_between0['pass_count'],
+                                   lw= pass_between0['pass_count'],
                                    color="white", zorder=0.7, ax=ax0)
         
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
-                                      s=30 * avg_locations0['count'].values,
+                                      s=50 * avg_locations0['count'].values,
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax0)
         
         # Annotate the plot for Team 0
         for _, row in avg_locations0.iterrows():
-            pitch0.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), c='#161A30',
+            pitch0.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='#161A30',
                     fontweight='light', va='center', ha='center', size=15, ax=ax0)
             
         
@@ -167,16 +167,16 @@ if comp:
         # Plot the passing lines for Team 1
         pass_lines1 = pitch1.lines(pass_between1['X'], pass_between1['Y'],
                                    pass_between1['X_end'], pass_between1['Y_end'],
-                                   lw=0.7 * pass_between1['pass_count'],
+                                   lw=pass_between1['pass_count'],
                                    color="white", zorder=0.7, ax=ax1)
         
         # Plot the average locations for Team 1
         pass_nodes1 = pitch1.scatter(avg_locations1['X'], avg_locations1['Y'],
-                                      s=30 * avg_locations1['count'].values,
+                                      s=50 * avg_locations1['count'].values,
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax1)
         
         for _, row in avg_locations1.iterrows():
-            pitch1.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), c='#161A30',
+            pitch1.annotate(int(row['passer_jersey_no']), xy=(row['X'], row['Y']), c='#161A30',
                     fontweight='light', va='center', ha='center', size=15, ax=ax1)
 
         
