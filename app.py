@@ -92,10 +92,10 @@ if comp:
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(f"{team_name0}")
-            st.dataframe(startingXI0)
+            st.dataframe(startingXI0,width=100)
         with col2:
             st.subheader(f"{team_name1}")
-            st.dataframe(startingXI1)
+            st.dataframe(startingXI1,width=100)
         
         # Pass data
         pass_df0 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name0)]
