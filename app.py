@@ -184,24 +184,7 @@ if comp:
         # Display the plots
         st.pyplot(fig0)
         st.pyplot(fig1)
-        #Pass Table
-        completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()].id.count()
-        completed_pass_count1 = pass_df1[pass_df1['pass_outcome'].isnull()].id.count()
-        pass_table.loc['Completed Pass', team_name0] = completed_pass_count0
-        pass_table.loc['Completed Pass', team_name1] = completed_pass_count1
-        pass_type_counts0 = pass_df0['pass_type'].value_counts()
-        for pass_type, count in pass_type_counts0.items():
-            pass_table.loc[pass_type, team_name0] = count
-        pass_type_counts1 = pass_df1['pass_type'].value_counts()
-        for pass_type, count in pass_type_counts1.items():
-            pass_table.loc[pass_type, team_name1] = count
-        pass_outcome_counts0 = pass_df0['pass_outcome'].value_counts()
-        pass_outcome_counts1 = pass_df1['pass_outcome'].value_counts()
-        for outcome, count in pass_outcome_counts0.items():
-            pass_table.loc[outcome, team_name0] = count
-        for outcome, count in pass_outcome_counts1.items():
-            pass_table.loc[outcome, team_name1] = count
-        pass_table = pass_table.fillna(0)
+       
         
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         fig, ax = pitch.draw(figsize=(16, 11), constrained_layout=True, tight_layout=False)
@@ -280,7 +263,24 @@ if comp:
         
         st.markdown("**Note:** Mapping only includes completed passes.")
  
-        
+         #Pass Table
+        completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()].id.count()
+        completed_pass_count1 = pass_df1[pass_df1['pass_outcome'].isnull()].id.count()
+        pass_table.loc['Completed Pass', team_name0] = completed_pass_count0
+        pass_table.loc['Completed Pass', team_name1] = completed_pass_count1
+        pass_type_counts0 = pass_df0['pass_type'].value_counts()
+        for pass_type, count in pass_type_counts0.items():
+            pass_table.loc[pass_type, team_name0] = count
+        pass_type_counts1 = pass_df1['pass_type'].value_counts()
+        for pass_type, count in pass_type_counts1.items():
+            pass_table.loc[pass_type, team_name1] = count
+        pass_outcome_counts0 = pass_df0['pass_outcome'].value_counts()
+        pass_outcome_counts1 = pass_df1['pass_outcome'].value_counts()
+        for outcome, count in pass_outcome_counts0.items():
+            pass_table.loc[outcome, team_name0] = count
+        for outcome, count in pass_outcome_counts1.items():
+            pass_table.loc[outcome, team_name1] = count
+        pass_table = pass_table.fillna(0)
         
         
         pass_table=pass_table.reset_index().rename(columns={'index':'Paticular'})
