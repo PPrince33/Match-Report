@@ -1,8 +1,3 @@
-Here's the full corrected code for your Streamlit application that generates a match report, including visualizations of passing networks and pass analysis. I've made adjustments based on the error message you encountered (the `KeyError`) and other potential issues I spotted in the code. 
-
-Make sure to adjust the columns used in the plotting logic based on your DataFrame structure. Here’s the complete code:
-
-```python
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,7 +69,7 @@ if comp:
         successful1 = completed_passes_team1[completed_passes_team1['minute'] < firstsub1]
 
         # Add jersey numbers
-        successful0 = pd.merge(successful0, lineup_data0, on='player_id', how='left')
+        successful0 = pd.merge(successful0, lineup_data0, on='player_id', how='left)
         successful1 = pd.merge(successful1, lineup_data1, on='player_id', how='left')
 
         successful0.rename(columns={'player_name': 'passer_name', 'jersey_number': 'passer_jersey_no'}, inplace=True)
@@ -140,4 +135,12 @@ if comp:
 
         # Pass Table
         pass_table = pd.DataFrame(columns=[team_name0, team_name1])
-        completed_pass_count0 = pass_df0[pass_df0['pass_outcome
+        completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()]['passer_jersey_no'].value_counts()
+        completed_pass_count1 = pass_df1[pass_df1['pass_outcome'].isnull()]['passer_jersey_no'].value_counts()
+        pass_table[team_name0] = completed_pass_count0
+        pass_table[team_name1] = completed_pass_count1
+        st.header("Completed Passes Table")
+        st.dataframe(pass_table)
+
+        # Clean up
+        st.balloons()
