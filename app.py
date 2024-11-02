@@ -25,7 +25,7 @@ if comp:
         event_df=sb.events(match_id=int(match_id))
         event_df[['X', 'Y']] = event_df['location'].apply(pd.Series)
         event_df[['endX', 'endY']] = event_df['pass_end_location'].apply(pd.Series)        
-        event_df['Part_of_pitch']=np.where(event_df['X']>=80,'Attacking-3rd',np.where(event_df['X']<=40,'Defensive-3rd','Mid-field'))
+        event_df['Part_of_pitch']=np.where((event_df['X']>=80) & (event_df['endX']>=80) ,'Attacking-3rd',np.where((event_df['X']<=40) & (event_df['endX']<=40) ,'Defensive-3rd','Mid-field'))
         
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         fig, ax = pitch.draw(figsize=(16, 11), constrained_layout=True, tight_layout=False)
