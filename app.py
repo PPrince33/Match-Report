@@ -188,7 +188,7 @@ if comp:
         
         # Plot the average locations for Team 0
         pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
-                                      s=50 * avg_locations0['count'].values,
+                                      s=30 * avg_locations0['count'].values,
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax0)
         
         # Annotate the plot for Team 0
@@ -214,7 +214,7 @@ if comp:
         
         # Plot the average locations for Team 1
         pass_nodes1 = pitch1.scatter(avg_locations1['X'], avg_locations1['Y'],
-                                      s=50 * avg_locations1['count'].values,
+                                      s=30 * avg_locations1['count'].values,
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax1)
         
         for _, row in avg_locations1.iterrows():
