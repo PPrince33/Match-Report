@@ -183,7 +183,7 @@ if comp:
         # Plot the passing lines for Team 0
         pass_lines0 = pitch0.lines(pass_between0['X'], pass_between0['Y'],
                                    pass_between0['X_end'], pass_between0['Y_end'],
-                                   lw= pass_between0['pass_count'],
+                                   lw= 2*pass_between0['pass_count'],
                                    color="white", zorder=0.7, ax=ax0)
         
         # Plot the average locations for Team 0
