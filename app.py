@@ -40,11 +40,11 @@ if comp:
         team_name0 = event_df.at[0, 'team']    
         team_name1 = event_df.at[1, 'team']
         lineup_data0=sb.lineups(match_id=int(match_id))[team_name0]
-        lineup_data0=lineup_data0[['player_nickname','player_id','jersey_number']]
+        lineup_data0=lineup_data0[['player_name','player_id','jersey_number']]
         jersey_data0=lineup_data0.copy()
         
         lineup_data1=sb.lineups(match_id=int(match_id))[team_name1]
-        lineup_data1=lineup_data1[['player_nickname','player_id','jersey_number']]
+        lineup_data1=lineup_data1[['player_name','player_id','jersey_number']]
         jersey_data1=lineup_data1.copy()
 
         
