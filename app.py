@@ -6,41 +6,53 @@ import streamlit as st
 from statsbombpy import sb
 from mplsoccer import Pitch
 
-# Fetch competitions data
+# Load competitions data
 comp_df = sb.competitions()
 comp_df['Tournament'] = comp_df.competition_name + ' ' + comp_df.season_name
 comp_list = comp_df.Tournament.unique().tolist()
 
-# Streamlit title and competition selection
+# Streamlit title
 st.title("Match Report by Precious")
 comp = st.selectbox("Select Competition:", comp_list)
 
 if comp:
+    # Get competition and season IDs
     c_id = comp_df.loc[comp_df['Tournament'] == comp, 'competition_id'].values[0]
     s_id = comp_df.loc[comp_df['Tournament'] == comp, 'season_id'].values[0]
     matches_df = sb.matches(competition_id=c_id, season_id=s_id)
+    
+    # Create match labels
     matches_df['Match'] = matches_df['home_team'] + '(' + matches_df['home_score'].astype(str) + ')' + ' vs ' + matches_df['away_team'] + '(' + matches_df['away_score'].astype(str) + ')'
     match_list = matches_df.Match.unique().tolist()
     match = st.selectbox("Select Match:", match_list)
-    
+
     if match:
         match_id = matches_df.loc[matches_df['Match'] == match, 'match_id'].values[0]
         event_df = sb.events(match_id=int(match_id))
+        
+        # Process event data
         event_df[['X', 'Y']] = event_df['location'].apply(pd.Series)
-        event_df[['endX', 'endY']] = event_df['pass_end_location'].apply(pd.Series)        
-        event_df['Part_of_pitch'] = np.where((event_df['X'] >= 80) & (event_df['endX'] >= 80), 'Attacking-3rd',
+        event_df[['endX', 'endY']] = event_df['pass_end_location'].apply(pd.Series)
+        event_df['Part_of_pitch'] = np.where((event_df['X'] >= 80) & (event_df['endX'] >= 80), 'Attacking-3rd', 
                                               np.where((event_df['X'] <= 40) & (event_df['endX'] <= 40), 'Defensive-3rd', 'Mid-field'))
         
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         fig, ax = pitch.draw(figsize=(16, 11), constrained_layout=True, tight_layout=False)
         fig.set_facecolor("black")
-
-        st.header("Lineup")
+        
+        st.header("Starting XI")
         team_name0 = event_df.at[0, 'team']    
         team_name1 = event_df.at[1, 'team']
-        lineup_data0 = sb.lineups(match_id=int(match_id))[team_name0][['player_name', 'player_id', 'jersey_number']]
-        lineup_data1 = sb.lineups(match_id=int(match_id))[team_name1][['player_name', 'player_id', 'jersey_number']]
         
+        # Load lineups
+        lineup_data0 = sb.lineups(match_id=int(match_id))[team_name0]
+        lineup_data0 = lineup_data0[['player_name', 'player_id', 'jersey_number']]
+        jersey_data0 = lineup_data0.copy()
+        
+        lineup_data1 = sb.lineups(match_id=int(match_id))[team_name1]
+        lineup_data1 = lineup_data1[['player_name', 'player_id', 'jersey_number']]
+        jersey_data1 = lineup_data1.copy()
+
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(f"{team_name0}")
@@ -48,99 +60,127 @@ if comp:
         with col2:
             st.subheader(f"{team_name1}")
             st.dataframe(lineup_data1)
-
-        # Pass analysis
+        
+        # Pass data
         pass_df0 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name0)]
         pass_df1 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name1)]
-
-        # Completed passes for both teams
+        
+        # Filter completed passes where 'pass_outcome' is null
         completed_passes_team0 = pass_df0[pass_df0['pass_outcome'].isnull()]
         completed_passes_team1 = pass_df1[pass_df1['pass_outcome'].isnull()]
         
+        # Merge successful passes with lineup data
+        successful0 = pd.merge(completed_passes_team0, jersey_data0, on='player_id', how='left')
+        successful1 = pd.merge(completed_passes_team1, jersey_data1, on='player_id', how='left')
+
         # First Substitution
         subs0 = event_df[(event_df['type'] == 'Substitution') & (event_df['team'] == team_name0)]
-        firstsub0 = subs0['minute'].min() if not subs0.empty else np.inf
-
+        sub_players0 = subs0[['minute', 'player', 'player_id']]
+        sub_players0 = pd.merge(sub_players0, jersey_data0, on='player_id', how='left')
+        sub_players0 = sub_players0[['minute', 'player', 'jersey_number']]
+        st.subheader(f"{team_name0} Substitutions")
+        st.dataframe(sub_players0)
+        firstsub0 = sub_players0[sub_players0['minute'].notnull()]['minute'].min() if not sub_players0.empty else None
+        
         subs1 = event_df[(event_df['type'] == 'Substitution') & (event_df['team'] == team_name1)]
-        firstsub1 = subs1['minute'].min() if not subs1.empty else np.inf
+        sub_players1 = subs1[['minute', 'player', 'player_id']]
+        sub_players1 = pd.merge(sub_players1, jersey_data1, on='player_id', how='left')
+        sub_players1 = sub_players1[['minute', 'player', 'jersey_number']]
+        st.subheader(f"{team_name1} Substitutions")
+        st.dataframe(sub_players1)
+        firstsub1 = sub_players1[sub_players1['minute'].notnull()]['minute'].min() if not sub_players1.empty else None
+        
+        # Pass Network Before First Substitution
+        if firstsub0 is not None:
+            successful0 = successful0[successful0['minute'] < firstsub0]
+        if firstsub1 is not None:
+            successful1 = successful1[successful1['minute'] < firstsub1]
 
-        # Filter successful passes before first substitution
-        successful0 = completed_passes_team0[completed_passes_team0['minute'] < firstsub0]
-        successful1 = completed_passes_team1[completed_passes_team1['minute'] < firstsub1]
+        successful0.rename(columns={'player_id': 'passer_id', 'player_name': 'passer_name', 'jersey_number': 'passer_jersey_no'}, inplace=True)
+        successful1.rename(columns={'player_id': 'passer_id', 'player_name': 'passer_name', 'jersey_number': 'passer_jersey_no'}, inplace=True)
+        
+        jersey_data0.rename(columns={'player_id': 'pass_recipient_id'}, inplace=True)
+        jersey_data1.rename(columns={'player_id': 'pass_recipient_id'}, inplace=True)
+        
+        successful0 = pd.merge(successful0, jersey_data0, on='pass_recipient_id')
+        successful1 = pd.merge(successful1, jersey_data1, on='pass_recipient_id')
 
-        # Add jersey numbers
-        successful0 = pd.merge(successful0, lineup_data0, on='player_id', how='left)
-        successful1 = pd.merge(successful1, lineup_data1, on='player_id', how='left')
+        successful0.rename(columns={'player_name': 'recipient_name', 'jersey_number': 'recipient_jersey_no'}, inplace=True)
+        successful1.rename(columns={'player_name': 'recipient_name', 'jersey_number': 'recipient_jersey_no'}, inplace=True)
 
-        successful0.rename(columns={'player_name': 'passer_name', 'jersey_number': 'passer_jersey_no'}, inplace=True)
-        successful1.rename(columns={'player_name': 'passer_name', 'jersey_number': 'passer_jersey_no'}, inplace=True)
+        avg_locations0 = successful0.groupby('passer_jersey_no').agg({'X': ['mean'], 'Y': ['mean', 'count']})
+        avg_locations0.columns = ['X', 'Y', 'count']
+        avg_locations0.reset_index(inplace=True)
+        
+        avg_locations1 = successful1.groupby('passer_jersey_no').agg({'X': ['mean'], 'Y': ['mean', 'count']})
+        avg_locations1.columns = ['X', 'Y', 'count']
+        avg_locations1.reset_index(inplace=True)
+        
+        # Passes Between Players for Plotting
+        pass_between0 = successful0.groupby(['passer_jersey_no', 'recipient_jersey_no']).id.count().reset_index()
+        pass_between0.rename(columns={'id': 'pass_count'}, inplace=True)
 
-        # Prepare average locations
-        avg_locations0 = successful0.groupby('passer_jersey_no').agg({'X': 'mean', 'Y': 'mean', 'minute': 'count'}).reset_index()
-        avg_locations0.rename(columns={'minute': 'count'}, inplace=True)
+        pass_between0=pd.merge(pass_between0,avg_locations0,on='passer_jersey_no')
+        avg_locations0=avg_locations0.rename_axis('recipient_jersey_no')
+        pass_between0=pd.merge(pass_between0,avg_locations0,on='recipient_jersey_no',suffixes=['','_end'])
 
-        avg_locations1 = successful1.groupby('passer_jersey_no').agg({'X': 'mean', 'Y': 'mean', 'minute': 'count'}).reset_index()
-        avg_locations1.rename(columns={'minute': 'count'}, inplace=True)
+        pass_between1 = successful1.groupby(['passer_jersey_no', 'recipient_jersey_no']).id.count().reset_index()
+        pass_between1.rename(columns={'id': 'pass_count'}, inplace=True)
+        
+        pass_between1=pd.merge(pass_between1,avg_locations1,on='passer_jersey_no')
+        avg_locations1=avg_locations1.rename_axis('recipient_jersey_no')
+        pass_between1=pd.merge(pass_between1,avg_locations1,on='recipient_jersey_no',suffixes=['','_end'])
 
-        # Passes between players for plotting
-        pass_between0 = successful0.groupby(['passer_jersey_no', 'recipient_jersey_no']).size().reset_index(name='pass_count')
-        pass_between1 = successful1.groupby(['passer_jersey_no', 'recipient_jersey_no']).size().reset_index(name='pass_count')
 
-        # Plot passing network for Team 0
+        
+        # Set up the pitch for Team 0
         pitch0 = Pitch(pitch_type='statsbomb', pitch_color='#FFDC02', line_color='black')
-        fig0, ax0 = pitch0.draw(figsize=(8, 11), constrained_layout=True)
+        fig0, ax0 = pitch0.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
         fig0.set_facecolor("black")
-
-        for _, row in pass_between0.iterrows():
-            passer = row['passer_jersey_no']
-            recipient = row['recipient_jersey_no']
-            pass_count = row['pass_count']
-            start_loc = avg_locations0[avg_locations0['passer_jersey_no'] == passer][['X', 'Y']].values[0]
-            end_loc = avg_locations0[avg_locations0['passer_jersey_no'] == recipient][['X', 'Y']].values[0]
-            pitch0.lines(start_loc[0], start_loc[1], end_loc[0], end_loc[1], lw=pass_count, color="#193375", zorder=0.7, ax=ax0)
-
-        pitch0.scatter(avg_locations0['X'], avg_locations0['Y'], s=30 * avg_locations0['count'].values, color='#19AE47', edgecolors='black', linewidth=1, ax=ax0)
-
+        
+        # Plot the passing lines for Team 0
+        pass_lines0 = pitch0.lines(pass_between0['X'], pass_between0['Y'],
+                                   pass_between0['X_end'], pass_between0['Y_end'],
+                                   lw=0.7 * pass_between0['pass_count'],
+                                   color="#193375", zorder=0.7, ax=ax0)
+        
+        # Plot the average locations for Team 0
+        pass_nodes0 = pitch0.scatter(avg_locations0['X'], avg_locations0['Y'],
+                                      s=30 * avg_locations0['count'].values,
+                                      color='#19AE47', edgecolors='black', linewidth=1, ax=ax0)
+        
+        # Annotate the plot for Team 0
         for index, row in avg_locations0.iterrows():
-            pitch0.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), color='#161A30', va='center', ha='center', size=15, ax=ax0)
-
-        ax0.set_title(f'{team_name0} Passing Network', color='white', fontsize=20)
-
-        # Plot passing network for Team 1
+            pitch0.annotate(index, xy=(row['X'], row['Y']), c='#161A30',
+                            fontweight='light', va='center', ha='center', size=15, ax=ax0)
+        
+        ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
+                       fontsize=20, fontweight='bold', pad=20)
+        
+        # Set up the pitch for Team 1 (similar process as for Team 0)
         pitch1 = Pitch(pitch_type='statsbomb', pitch_color='#FFDC02', line_color='black')
-        fig1, ax1 = pitch1.draw(figsize=(8, 11), constrained_layout=True)
+        fig1, ax1 = pitch1.draw(figsize=(8, 11), constrained_layout=True, tight_layout=False)
         fig1.set_facecolor("black")
-
-        for _, row in pass_between1.iterrows():
-            passer = row['passer_jersey_no']
-            recipient = row['recipient_jersey_no']
-            pass_count = row['pass_count']
-            start_loc = avg_locations1[avg_locations1['passer_jersey_no'] == passer][['X', 'Y']].values[0]
-            end_loc = avg_locations1[avg_locations1['passer_jersey_no'] == recipient][['X', 'Y']].values[0]
-            pitch1.lines(start_loc[0], start_loc[1], end_loc[0], end_loc[1], lw=pass_count, color="#193375", zorder=0.7, ax=ax1)
-
-        pitch1.scatter(avg_locations1['X'], avg_locations1['Y'], s=30 * avg_locations1['count'].values, color='#19AE47', edgecolors='black', linewidth=1, ax=ax1)
-
+        
+        # Plot the passing lines for Team 1
+        pass_lines1 = pitch1.lines(pass_between1['X'], pass_between1['Y'],
+                                   pass_between1['X_end'], pass_between1['Y_end'],
+                                   lw=0.7 * pass_between1['pass_count'],
+                                   color="#193375", zorder=0.7, ax=ax1)
+        
+        # Plot the average locations for Team 1
+        pass_nodes1 = pitch1.scatter(avg_locations1['X'], avg_locations1['Y'],
+                                      s=30 * avg_locations1['count'].values,
+                                      color='#19AE47', edgecolors='black', linewidth=1, ax=ax1)
+        
+        # Annotate the plot for Team 1
         for index, row in avg_locations1.iterrows():
-            pitch1.annotate(row['passer_jersey_no'], xy=(row['X'], row['Y']), color='#161A30', va='center', ha='center', size=15, ax=ax1)
+            pitch1.annotate(index, xy=(row['X'], row['Y']), c='#161A30',
+                            fontweight='light', va='center', ha='center', size=15, ax=ax1)
+        
+        ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
+                       fontsize=20, fontweight='bold', pad=20)
 
-        ax1.set_title(f'{team_name1} Passing Network', color='white', fontsize=20)
-
-        # Display plots
-        col1, col2 = st.columns(2)
-        with col1:
-            st.pyplot(fig0)
-        with col2:
-            st.pyplot(fig1)
-
-        # Pass Table
-        pass_table = pd.DataFrame(columns=[team_name0, team_name1])
-        completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()]['passer_jersey_no'].value_counts()
-        completed_pass_count1 = pass_df1[pass_df1['pass_outcome'].isnull()]['passer_jersey_no'].value_counts()
-        pass_table[team_name0] = completed_pass_count0
-        pass_table[team_name1] = completed_pass_count1
-        st.header("Completed Passes Table")
-        st.dataframe(pass_table)
-
-        # Clean up
-        st.balloons()
+        # Display the plots
+        st.pyplot(fig0)
+        st.pyplot(fig1)
