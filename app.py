@@ -150,8 +150,8 @@ if comp:
                                       color='#19AE47', edgecolors='black', linewidth=1, ax=ax0)
         
         # Annotate the plot for Team 0
-        for index, row in avg_locations0.iterrows():
-            pitch0.annotate(index, xy=(row['X'], row['Y']), c='#161A30',
+        for passer_jersey_no, row in pass_between0.iterrows():
+            pitch0.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax0)
         
         ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
@@ -174,8 +174,8 @@ if comp:
                                       color='#19AE47', edgecolors='black', linewidth=1, ax=ax1)
         
         # Annotate the plot for Team 1
-        for index, row in avg_locations1.iterrows():
-            pitch1.annotate(index, xy=(row['X'], row['Y']), c='#161A30',
+        for passer_jersey_no, row in pass_between1.iterrows():
+            pitch1.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax1)
         
         ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
