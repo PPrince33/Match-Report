@@ -373,7 +373,7 @@ if comp:
 
 
         
-        
+        st.subheader("All Passes")
         st.dataframe(pass_table)
         
         # Initialize the pitch settings
