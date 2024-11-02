@@ -316,6 +316,7 @@ if comp:
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         
         # Streamlit layout for side-by-side pitch maps
+        st.subheader("Successful Passes")
         col1, col2 = st.columns(2)
         
         # Plot for Team 1 with filters applied
@@ -344,7 +345,7 @@ if comp:
             ax.legend(loc="upper left")
             st.pyplot(fig)
         
-        st.markdown("**Note:** Mapping only includes completed passes.")
+        
  
          #Pass Table
         completed_pass_count0 = pass_df0[pass_df0['pass_outcome'].isnull()].id.count()
@@ -379,6 +380,7 @@ if comp:
         pitch = Pitch(pitch_type='statsbomb', pitch_color='black', line_color='white')
         
         # Streamlit layout for side-by-side pitch maps
+        st.subheader("Unsuccessful Passes")
         col1, col2 = st.columns(2)
 
 
