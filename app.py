@@ -428,11 +428,11 @@ if comp:
         
         with col1:
             st.subheader("Completed Pass Table")
-            st.dataframe(completed_pass_table,height = 500)
+            st.dataframe(completed_pass_table,height = 200)
         
         with col2:
             st.subheader("Incomplete Pass Table")
-            st.dataframe(incompleted_pass_table,height = 500)
+            st.dataframe(incompleted_pass_table,height = 200)
                 
                 
                 
