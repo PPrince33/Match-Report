@@ -150,10 +150,11 @@ if comp:
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax0)
         
         # Annotate the plot for Team 0
-        for passer_jersey_no, row in avg_locations0.iterrows():
-            pitch0.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
-                            fontweight='light', va='center', ha='center', size=15, ax=ax0)
-        
+        # Annotate the plot for Team 0
+        for _, row in avg_locations0.iterrows():
+            pitch1.annotate(row['jersey_number'], xy=(row['X'], row['Y']), c='#161A30',
+                            fontweight='light', va='center', ha='center', size=15, ax=ax1)
+
         ax0.set_title(f'{team_name0} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         
@@ -166,7 +167,7 @@ if comp:
         pass_lines1 = pitch1.lines(pass_between1['X'], pass_between1['Y'],
                                    pass_between1['X_end'], pass_between1['Y_end'],
                                    lw=0.7 * pass_between1['pass_count'],
-                                   color="#193375", zorder=0.7, ax=ax1)
+                                   color="white", zorder=0.7, ax=ax1)
         
         # Plot the average locations for Team 1
         pass_nodes1 = pitch1.scatter(avg_locations1['X'], avg_locations1['Y'],
@@ -174,10 +175,10 @@ if comp:
                                       color='#19AE47', edgecolors='green', linewidth=1, ax=ax1)
         
         # Annotate the plot for Team 1
-        for passer_jersey_no, row in avg_locations1.iterrows():
-            pitch1.annotate(passer_jersey_no, xy=(row['X'], row['Y']), c='#161A30',
+        for _, row in avg_locations0.iterrows():
+            pitch1.annotate(row['jersey_number'], xy=(row['X'], row['Y']), c='#161A30',
                             fontweight='light', va='center', ha='center', size=15, ax=ax1)
-        
+
         ax1.set_title(f'{team_name1} Passing Network', color='white', va='center', ha='center',
                        fontsize=20, fontweight='bold', pad=20)
         # Display the plots
