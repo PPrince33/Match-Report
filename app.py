@@ -92,10 +92,10 @@ if comp:
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(f"{team_name0}")
-            st.dataframe(startingXI0,width=1000)
+            st.dataframe(startingXI0)
         with col2:
             st.subheader(f"{team_name1}")
-            st.dataframe(startingXI1,width=1000)
+            st.dataframe(startingXI1)
         
         # Pass data
         pass_df0 = event_df[(event_df.type == 'Pass') & (event_df.team == team_name0)]
@@ -128,10 +128,10 @@ if comp:
         col1, col2 = st.columns(2)
         with col1:
             #st.subheader(f"{team_name0} Substitutions")
-            st.dataframe(sub_players0)
+            st.dataframe(sub_players0,height=300)
         with col2:
             #st.subheader(f"{team_name1} Substitutions")
-            st.dataframe(sub_players1)
+            st.dataframe(sub_players1,height=300)
         # Pass Network Before First Substitution
         if firstsub0 is not None:
             successful0 = successful0[successful0['minute'] < firstsub0]
