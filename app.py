@@ -412,13 +412,7 @@ if comp:
         # Reset index for incomplete pass table
         incompleted_pass_table = incompleted_pass_table.reset_index().rename(columns={'index': 'Particular'})
         
-        # Display the completed pass table
-        st.subheader("Completed Pass Table")
-        st.dataframe(completed_pass_table)
-        
-        # Display the incomplete pass table
-        st.subheader("Incomplete Pass Table")
-        st.dataframe(incompleted_pass_table)
+
         
         
         
@@ -459,5 +453,15 @@ if comp:
                 ax.plot([row['X'], row['endX']], [row['Y'], row['endY']], color='white', linestyle='--',linewidth=1)  # Line between passes
             ax.legend(loc="upper left")
             st.pyplot(fig)
+
+
+
+        # Display the completed pass table
+        st.subheader("Completed Pass Table")
+        st.dataframe(completed_pass_table)
+        
+        # Display the incomplete pass table
+        st.subheader("Incomplete Pass Table")
+        st.dataframe(incompleted_pass_table)
 
         #st.markdown(f"<div style='display: flex; justify-content: center;'>{pass_table.to_html(index=False)}</div>",unsafe_allow_html=True)
