@@ -128,10 +128,10 @@ if comp:
         col1, col2 = st.columns(2)
         with col1:
             #st.subheader(f"{team_name0} Substitutions")
-            st.dataframe(sub_players0,height=300)
+            st.dataframe(sub_players0,height=200)
         with col2:
             #st.subheader(f"{team_name1} Substitutions")
-            st.dataframe(sub_players1,height=300)
+            st.dataframe(sub_players1,height=200)
         # Pass Network Before First Substitution
         if firstsub0 is not None:
             successful0 = successful0[successful0['minute'] < firstsub0]
