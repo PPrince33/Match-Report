@@ -179,8 +179,8 @@ if comp:
         
     
         min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
-        min_passes = st.selectbox("Select Minimum Passes", min_passes_options)
-        st.write("Selected Minimum Passes:", min_passes)   
+        min_passes = st.sidebar.selectbox("Select Minimum Passes", min_passes_options)
+           
         
         
         
