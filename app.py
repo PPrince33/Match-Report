@@ -122,12 +122,38 @@ if comp:
         sub0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         sub1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
 
-
+        
 
 
         
-        col1, col2 = st.columns(2)
+        
 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        col1, col2 = st.columns(2)
         # Display the DataFrames in the columns
         with col1:
             st.subheader(f"{team_name0} XI")
