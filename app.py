@@ -88,8 +88,8 @@ if comp:
         startingXI0 = full_lineup_expanded0[full_lineup_expanded0.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         startingXI1 = full_lineup_expanded1[full_lineup_expanded1.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         
-        sub0=full_lineup_expanded0[full_lineup_expanded0.start_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
-        sub1=full_lineup_expanded1[full_lineup_expanded1.start_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
+        sub0=full_lineup_expanded0[full_lineup_expanded0.start_reason.isin(['Substitution - On (Injury)','Substitution - On (Tactical)'])].rename(columns={'player_name':'player'})
+        sub1=full_lineup_expanded1[full_lineup_expanded1.start_reason.isin(['Substitution - On (Injury)','Substitution - On (Tactical)'])].rename(columns={'player_name':'player'})
         
         
         
@@ -121,7 +121,7 @@ if comp:
         
         sub0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         sub1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
-        
+
 
 
 
