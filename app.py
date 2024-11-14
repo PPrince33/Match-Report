@@ -207,8 +207,8 @@ if comp:
             pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig00, ax00 = plt.subplots(figsize=(10, 6))
             pitch00.draw(ax=ax00)
-            min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
-            min_passes0 = st.selectbox("Select Minimum Passes", min_passes_options)
+            min_passes_options0 = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
+            min_passes0 = st.selectbox("Select Minimum Passes", min_passes_options0)
             st.write("Selected Minimum Passes:", min_passes0)
             pass_bw0_set = pass_bw0[pass_bw0['id'] >= int(min_passes0)].reset_index(drop=True)
             for i in range(pass_bw0_set.shape[0]):
@@ -270,8 +270,8 @@ if comp:
             fig11, ax11 = plt.subplots(figsize=(10, 6))
             pitch11.draw(ax=ax11)
 
-            min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
-            min_passes1 = st.selectbox("Select Minimum Passes", min_passes_options)
+            min_passes_options1 = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
+            min_passes1 = st.selectbox("Select Minimum Passes", min_passes_options1)
             st.write("Selected Minimum Passes:", min_passes1)
             pass_bw1_set = pass_bw1[pass_bw1['id'] >= int(min_passes1)].reset_index(drop=True)
            
