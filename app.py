@@ -88,8 +88,8 @@ if comp:
         startingXI0 = full_lineup_expanded0[full_lineup_expanded0.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         startingXI1 = full_lineup_expanded1[full_lineup_expanded1.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         
-        sub0=full_lineup_expanded0[full_lineup_expanded0.end_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
-        sub1=full_lineup_expanded1[full_lineup_expanded1.end_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
+        sub0=full_lineup_expanded0[full_lineup_expanded0.start_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
+        sub1=full_lineup_expanded1[full_lineup_expanded1.start_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
         
         
         
@@ -110,9 +110,21 @@ if comp:
         plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
         st.pyplot(fig) 
     
+        startingXI0=startingXI0[['player','jersey_number','position','to','card_type','time','reason']]
+        startingXI1=startingXI1[['player','jersey_number','position','to','card_type','time','reason']]
         
+        startingXI0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
+        startingXI1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         
+        sub0=sub0[['player','jersey_number','position','from','to','card_type','time','reason']]
+        sub1=sub1[['player','jersey_number','position','from','to','card_type','time','reason']]
         
+        sub0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
+        sub1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
+        
+
+
+
         
         col1, col2 = st.columns(2)
 
