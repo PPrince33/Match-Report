@@ -110,7 +110,7 @@ if comp:
 
         # Display the DataFrames in the columns
         with col1:
-            st.subheader(f"{team_name0} Starting XI")
+            st.subheader(f"{team_name0} XI")
             st.dataframe(startingXI0)
             st.subheader(f"Substitutions")
             st.dataframe(sub0)
@@ -127,7 +127,7 @@ if comp:
             plt.show()
             st.pyplot(fig0)
         with col2:
-            st.subheader(f"{team_name1} Starting XI")
+            st.subheader(f"{team_name1} XI")
             st.dataframe(startingXI1)
             st.subheader(f"Substitutions")
             st.dataframe(sub1)               
