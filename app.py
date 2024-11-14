@@ -87,7 +87,7 @@ if comp:
         sub1=full_lineup_expanded1[full_lineup_expanded1.end_reason.isin(['Substitution - Off (Injury)','Substitution - Off (Tactical)'])].rename(columns={'player_name':'player'})
         
         
-
+        
         poss0 = event_df[event_df.possession_team == team_name0]['possession_team'].count() / event_df.possession_team.count()
         poss1 = event_df[event_df.possession_team == team_name1]['possession_team'].count() / event_df.possession_team.count()
         fig, ax = plt.subplots(figsize=(18, 1))
@@ -98,7 +98,7 @@ if comp:
         ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
         plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
         
-        
+        st.pyplot(fig)
         
         
         all_avg_loc0=event_df[event_df.team==team_name0].groupby('player')[['location_x','location_y']].mean().reset_index()
