@@ -95,43 +95,7 @@ if comp:
         
         poss0 = event_df[event_df.possession_team == team_name0]['possession_team'].count() / event_df.possession_team.count()
         poss1 = event_df[event_df.possession_team == team_name1]['possession_team'].count() / event_df.possession_team.count()
-        fig, ax = plt.subplots(figsize=(18, 1))
-        ax.barh(y=0, width=poss0,color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
-        ax.barh(y=0, width=poss1, left=poss0, color='#90EE90', label=f'{team_name1} - {poss1 * 100:.1f}%')
-        ax.axis('off')
-        ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
-        ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
-        plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
         
-        st.pyplot(fig)
-        
-        
-        all_avg_loc0=event_df[event_df.team==team_name0].groupby('player')[['location_x','location_y']].mean().reset_index()
-        all_avg_loc0=pd.merge(startingXI0,all_avg_loc0,on='player',how='left')
-        all_avg_loc1=event_df[event_df.team==team_name1].groupby('player')[['location_x','location_y']].mean().reset_index()
-        all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
-        # Formation Pitch
-        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(16, 10), constrained_layout=True)
-        plt.suptitle("Formation", fontsize=14, fontweight='bold',fontname="Georgia",y=0.8)
-        # Draw pitch and plot for team 0
-        pitch0 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-        pitch0.draw(ax=ax0)
-        for i in range(all_avg_loc0.shape[0]):
-            ax0.scatter(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], color='#DEEFF5', edgecolors='black', s=800)
-            ax0.text(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], s=all_avg_loc0['jersey_number'][i],
-                     color='black', weight='bold', ha='center', va='center',fontsize=15,fontname="Georgia", zorder=2)
-        ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
-        
-        # Draw pitch and plot for team 1
-        pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-        pitch1.draw(ax=ax1)
-        for i in range(all_avg_loc1.shape[0]):
-            ax1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], color='#90EE90', edgecolors='black', s=800)
-            ax1.text(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], s=all_avg_loc1['jersey_number'][i],
-                     color='black', weight='bold', ha='center', va='center',fontsize=15,fontname="Georgia", zorder=2)
-        ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
-        
-        st.pyplot(fig)
         col1, col2 = st.columns(2)
 
         # Display the DataFrames in the columns
