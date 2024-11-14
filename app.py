@@ -111,7 +111,7 @@ if comp:
         # Display the DataFrames in the columns
         with col1:
             st.subheader(f"{team_name0} XI")
-            st.dataframe(startingXI0)
+            st.dataframe(startingXI0, height=400, width=700)
             st.subheader(f"Substitutions")
             st.dataframe(sub0)
             pitch0 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
@@ -128,7 +128,7 @@ if comp:
             st.pyplot(fig0)
         with col2:
             st.subheader(f"{team_name1} XI")
-            st.dataframe(startingXI1)
+            st.dataframe(startingXI1, height=400, width=700)
             st.subheader(f"Substitutions")
             st.dataframe(sub1)               
             pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
