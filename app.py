@@ -159,7 +159,7 @@ if comp:
             st.dataframe(sub1)               
             pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig, ax1 = plt.subplots(figsize=(10, 6))
-            pitch1.draw(ax=ax0)
+            pitch1.draw(ax=ax1)
             for i in range(all_avg_loc1.shape[0]):
                 pitch1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
                                color='#DEEFF5', edgecolors='black', s=600, ax=ax1)
