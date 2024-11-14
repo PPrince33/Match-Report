@@ -29,7 +29,7 @@ if comp:
 
     if match:
         selected_match_id = matches_df.loc[matches_df['Match'] == match, 'match_id'].values[0]
-        event_df = sb.events(match_id=int(match_id))
+        event_df = sb.events(match_id=int(selected_match_id))
         
         event_df=sb.events(match_id=selected_match_id)
         location_columns = ['shot_end_location', 'goalkeeper_end_location', 'carry_end_location', 'location', 'pass_end_location']
