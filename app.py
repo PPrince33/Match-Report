@@ -141,7 +141,7 @@ if comp:
             st.subheader(f"Substitutions")
             st.dataframe(sub0)
             pitch0 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig, ax0 = plt.subplots(figsize=(10, 6))
+            fig0, ax0 = plt.subplots(figsize=(10, 6))
             pitch0.draw(ax=ax0)
             for i in range(all_avg_loc0.shape[0]):
                 pitch0.scatter(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
@@ -151,14 +151,14 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax0)
             ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
-        
+            st.pyplot(fig0)
         with col2:
             st.subheader(f"{team_name0} Starting XI")
             st.dataframe(startingXI1)
             st.subheader(f"Substitutions")
             st.dataframe(sub1)               
             pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig, ax1 = plt.subplots(figsize=(10, 6))
+            fig1, ax1 = plt.subplots(figsize=(10, 6))
             pitch1.draw(ax=ax1)
             for i in range(all_avg_loc1.shape[0]):
                 pitch1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
@@ -168,7 +168,7 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax1)
             ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()       
-                    
+            st.pyplot(fig1)       
                     
                     
                     
