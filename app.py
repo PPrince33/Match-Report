@@ -39,7 +39,6 @@ if comp:
             event_df[f'{col}_y'] = event_df[col].apply(lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None)
             event_df[f'{col}_z'] = event_df[col].apply(lambda loc: loc[2] if isinstance(loc, (list, tuple)) and len(loc) > 2 else None)
 
-            ......................
             #Starting Lineup Data Frame
             S_lineup_df=event_df[event_df.type=='Starting XI'].dropna(how='all',axis=1).reset_index(drop=True)
             
