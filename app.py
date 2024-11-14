@@ -202,6 +202,7 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax0)
             ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
+            st.subheader(f"Average Formation or Position")
             st.pyplot(fig0)
 
             pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
@@ -221,8 +222,9 @@ if comp:
                 ax00.text(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
-            ax00.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
+            st.subheader(f"Pass Network")
             st.pyplot(fig00)
 
 
@@ -258,6 +260,7 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax1)
             ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()       
+            st.subheader(f"Average Formation or Position")
             st.pyplot(fig1)       
                     
                     
@@ -278,8 +281,9 @@ if comp:
                 ax11.text(pass_df1_avg_loc.iloc[i]['location_x'], pass_df1_avg_loc.iloc[i]['location_y'], 
                           s=pass_df1_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
-            ax11.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            ax11.set_title(f'{team_name1} - {formation1} (0 to {sub_min1} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
+            st.subheader(f"Pass Network")
             st.pyplot(fig11)        
                     
                     
