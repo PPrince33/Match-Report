@@ -162,7 +162,7 @@ if comp:
             pitch1.draw(ax=ax1)
             for i in range(all_avg_loc1.shape[0]):
                 pitch1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
-                               color='#DEEFF5', edgecolors='black', s=600, ax=ax1)
+                               color='#90EE90', edgecolors='black', s=600, ax=ax1)
                 pitch1.text(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
                             s=all_avg_loc1['jersey_number'][i], color='black', weight='bold', 
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax1)
