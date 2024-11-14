@@ -112,7 +112,7 @@ if comp:
         all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
         # Formation Pitch
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(16, 10), constrained_layout=True)
-        
+        plt.suptitle("Formation", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
         # Draw pitch and plot for team 0
         pitch0 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
         pitch0.draw(ax=ax0)
