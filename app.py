@@ -93,8 +93,8 @@ if comp:
         
         
         
-        poss0 = event_df[(event_df.team==team_name0)&(event_df.possession_team==team_name0)]['possession_team'].count() / event_df.possession_team.count()
-        poss1 = event_df[(event_df.team==team_name1)&(event_df.possession_team==team_name1)]['possession_team'].count() / event_df.possession_team.count()
+        poss0 = event_df[(event_df.possession_team==team_name0)]['possession_team'].count() / event_df.possession_team.count()
+        poss1 = event_df[(event_df.possession_team==team_name1)]['possession_team'].count() / event_df.possession_team.count()
         
         
         all_avg_loc0=event_df[(event_df.team==team_name0)&(event_df.possession_team==team_name0)].groupby('player')[['location_x','location_y']].mean().reset_index()
