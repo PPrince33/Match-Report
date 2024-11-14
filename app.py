@@ -132,7 +132,7 @@ if comp:
         ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
         
         st.pyplot(fig)
-        ol1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
 
         # Display the DataFrames in the columns
         with col1:
