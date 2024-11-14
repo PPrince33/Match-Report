@@ -123,6 +123,35 @@ if comp:
         sub1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
 
         
+        sub_min=event_df[event_df.type=='Substitution'][['team','player','minute']].groupby('team')['minute'].min().reset_index()
+        sub_min0=int(sub_min[sub_min.team==team_name0]['minute'])
+        sub_min1=int(sub_min[sub_min.team==team_name1]['minute'])
+        
+        
+        pass_df0_net=event_df[(event_df.type=='Pass')&(event_df.team==team_name0)&(event_df.pass_outcome.isnull())&(event_df.minute<=sub_min0)].dropna(axis=1,how='all')
+        pass_df1_net=event_df[(event_df.type=='Pass')&(event_df.team==team_name1)&(event_df.pass_outcome.isnull())&(event_df.minute<=sub_min1)].dropna(axis=1,how='all')
+        
+        pass_df0_avg_loc=pass_df0_net.groupby('player')[['location_x','location_y']].mean().reset_index()
+        pass_df1_avg_loc=pass_df1_net.groupby('player')[['location_x','location_y']].mean().reset_index()
+        
+        pass_bw0=pass_df0_net.groupby(['player','pass_recipient'])['id'].count().reset_index()
+        pass_bw1=pass_df1_net.groupby(['player','pass_recipient'])['id'].count().reset_index()
+        
+        pass_bw0=pd.merge(pass_bw0,pass_df0_avg_loc,on='player')
+        pass_bw1=pd.merge(pass_bw1,pass_df1_avg_loc,on='player')
+        
+        pass_recipient_df0_avg_loc=pass_df0_avg_loc.rename(columns={'player':'pass_recipient','location_x':'end_x','location_y':'end_y'})
+        pass_recipient_df1_avg_loc=pass_df1_avg_loc.rename(columns={'player':'pass_recipient','location_x':'end_x','location_y':'end_y'})
+        
+        pass_bw0=pd.merge(pass_bw0,pass_recipient_df0_avg_loc,on='pass_recipient')
+        pass_bw1=pd.merge(pass_bw1,pass_recipient_df1_avg_loc,on='pass_recipient')
+        
+        pass_df0_avg_loc.rename(columns={'player':'Player'},inplace=True)
+        pass_df1_avg_loc.rename(columns={'player':'Player'},inplace=True)
+        
+        pass_df0_avg_loc=pd.merge(startingXI0[['Player','Jersey No.']],pass_df0_avg_loc,on='Player')
+        pass_df1_avg_loc=pd.merge(startingXI1[['Player','Jersey No.']],pass_df1_avg_loc,on='Player')
+        
 
 
         
@@ -152,7 +181,9 @@ if comp:
         
         
         
-        
+        min_passes_options = [1, 2, 3, 4, 5]
+        min_passes = st.sidebar.selectbox("Select Minimum Passes", min_passes_options)
+        st.write("Selected Minimum Passes:", min_passes)
         col1, col2 = st.columns(2)
         # Display the DataFrames in the columns
         with col1:
@@ -172,6 +203,45 @@ if comp:
             ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
             st.pyplot(fig0)
+
+            pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig00, ax00 = plt.subplots(figsize=(10, 6))
+            pitch00.draw(ax=ax00)
+            pass_bw0_set = pass_bw0[pass_bw0['id'] >= int(min_passes)].reset_index(drop=True)
+            for i in range(pass_bw0_set.shape[0]):
+                start_x = pass_bw0_set.iloc[i]['location_x']
+                start_y = pass_bw0_set.iloc[i]['location_y']
+                end_x = pass_bw0_set.iloc[i]['end_x']
+                end_y = pass_bw0_set.iloc[i]['end_y']
+                size = pass_bw0_set.iloc[i]['id']  # Adjust multiplier if lines are too thick/thin
+                pitch00.lines(start_x, start_y, end_x, end_y, ax=ax00, color="black", lw=size, zorder=1)
+            for i in range(pass_df0_avg_loc.shape[0]):
+                ax00.scatter(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
+                             color='#DEEFF5', edgecolors='black', s=600, linewidths=2)
+                ax00.text(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
+                          s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
+                          ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
+            ax00.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            plt.show()
+            st.pyplot(fig00)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
         with col2:
             st.subheader(f"{team_name1} XI")
             st.dataframe(startingXI1, height=400, width=700)
@@ -191,7 +261,26 @@ if comp:
             st.pyplot(fig1)       
                     
                     
-                    
+            pitch11 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig11, ax11 = plt.subplots(figsize=(10, 6))
+            pitch11.draw(ax=ax11)
+            pass_bw1_set = pass_bw1[pass_bw1['id'] >= int(min_passes)].reset_index(drop=True)
+            for i in range(pass_bw1_set.shape[0]):
+                start_x = pass_bw1_set.iloc[i]['location_x']
+                start_y = pass_bw1_set.iloc[i]['location_y']
+                end_x = pass_bw1_set.iloc[i]['end_x']
+                end_y = pass_bw1_set.iloc[i]['end_y']
+                size = pass_bw1_set.iloc[i]['id']  # Adjust multiplier if lines are too thick/thin
+                pitch11.lines(start_x, start_y, end_x, end_y, ax=ax11, color="black", lw=size, zorder=1)
+            for i in range(pass_df1_avg_loc.shape[0]):
+                ax11.scatter(pass_df1_avg_loc.iloc[i]['location_x'], pass_df1_avg_loc.iloc[i]['location_y'], 
+                             color='#90EE90', edgecolors='black', s=600, linewidths=2)
+                ax11.text(pass_df1_avg_loc.iloc[i]['location_x'], pass_df1_avg_loc.iloc[i]['location_y'], 
+                          s=pass_df1_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
+                          ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
+            ax11.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            plt.show()
+            st.pyplot(fig11)        
                     
                     
                     
