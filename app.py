@@ -93,13 +93,13 @@ if comp:
         
         
         
-        poss0 = event_df[event_df.possession_team == team_name0]['possession_team'].count() / event_df.possession_team.count()
-        poss1 = event_df[event_df.possession_team == team_name1]['possession_team'].count() / event_df.possession_team.count()
+        poss0 = event_df[(event_df.team==team_name0)&(event_df.possession_team==team_name0)]['possession_team'].count() / event_df.possession_team.count()
+        poss1 = event_df[(event_df.team==team_name1)&(event_df.possession_team==team_name1)]['possession_team'].count() / event_df.possession_team.count()
         
         
-        all_avg_loc0=event_df[event_df.team==team_name0].groupby('player')[['location_x','location_y']].mean().reset_index()
+        all_avg_loc0=event_df[(event_df.team==team_name0)&(event_df.possession_team==team_name0)].groupby('player')[['location_x','location_y']].mean().reset_index()
         all_avg_loc0=pd.merge(startingXI0,all_avg_loc0,on='player',how='left')
-        all_avg_loc1=event_df[event_df.team==team_name1].groupby('player')[['location_x','location_y']].mean().reset_index()
+        all_avg_loc1=event_df[(event_df.team==team_name1)&(event_df.possession_team==team_name1)].groupby('player')[['location_x','location_y']].mean().reset_index()
         all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
         fig, ax = plt.subplots(figsize=(18, 1))
         ax.barh(y=0, width=poss0, color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
