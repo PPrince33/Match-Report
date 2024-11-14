@@ -268,9 +268,9 @@ if comp:
             pitch11 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig11, ax11 = plt.subplots(figsize=(10, 6))
             pitch11.draw(ax=ax11)
-            min_passes0 = st.selectbox("Select Minimum Passes", min_passes_options)
-            st.write("Selected Minimum Passes:", min_passes0)
-            pass_bw1_set = pass_bw1[pass_bw1['id'] >= int(min_passes0)].reset_index(drop=True)
+            min_passes1 = st.selectbox("Select Minimum Passes", min_passes_options)
+            st.write("Selected Minimum Passes:", min_passes1)
+            pass_bw1_set = pass_bw1[pass_bw1['id'] >= int(min_passes1)].reset_index(drop=True)
             for i in range(pass_bw1_set.shape[0]):
                 start_x = pass_bw1_set.iloc[i]['location_x']
                 start_y = pass_bw1_set.iloc[i]['location_y']
