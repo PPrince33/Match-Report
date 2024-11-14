@@ -101,7 +101,15 @@ if comp:
         all_avg_loc0=pd.merge(startingXI0,all_avg_loc0,on='player',how='left')
         all_avg_loc1=event_df[event_df.team==team_name1].groupby('player')[['location_x','location_y']].mean().reset_index()
         all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
-                
+        fig, ax = plt.subplots(figsize=(18, 1))
+        ax.barh(y=0, width=poss0, color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
+        ax.barh(y=0, width=poss1, left=poss0, color='#90EE90', label=f'{team_name1} - {poss1 * 100:.1f}%')
+        ax.axis('off')
+        ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
+        ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
+        plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
+        st.pyplot(fig) 
+    
         
         
         
