@@ -152,6 +152,40 @@ if comp:
         pass_df0_avg_loc=pd.merge(startingXI0[['Player','Jersey No.']],pass_df0_avg_loc,on='Player')
         pass_df1_avg_loc=pd.merge(startingXI1[['Player','Jersey No.']],pass_df1_avg_loc,on='Player')
         
+        event_df['Pass_Result']=np.where(event_df.pass_outcome.isnull(),1,0)
+        pass_df0=event_df[(event_df.type=='Pass')&(event_df.team==team_name0)].dropna(axis=1,how='all')
+        pass_df1=event_df[(event_df.type=='Pass')&(event_df.team==team_name1)].dropna(axis=1,how='all')
+        pass_result0=pass_df0.groupby(['player','Pass_Result'])['id'].count().reset_index().rename(columns={'id':'counts'})
+        pass_result1=pass_df1.groupby(['player','Pass_Result'])['id'].count().reset_index().rename(columns={'id':'counts'})
+        pivot_pass_result0= pass_result0.pivot_table(index='player', columns='Pass_Result', values='counts', fill_value=0).reset_index()
+        pivot_pass_result1 = pass_result1.pivot_table(index='player', columns='Pass_Result', values='counts', fill_value=0).reset_index()
+        
+        
+        
+        successful_pass0_number=pass_df0[pass_df0.pass_outcome.isnull()].shape[0]
+        successful_pass1_number=pass_df1[pass_df1.pass_outcome.isnull()].shape[0]
+        successful_pass0_rate=round(pass_df0[pass_df0.pass_outcome.isnull()].shape[0]/pass_df0.shape[0]*100)
+        successful_pass1_rate=round(pass_df1[pass_df1.pass_outcome.isnull()].shape[0]/pass_df1.shape[0]*100)
+        
+        
+        
+        pass_rate_player0=pd.DataFrame(round(pass_result0[pass_result0['Pass_Result'] == 1].groupby('player')['counts'].sum()/pass_result0.groupby('player')['counts'].sum()*100,2)).reset_index()
+        pass_rate_player0=pd.merge(pivot_pass_result0,pass_rate_player0,on='player')
+        pass_rate_player0=pass_rate_player0.rename(columns={'player':'Player',0:'Unsucessful Passes',1:'Successful Passes','counts':'Pass Accuracy'})
+        pass_rate_player0.sort_values(by='Successful Passes', ascending=False, inplace=True)
+        
+        
+        pass_rate_player1=pd.DataFrame(round(pass_result1[pass_result1['Pass_Result'] == 1].groupby('player')['counts'].sum()/pass_result1.groupby('player')['counts'].sum()*100,2)).reset_index()
+        pass_rate_player1=pd.merge(pivot_pass_result1,pass_rate_player1,on='player')
+        pass_rate_player1=pass_rate_player1.rename(columns={'player':'Player',0:'Unsucessful Passes',1:'Successful Passes','counts':'Pass Accuracy'})
+        pass_rate_player1.sort_values(by='Successful Passes', ascending=False, inplace=True)
+        
+        
+        
+        
+        
+        
+
 
 
         
@@ -220,10 +254,22 @@ if comp:
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
             ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="Blues",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax00 ,
+                    linewidths=0 
+                
+            )
+                        
+            
             plt.show()
             st.subheader(f"Pass Network")
             st.pyplot(fig00)
-
+            st.write("No. of successfull passes:", successful_pass0_number)        
+            st.write("Pass Accuracy:", successful_pass0_rate)
+            st.dataframe(pass_rate_player0)            
 
 
 
@@ -282,10 +328,26 @@ if comp:
                           s=pass_df1_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
             ax11.set_title(f'{team_name1} - {formation1} (0 to {sub_min1} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            pitch11.kdeplot(x=pass_df1.location_x,y=pass_df1.location_y,cmap="Greens",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax11 ,
+                    linewidths=0 
+                
+            )
+            
+            
+           
+            
+            
+            
+            
             plt.show()
             st.subheader(f"Pass Network")
             st.pyplot(fig11)        
-                    
-                    
+            st.write("No. of successfull passes:", successful_pass1_number)        
+            st.write("Pass Accuracy:", successful_pass1_rate)
+            st.dataframe(pass_rate_player1)
                     
                     
