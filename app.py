@@ -172,13 +172,13 @@ if comp:
         pass_rate_player0=pd.DataFrame(round(pass_result0[pass_result0['Pass_Result'] == 1].groupby('player')['counts'].sum()/pass_result0.groupby('player')['counts'].sum()*100,2)).reset_index()
         pass_rate_player0=pd.merge(pivot_pass_result0,pass_rate_player0,on='player')
         pass_rate_player0=pass_rate_player0.rename(columns={'player':'Player',0:'Unsucessful Passes',1:'Successful Passes','counts':'Pass Accuracy'})
-        pass_rate_player0.sort_values(by='Successful Passes', ascending=False, inplace=True)
+        pass_rate_player0.sort_values(by='Successful Passes', ascending=False, inplace=True).reset_index(drop=True)
         
         
         pass_rate_player1=pd.DataFrame(round(pass_result1[pass_result1['Pass_Result'] == 1].groupby('player')['counts'].sum()/pass_result1.groupby('player')['counts'].sum()*100,2)).reset_index()
         pass_rate_player1=pd.merge(pivot_pass_result1,pass_rate_player1,on='player')
         pass_rate_player1=pass_rate_player1.rename(columns={'player':'Player',0:'Unsucessful Passes',1:'Successful Passes','counts':'Pass Accuracy'})
-        pass_rate_player1.sort_values(by='Successful Passes', ascending=False, inplace=True)
+        pass_rate_player1.sort_values(by='Successful Passes', ascending=False, inplace=True).reset_index(drop=True)
         
         
         
@@ -269,6 +269,7 @@ if comp:
             st.pyplot(fig00)
             st.write("No. of successfull passes:", successful_pass0_number)        
             st.metric(label="Pass Accuracy", value=f"{successful_pass0_rate}%", delta=None)
+            st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player0)            
 
 
@@ -348,6 +349,7 @@ if comp:
             st.pyplot(fig11)        
             st.write("No. of successfull passes:", successful_pass1_number)        
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
+            st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
-                    
+                 
                     
