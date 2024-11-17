@@ -169,7 +169,7 @@ if comp:
         pass_df0_avg_loc=pd.merge(startingXI0[['Player','Jersey No.']],pass_df0_avg_loc,on='Player')
         pass_df1_avg_loc=pd.merge(startingXI1[['Player','Jersey No.']],pass_df1_avg_loc,on='Player')
         
-        event_df['Pass_Result']=np.where(event_df.pass_outcome.isnull(),1,0)
+        event_df['Pass_Result']=np.where((event_df.type=='Pass') & (event_df.pass_outcome.isnull()),1,0)
         pass_df0=event_df[(event_df.type=='Pass')&(event_df.team==team_name0)].dropna(axis=1,how='all')
         pass_df1=event_df[(event_df.type=='Pass')&(event_df.team==team_name1)].dropna(axis=1,how='all')
         pass_result0=pass_df0.groupby(['player','Pass_Result'])['id'].count().reset_index().rename(columns={'id':'counts'})
