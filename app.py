@@ -404,7 +404,12 @@ if comp:
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
             if player_pass0!= 'All':
                 pass_map_df0 = pass_map_df0[pass_map_df0['player'] == player_pass0]
-                
+                pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Blues",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax000 ,
+                    linewidths=0 )
             if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
@@ -441,14 +446,7 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax000.add_patch(arrow)
-            pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Blues",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax000 ,
-                    linewidths=0 
-                
-            )
+            
             st.pyplot(fig000)
         
         with col4:
@@ -470,7 +468,14 @@ if comp:
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
             if player_pass1!= 'All':
                 pass_map_df1 = pass_map_df1[pass_map_df1['player'] == player_pass1]
+                pitch111.kdeplot(x=pass_map_df1.location_x,y=pass_map_df1.location_y,cmap="Greens",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax111 ,
+                    linewidths=0 )
                 
+            
             if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
             elif progressive_filter1 == "No":
@@ -505,12 +510,5 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax111.add_patch(arrow1)
-                pitch111.kdeplot(x=pass_map_df1.location_x,y=pass_map_df1.location_y,cmap="Greens",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax111 ,
-                    linewidths=0 
-                
-            )
+               
             st.pyplot(fig111)
