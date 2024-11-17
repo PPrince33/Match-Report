@@ -230,11 +230,10 @@ if comp:
         
         
         
-        outcome_options = ["All", "Successful", "Incomplete", "Out", "Unknown", "Injury Clearance"]
+        outcome_options = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
         progressive_options = ["Both", "Yes", "No"]
         
-        outcome_filter = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
-        progressive_filter = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
+
 
         
     
@@ -299,8 +298,10 @@ if comp:
             st.write("No. of successfull progressive passes:", successful_progressive_pass0_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass0_rate}%", delta=None)
             st.subheader(f"Players Pass Accuracy")
-            st.dataframe(pass_rate_player0)            
-
+            st.dataframe(pass_rate_player0)   
+            st.subheader(f"Pass Mapping")
+            outcome_filter = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
+            progressive_filter = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
             pass_map_df0 = pass_df0
             if outcome_filter == "Successful":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
@@ -333,7 +334,7 @@ if comp:
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
                                arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
-            st.subheader(f"Pass Mapping")
+            
             st.pyplot(fig111)
 
 
@@ -415,6 +416,12 @@ if comp:
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
             st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
+
+
+
+            st.subheader(f"Pass Mapping")
+            outcome_filter = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
+            progressive_filter = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
             
             pass_map_df1 = pass_df1
             if outcome_filter == "Successful":
@@ -448,7 +455,7 @@ if comp:
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
                                arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
-            st.subheader(f"Pass Mapping")
+            
             st.pyplot(fig111)
 
     
