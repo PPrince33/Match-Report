@@ -439,7 +439,7 @@ if comp:
                 ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                               arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+                               arrowprops=dict(arrowstyle=">", color=color, lw=1.5))
             
             st.pyplot(fig111)
 
@@ -505,7 +505,7 @@ if comp:
                 ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                               arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+                               arrowprops=dict(arrowstyle=">", color=color, lw=1.5))
             
             st.pyplot(fig111)
 
