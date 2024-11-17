@@ -124,8 +124,17 @@ if comp:
         startingXI0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         startingXI1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         
-        sub0=sub0[['player','jersey_number','position','from','to','card_type','time','reason']]
-        sub1=sub1[['player','jersey_number','position','from','to','card_type','time','reason']]
+        if 'card_type'in sub0.columns:
+            sub0=sub0[['player','jersey_number','position','from','to','card_type','time','reason']]
+        else:
+            sub0=sub0[['player','jersey_number','position','from','to']]
+        
+        if 'card_type'in sub1.columns:
+            sub1=sub1[['player','jersey_number','position','from','to','card_type','time','reason']]
+        else:
+            sub1=sub1[['player','jersey_number','position','from','to']]
+    
+
         
         sub0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         sub1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','from':'Sub In Time','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
