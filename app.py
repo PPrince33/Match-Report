@@ -399,28 +399,21 @@ if comp:
             # Filter pass data based on the selected outcomes and progressive pass filter
             pass_map_df0 = pass_df0
 
-            pitch000 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig000, ax000 = plt.subplots(figsize=(10, 6))
-            pitch000.draw(ax=ax000)
+            
             if outcome_filter0 != "All":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
             if player_pass0!= 'All':
                 pass_map_df0 = pass_map_df0[pass_map_df0['player'] == player_pass0]
-                pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Greens",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax11 ,
-                    linewidths=0 
                 
-            )
             if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
         
             # Plotting the pass data
-
+            pitch000 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig000, ax000 = plt.subplots(figsize=(10, 6))
+            pitch000.draw(ax=ax000)
         
             for i in range(pass_map_df0.shape[0]):
                 start_x = pass_map_df0.iloc[i]['location_x']
@@ -448,7 +441,14 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax000.add_patch(arrow)
-        
+            pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Greens",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax11 ,
+                    linewidths=0 
+                
+            )
             st.pyplot(fig000)
         
         with col4:
@@ -463,29 +463,22 @@ if comp:
             
             # Filter pass data based on the selected outcomes and progressive pass filter
             # Plotting the pass data
-            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig111, ax111 = plt.subplots(figsize=(10, 6))
-            pitch111.draw(ax=ax111)
+            
             
             pass_map_df1 = pass_df1
             if outcome_filter1 != "All":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
             if player_pass1!= 'All':
                 pass_map_df1 = pass_map_df1[pass_map_df1['player'] == player_pass1]
-                pitch111.kdeplot(x=pass_map_df1.location_x,y=pass_map_df1.location_y,cmap="Greens",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax11 ,
-                    linewidths=0 
                 
-            )
             if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
             elif progressive_filter1 == "No":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 0]
         
-
+            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig111, ax111 = plt.subplots(figsize=(10, 6))
+            pitch111.draw(ax=ax111)
         
             for i in range(pass_map_df1.shape[0]):
                 start_x1 = pass_map_df1.iloc[i]['location_x']
@@ -512,5 +505,12 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax111.add_patch(arrow1)
-        
+                pitch111.kdeplot(x=pass_map_df1.location_x,y=pass_map_df1.location_y,cmap="Greens",
+                shade=True,
+                n_levels=10,
+                alpha=0.5,
+                zorder=0,ax=ax11 ,
+                    linewidths=0 
+                
+            )
             st.pyplot(fig111)
