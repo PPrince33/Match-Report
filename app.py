@@ -441,7 +441,7 @@ if comp:
                 arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
                             mutation_scale=15,  # Controls the size of the arrowhead
                             color=color, lw=1)
-                ax111.add_patch(arrow)  # Add the arrow to the plot
+                ax000.add_patch(arrow)  # Add the arrow to the plot
             
             st.pyplot(fig000)
 
