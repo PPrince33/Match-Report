@@ -387,7 +387,7 @@ if comp:
         col3, col4 = st.columns(2)
 
         with col3:
-
+            st.subheader(f"Pass Mapping")
             outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
@@ -424,14 +424,14 @@ if comp:
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
                                arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
-            st.subheader(f"Pass Mapping")
+            
             st.pyplot(fig111)
 
 
         with col4:
 
 
-            
+            st.subheader(f"Pass Mapping")
             outcome_options1 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
@@ -468,7 +468,7 @@ if comp:
                 ax111.scatter(start_x, start_y, color=color, s=10)
                 ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
                                arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
-            st.subheader(f"Pass Mapping")
+            
             st.pyplot(fig111)
 
     
