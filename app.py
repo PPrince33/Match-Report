@@ -436,10 +436,12 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-                ax000.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
-                ax000.scatter(start_x, start_y, color=color, s=10)
-                ax000.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                   arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+            
+                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
+                            mutation_scale=15,  # Controls the size of the arrowhead
+                            color=color, lw=1)
+                ax111.add_patch(arrow)  # Add the arrow to the plot
+            
             st.pyplot(fig000)
 
 
@@ -501,10 +503,11 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-                ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
-                ax111.scatter(start_x, start_y, color=color, s=10)
-                ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                   arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+                
+                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
+                            mutation_scale=15,  # Controls the size of the arrowhead
+                            color=color, lw=1)
+                ax111.add_patch(arrow)  # Add the arrow to the plot", color=color, lw=1.5))
             
             st.pyplot(fig111)
 
