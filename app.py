@@ -417,9 +417,9 @@ if comp:
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
-            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig111, ax111 = plt.subplots(figsize=(10, 6))
-            pitch111.draw(ax=ax111)
+            pitch000 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig000, ax000 = plt.subplots(figsize=(10, 6))
+            pitch000.draw(ax=ax000)
             for i in range(pass_map_df0.shape[0]):
                 start_x = pass_map_df0.iloc[i]['location_x']
                 start_y = pass_map_df0.iloc[i]['location_y']
@@ -436,12 +436,11 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-                ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
-                ax111.scatter(start_x, start_y, color=color, s=10)
-                ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                               arrowprops=dict(arrowstyle=">", color=color, lw=1.5))
-            
-            st.pyplot(fig111)
+                ax000.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
+                ax000.scatter(start_x, start_y, color=color, s=10)
+                ax000.annotate('', xy=(end_x, end_y), xytext=(end_x - 0.5, end_y),  # Slight offset for the arrow
+                   arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+            st.pyplot(fig000)
 
 
         with col4:
@@ -504,8 +503,8 @@ if comp:
                     color = "green"
                 ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
                 ax111.scatter(start_x, start_y, color=color, s=10)
-                ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                               arrowprops=dict(arrowstyle=">", color=color, lw=1.5))
+                ax111.annotate('', xy=(end_x, end_y), xytext=(end_x - 0.5, end_y),  # Slight offset for the arrow
+                   arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
             
             st.pyplot(fig111)
 
