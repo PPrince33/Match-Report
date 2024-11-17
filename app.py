@@ -395,7 +395,7 @@ if comp:
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
             progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
-            
+            player_pass0 = st.selectbox("Select Player", player_pass0)
             # Filter pass data based on the selected outcomes and progressive pass filter
             pass_map_df0 = pass_df0
             if outcome_filter0 != "All":
@@ -449,6 +449,7 @@ if comp:
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
             progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1, key="progressive_filter1")
+            player_pass1 = st.selectbox("Select Player", player_pass1)
             
             # Filter pass data based on the selected outcomes and progressive pass filter
             pass_map_df1 = pass_df1
