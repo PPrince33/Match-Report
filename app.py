@@ -420,8 +420,8 @@ if comp:
 
 
             st.subheader(f"Pass Mapping")
-            outcome_filter1 = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
-            progressive_filter1 = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
+            outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options)
+            progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options)
             
             pass_map_df1 = pass_df1
             if outcome_filter1 == "Successful":
