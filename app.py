@@ -85,6 +85,7 @@ if comp:
             full_lineup_expanded1=full_lineup_expanded1[['player_name','jersey_number','position','from',
                                                      'to','start_reason','end_reason']].reset_index(drop=True)
         ##----------------------------------------------------------|
+   
         startingXI0 = full_lineup_expanded0[full_lineup_expanded0.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         startingXI1 = full_lineup_expanded1[full_lineup_expanded1.start_reason=='Starting XI'].rename(columns={'player_name':'player'})
         
@@ -109,9 +110,16 @@ if comp:
         ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
         plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
         st.pyplot(fig) 
-    
-        startingXI0=startingXI0[['player','jersey_number','position','to','card_type','time','reason']]
-        startingXI1=startingXI1[['player','jersey_number','position','to','card_type','time','reason']]
+
+        if 'card_type'in startingXI0.columns:
+            startingXI0=startingXI0[['player','jersey_number','position','to','card_type','time','reason']]
+        else:
+             startingXI0=startingXI0[['player','jersey_number','position','to']]
+        
+        if 'card_type'in startingXI1.columns:
+            startingXI1=startingXI1[['player','jersey_number','position','to','card_type','time','reason']]
+        else:
+            startingXI1=startingXI1[['player','jersey_number','position','to']]
         
         startingXI0.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
         startingXI1.rename(columns={'player':'Player','jersey_number':'Jersey No.','position':'Position','to':'Sub Out Time','card_type':'Card','time':'Card Time','reason':'Card Reason'},inplace=True)
