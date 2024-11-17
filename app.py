@@ -441,7 +441,7 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax000.add_patch(arrow)
-            pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Greens",
+            pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Blues",
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
