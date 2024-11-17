@@ -300,16 +300,16 @@ if comp:
             st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player0)   
             st.subheader(f"Pass Mapping")
-            outcome_filter = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
-            progressive_filter = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
+            outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options)
+            progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options)
             pass_map_df0 = pass_df0
-            if outcome_filter == "Successful":
+            if outcome_filter0 == "Successful":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
-            elif outcome_filter != "All":
+            elif outcome_filter0 != "All":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter]
-            if progressive_filter == "Yes":
+            if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
-            elif progressive_filter == "No":
+            elif progressive_filter0 == "No":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
             pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig111, ax111 = plt.subplots(figsize=(10, 6))
@@ -420,17 +420,17 @@ if comp:
 
 
             st.subheader(f"Pass Mapping")
-            outcome_filter = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
-            progressive_filter = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
+            outcome_filter1 = st.sidebar.selectbox("Select Pass Outcome", outcome_options)
+            progressive_filter1 = st.sidebar.selectbox("Is Progressive Pass?", progressive_options)
             
             pass_map_df1 = pass_df1
-            if outcome_filter == "Successful":
+            if outcome_filter1 == "Successful":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'].isna()]
-            elif outcome_filter != "All":
+            elif outcome_filter1 != "All":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter]
-            if progressive_filter == "Yes":
+            if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
-            elif progressive_filter == "No":
+            elif progressive_filter1 == "No":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 0]
             pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig111, ax111 = plt.subplots(figsize=(10, 6))
