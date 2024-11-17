@@ -423,9 +423,8 @@ if comp:
             st.subheader(f"Pass Mapping")
             outcome_options1 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
-            outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1)
-            progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1)
-            
+            outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
+            progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options, key="progressive_filter1")
             pass_map_df1 = pass_df1
             if outcome_filter1 == "Successful":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'].isna()]
