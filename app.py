@@ -230,8 +230,7 @@ if comp:
         
         
         
-        outcome_options = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
-        progressive_options = ["Both", "Yes", "No"]
+
         
 
 
@@ -300,8 +299,11 @@ if comp:
             st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player0)   
             st.subheader(f"Pass Mapping")
-            outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options)
-            progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options)
+
+            outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
+            progressive_options0 = ["Both", "Yes", "No"]
+            outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
+            progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
             pass_map_df0 = pass_df0
             if outcome_filter0 == "Successful":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
@@ -420,8 +422,10 @@ if comp:
 
 
             st.subheader(f"Pass Mapping")
-            outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options)
-            progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options)
+            outcome_options1 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
+            progressive_options1 = ["Both", "Yes", "No"]
+            outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1)
+            progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1)
             
             pass_map_df1 = pass_df1
             if outcome_filter1 == "Successful":
