@@ -370,7 +370,7 @@ if comp:
             st.subheader(f"Pass Network")
             st.pyplot(fig11)        
             st.write("No. of successfull passes:", successful_pass1_number)     
-            st.write("No. of successfull passes:", successful_progressive_pass0_number)
+            st.write("No. of successfull passes:", successful_progressive_pass1_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
             st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
