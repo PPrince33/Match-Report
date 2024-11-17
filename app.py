@@ -299,45 +299,7 @@ if comp:
             st.dataframe(pass_rate_player0)   
             st.subheader(f"Pass Mapping")
 
-            outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
-            progressive_options0 = ["Both", "Yes", "No"]
-            outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
-            progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
-            pass_map_df0 = pass_df0
-            if outcome_filter0 == "Successful":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
-            elif outcome_filter0 != "All":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter]
-            if progressive_filter0 == "Yes":
-                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
-            elif progressive_filter0 == "No":
-                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
-            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig111, ax111 = plt.subplots(figsize=(10, 6))
-            pitch111.draw(ax=ax111)
-            for i in range(pass_map_df0.shape[0]):
-                start_x = pass_map_df0.iloc[i]['location_x']
-                start_y = pass_map_df0.iloc[i]['location_y']
-                end_x = pass_map_df0.iloc[i]['pass_end_location_x']
-                end_y = pass_map_df0.iloc[i]['pass_end_location_y']
-                outcome = pass_map_df0.iloc[i]['pass_outcome']
-                if pd.isna(outcome):         # NaN outcome
-                    color = "black"
-                elif outcome == "Incomplete":
-                    color = "red"
-                elif outcome == "Out":
-                    color = "orange"
-                elif outcome == "Unknown":
-                    color = "blue"
-                elif outcome == "Injury Clearance":
-                    color = "green"
-                ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
-                ax111.scatter(start_x, start_y, color=color, s=10)
-                ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
-                               arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
             
-            st.pyplot(fig111)
-
 
 
 
@@ -417,6 +379,54 @@ if comp:
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
             st.subheader(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
+
+
+
+            
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
+            progressive_options0 = ["Both", "Yes", "No"]
+            outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
+            progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
+            pass_map_df0 = pass_df0
+            if outcome_filter0 == "Successful":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
+            elif outcome_filter0 != "All":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter]
+            if progressive_filter0 == "Yes":
+                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
+            elif progressive_filter0 == "No":
+                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
+            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig111, ax111 = plt.subplots(figsize=(10, 6))
+            pitch111.draw(ax=ax111)
+            for i in range(pass_map_df0.shape[0]):
+                start_x = pass_map_df0.iloc[i]['location_x']
+                start_y = pass_map_df0.iloc[i]['location_y']
+                end_x = pass_map_df0.iloc[i]['pass_end_location_x']
+                end_y = pass_map_df0.iloc[i]['pass_end_location_y']
+                outcome = pass_map_df0.iloc[i]['pass_outcome']
+                if pd.isna(outcome):         # NaN outcome
+                    color = "black"
+                elif outcome == "Incomplete":
+                    color = "red"
+                elif outcome == "Out":
+                    color = "orange"
+                elif outcome == "Unknown":
+                    color = "blue"
+                elif outcome == "Injury Clearance":
+                    color = "green"
+                ax111.plot([start_x, end_x], [start_y, end_y], color=color, lw=1)
+                ax111.scatter(start_x, start_y, color=color, s=10)
+                ax111.annotate('', xy=(end_x, end_y), xytext=(start_x, start_y),
+                               arrowprops=dict(arrowstyle="->", color=color, lw=1.5))
+            
+            st.pyplot(fig111)
+
 
 
 
