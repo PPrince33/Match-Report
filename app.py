@@ -384,9 +384,9 @@ if comp:
 
             
 
-        col1, col2 = st.columns(2)
+        col3, col4 = st.columns(2)
 
-        with col1:
+        with col3:
 
             outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
@@ -428,6 +428,7 @@ if comp:
             st.pyplot(fig111)
 
 
+        with col4:
 
 
             st.subheader(f"Pass Mapping")
