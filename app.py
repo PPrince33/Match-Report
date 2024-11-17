@@ -395,8 +395,24 @@ if comp:
             pass_map_df0 = pass_df0
             if outcome_filter0 == "Successful":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
+            elif outcome_filter0 == "Incomplete":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+            elif outcome_filter0 == "Pass Offside":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+            elif outcome_filter0 == "Out":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+
+            elif outcome_filter0 == "Unknown":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+
+            elif outcome_filter0 == "Injury Clearance":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+
             elif outcome_filter0 != "All":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+
+            
+
             if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
@@ -439,8 +455,30 @@ if comp:
             pass_map_df1 = pass_df1
             if outcome_filter1 == "Successful":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'].isna()]
+            
+
+            elif outcome_filter1 == "Incomplete":
+                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+            elif outcome_filter1 == "Pass Offside":
+                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+            elif outcome_filter1 == "Out":
+                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+
+            elif outcome_filter1 == "Unknown":
+                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+
+            elif outcome_filter1 == "Injury Clearance":
+                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+
+
             elif outcome_filter1 != "All":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
+
+
+
+
+
+            
             if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
             elif progressive_filter1 == "No":
