@@ -391,7 +391,7 @@ if comp:
             st.subheader("Pass Mapping")
             outcome_options0 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
-            
+            player_pass0=['All']+pass_df0.player.unique().tolist()
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
             progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
@@ -400,7 +400,8 @@ if comp:
             pass_map_df0 = pass_df0
             if outcome_filter0 != "All":
                 pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-            
+            if player_pass!= 'All':
+                pass_map_df0 = pass_map_df0[pass_map_df0['player'] == player_pass0]
             if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
@@ -444,7 +445,7 @@ if comp:
             st.subheader("Pass Mapping")
             outcome_options1 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
-            
+            player_pass1=['All']+pass_df1.player.unique().tolist()
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
             progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1, key="progressive_filter1")
@@ -453,7 +454,8 @@ if comp:
             pass_map_df1 = pass_df1
             if outcome_filter1 != "All":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-        
+            if player_pass!= 'All':
+                pass_map_df1 = pass_map_df0[pass_map_df1['player'] == player_pass1]
             if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
             elif progressive_filter1 == "No":
