@@ -198,9 +198,9 @@ if comp:
         pass_rate_player1=pass_rate_player1.sort_values(by=['Successful Passes','Pass Accuracy'], ascending=False).reset_index(drop=True)
         
         
-        pass_df0['progressive_pass']=np.where((pass_df0.pass_outcome.isnull()) & (pass_df0.location_x<pass_df0.pass_end_location_x),1,0)
-        pass_df1['progressive_pass']=np.where((pass_df1.pass_outcome.isnull()) & (pass_df1.location_x<pass_df1.pass_end_location_x),1,0)
-
+        pass_df0['progressive_pass']=np.where((pass_df0.location_x<pass_df0.pass_end_location_x),1,0)
+        pass_df1['progressive_pass']=np.where((pass_df1.location_x<pass_df1.pass_end_location_x),1,0)
+        
         successful_progressive_pass0_number=pass_df0[(pass_df0['progressive_pass']==1)&pass_df0.pass_outcome.isnull()].shape[0]
         successful_progressive_pass1_number=pass_df1[(pass_df1['progressive_pass']==1)&pass_df1.pass_outcome.isnull()].shape[0]
 
