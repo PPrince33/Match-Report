@@ -388,45 +388,37 @@ if comp:
         col3, col4 = st.columns(2)
 
         with col3:
-            st.subheader(f"Pass Mapping")
-            outcome_options0 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
+            st.subheader("Pass Mapping")
+            outcome_options0 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
+            
+            # Selectbox for pass outcome and progressive pass filter
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
             progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
-            pass_map_df0 = pass_df0
-            if outcome_filter0 == "Successful":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'].isna()]
-            elif outcome_filter0 == "Incomplete":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-            elif outcome_filter0 == "Pass Offside":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-            elif outcome_filter0 == "Out":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-
-            elif outcome_filter0 == "Unknown":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-
-            elif outcome_filter0 == "Injury Clearance":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-
-            elif outcome_filter0 != "All":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-
             
-
+            # Filter pass data based on the selected outcomes and progressive pass filter
+            pass_map_df0 = pass_df0
+            if outcome_filter0 != "All":
+                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
+            
             if progressive_filter0 == "Yes":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
             elif progressive_filter0 == "No":
                 pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
+        
+            # Plotting the pass data
             pitch000 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig000, ax000 = plt.subplots(figsize=(10, 6))
             pitch000.draw(ax=ax000)
+        
             for i in range(pass_map_df0.shape[0]):
                 start_x = pass_map_df0.iloc[i]['location_x']
                 start_y = pass_map_df0.iloc[i]['location_y']
                 end_x = pass_map_df0.iloc[i]['pass_end_location_x']
                 end_y = pass_map_df0.iloc[i]['pass_end_location_y']
                 outcome = pass_map_df0.iloc[i]['pass_outcome']
+        
+                # Set color based on pass outcome
                 if pd.isna(outcome):         # NaN outcome
                     color = "black"
                 elif outcome == "Incomplete":
@@ -437,63 +429,47 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-            
+        
+                # Draw arrow at the end
                 arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
-                            mutation_scale=15,  # Controls the size of the arrowhead
-                            color=color, lw=1)
-                ax000.add_patch(arrow)  # Add the arrow to the plot
-            
+                                        mutation_scale=15,  # Controls the size of the arrowhead
+                                        color=color, lw=1)
+                ax000.add_patch(arrow)
+        
             st.pyplot(fig000)
-
-
+        
         with col4:
-
-
-            st.subheader(f"Pass Mapping")
-            outcome_options1 = ["All", "Successful", "Incomplete",'Pass Offside', "Out", "Unknown", "Injury Clearance"]
+            st.subheader("Pass Mapping")
+            outcome_options1 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
+            
+            # Selectbox for pass outcome and progressive pass filter
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
             progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1, key="progressive_filter1")
+            
+            # Filter pass data based on the selected outcomes and progressive pass filter
             pass_map_df1 = pass_df1
-            if outcome_filter1 == "Successful":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'].isna()]
-            
-
-            elif outcome_filter1 == "Incomplete":
+            if outcome_filter1 != "All":
                 pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-            elif outcome_filter1 == "Pass Offside":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-            elif outcome_filter1 == "Out":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-
-            elif outcome_filter1 == "Unknown":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-
-            elif outcome_filter1 == "Injury Clearance":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-
-
-            elif outcome_filter1 != "All":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-
-
-
-
-
-            
+        
             if progressive_filter1 == "Yes":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
             elif progressive_filter1 == "No":
                 pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 0]
+        
+            # Plotting the pass data
             pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig111, ax111 = plt.subplots(figsize=(10, 6))
             pitch111.draw(ax=ax111)
+        
             for i in range(pass_map_df1.shape[0]):
                 start_x = pass_map_df1.iloc[i]['location_x']
                 start_y = pass_map_df1.iloc[i]['location_y']
                 end_x = pass_map_df1.iloc[i]['pass_end_location_x']
                 end_y = pass_map_df1.iloc[i]['pass_end_location_y']
                 outcome = pass_map_df1.iloc[i]['pass_outcome']
+        
+                # Set color based on pass outcome
                 if pd.isna(outcome):         # NaN outcome
                     color = "black"
                 elif outcome == "Incomplete":
@@ -504,13 +480,11 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-                
+        
+                # Draw arrow at the end
                 arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
-                            mutation_scale=15,  # Controls the size of the arrowhead
-                            color=color, lw=1)
-                ax111.add_patch(arrow)  # Add the arrow to the plot", color=color, lw=1.5))
-            
+                                        mutation_scale=15,  # Controls the size of the arrowhead
+                                        color=color, lw=1)
+                ax111.add_patch(arrow)
+        
             st.pyplot(fig111)
-
-    
-                    
