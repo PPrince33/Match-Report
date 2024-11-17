@@ -429,6 +429,8 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
+                elif outcome == "Pass Offside":
+                    color = "purple" #["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
         
                 # Draw arrow at the end
                 arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
@@ -480,7 +482,8 @@ if comp:
                     color = "blue"
                 elif outcome == "Injury Clearance":
                     color = "green"
-        
+                elif outcome == "Pass Offside":
+                    color = "purple"
                 # Draw arrow at the end
                 arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
                                         mutation_scale=15,  # Controls the size of the arrowhead
