@@ -445,7 +445,7 @@ if comp:
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
-                zorder=0,ax=ax11 ,
+                zorder=0,ax=ax000 ,
                     linewidths=0 
                 
             )
@@ -509,7 +509,7 @@ if comp:
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
-                zorder=0,ax=ax11 ,
+                zorder=0,ax=ax111 ,
                     linewidths=0 
                 
             )
