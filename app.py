@@ -465,29 +465,29 @@ if comp:
             pitch111.draw(ax=ax111)
         
             for i in range(pass_map_df1.shape[0]):
-                start_x = pass_map_df1.iloc[i]['location_x']
-                start_y = pass_map_df1.iloc[i]['location_y']
-                end_x = pass_map_df1.iloc[i]['pass_end_location_x']
-                end_y = pass_map_df1.iloc[i]['pass_end_location_y']
-                outcome = pass_map_df1.iloc[i]['pass_outcome']
+                start_x1 = pass_map_df1.iloc[i]['location_x']
+                start_y1 = pass_map_df1.iloc[i]['location_y']
+                end_x1 = pass_map_df1.iloc[i]['pass_end_location_x']
+                end_y1 = pass_map_df1.iloc[i]['pass_end_location_y']
+                outcome1 = pass_map_df1.iloc[i]['pass_outcome']
         
                 # Set color based on pass outcome
-                if pd.isna(outcome):         # NaN outcome
+                if pd.isna(outcome1):         # NaN outcome
                     color = "black"
-                elif outcome == "Incomplete":
+                elif outcome1 == "Incomplete":
                     color = "red"
-                elif outcome == "Out":
+                elif outcome1 == "Out":
                     color = "orange"
-                elif outcome == "Unknown":
+                elif outcome1 == "Unknown":
                     color = "blue"
-                elif outcome == "Injury Clearance":
+                elif outcome1 == "Injury Clearance":
                     color = "green"
-                elif outcome == "Pass Offside":
+                elif outcome1 == "Pass Offside":
                     color = "purple"
                 # Draw arrow at the end
-                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
+                arrow1 = FancyArrowPatch((start_x1, start_y1), (end_x1, end_y1),
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1)
-                ax111.add_patch(arrow)
+                ax111.add_patch(arrow1)
         
             st.pyplot(fig111)
