@@ -448,12 +448,12 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax000.add_patch(arrow)
-            pitch000.kdeplot(x=pass_map_df0.location_x,y=pass_map_df0.location_y,cmap="Blues",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax000 ,
-                    linewidths=0 )
+                pitch000.kdeplot(end_x,end_y,cmap="Blues",
+                            shade=True,
+                            n_levels=10,
+                            alpha=0.5,
+                            zorder=0,ax=ax000 ,
+                                linewidths=0 )
             st.pyplot(fig000)
         
         with col4:
@@ -513,7 +513,7 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax111.add_patch(arrow1)
-            pitch111.kdeplot(x=pass_map_df1.location_x,y=pass_map_df1.location_y,cmap="Greens",
+                pitch111.kdeplot(end_x1,end_y1.location_y,cmap="Greens",
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
