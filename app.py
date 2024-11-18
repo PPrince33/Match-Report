@@ -395,7 +395,7 @@ if comp:
             outcome_options0 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
             player_pass0=['All']+pass_df0.player.unique().tolist()
-            pass_type_list0=['All']+pass_df0.pass_type.unique.tolist()
+            pass_type_list0=['All']+pass_df0.pass_type.unique().tolist()
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
             progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
@@ -460,7 +460,7 @@ if comp:
             st.subheader("Pass Mapping")
             outcome_options1 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
-            pass_type_list1=['All']+pass_df1.pass_type.unique.tolist()
+            pass_type_list1=['All']+pass_df1.pass_type.unique().tolist()
             player_pass1=['All']+pass_df1.player.unique().tolist()
             # Selectbox for pass outcome and progressive pass filter
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
