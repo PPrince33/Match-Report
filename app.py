@@ -388,135 +388,85 @@ if comp:
 
             
 
-        col3, col4 = st.columns(2)
 
+        
+        # Define colors for pass outcomes
+        outcome_colors = {
+            "Incomplete": "red",
+            "Out": "orange",
+            "Unknown": "blue",
+            "Injury Clearance": "green",
+            "Pass Offside": "purple",
+            "Successful": "black"
+        }
+        
+        def plot_pass_map(pass_df, outcome_filter, progressive_filter, player_filter, pass_type_filter, kde_color):
+            # Filter data based on user input
+            filtered_df = pass_df
+            if outcome_filter != "All":
+                filtered_df = filtered_df[filtered_df['pass_outcome'] == outcome_filter]
+            if player_filter != "All":
+                filtered_df = filtered_df[filtered_df['player'] == player_filter]
+            if pass_type_filter != "All":
+                filtered_df = filtered_df[filtered_df['pass_type'] == pass_type_filter]
+            if progressive_filter == "Yes":
+                filtered_df = filtered_df[filtered_df['progressive_pass'] == 1]
+            elif progressive_filter == "No":
+                filtered_df = filtered_df[filtered_df['progressive_pass'] == 0]
+        
+            # Plotting
+            pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig, ax = plt.subplots(figsize=(10, 6))
+            pitch.draw(ax=ax)
+            
+            for _, row in filtered_df.iterrows():
+                start_x, start_y = row['location_x'], row['location_y']
+                end_x, end_y = row['pass_end_location_x'], row['pass_end_location_y']
+                outcome = row['pass_outcome']
+                color = outcome_colors.get(outcome, "black")  # default to black for NaN or 'Successful'
+                
+                # Draw pass arrow
+                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y), mutation_scale=15, color=color, lw=1, zorder=1)
+                ax.add_patch(arrow)
+        
+            # KDE Plot
+            pitch.kdeplot(
+                filtered_df['pass_end_location_x'], filtered_df['pass_end_location_y'], 
+                cmap=kde_color, shade=True, n_levels=10, alpha=0.5, zorder=0, ax=ax, linewidths=0
+            )
+            return fig
+        
+        # Streamlit layout
+        col3, col4 = st.columns(2)
+        
+        # Column 3 for pass_df0
         with col3:
-            st.subheader("Pass Mapping")
+            st.subheader("Pass Mapping - DataFrame 0")
             outcome_options0 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
-            player_pass0=['All']+pass_df0.player.unique().tolist()
-            pass_type_list0=['All']+pass_df0.pass_type.unique().tolist()
-            # Selectbox for pass outcome and progressive pass filter
+            player_pass0 = ['All'] + pass_df0['player'].unique().tolist()
+            pass_type_list0 = ['All'] + pass_df0['pass_type'].unique().tolist()
+            
             outcome_filter0 = st.selectbox("Select Pass Outcome", outcome_options0)
             progressive_filter0 = st.selectbox("Is Progressive Pass?", progressive_options0)
-            type_pass0=st.selectbox("Select the Pass Type",pass_type_list0)
             player_pass0 = st.selectbox("Select Player", player_pass0)
+            type_pass0 = st.selectbox("Select Pass Type", pass_type_list0)
             
-            # Filter pass data based on the selected outcomes and progressive pass filter
-            pass_map_df0 = pass_df0
-
-            
-            if outcome_filter0 != "All":
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_outcome'] == outcome_filter0]
-            if player_pass0!= 'All':
-                pass_map_df0 = pass_map_df0[pass_map_df0['player'] == player_pass0]
-            if type_pass0!= 'All':
-                pass_map_df0 = pass_map_df0[pass_map_df0['pass_type'] == type_pass0]   
-            if progressive_filter0 == "Yes":
-                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 1]
-            elif progressive_filter0 == "No":
-                pass_map_df0 = pass_map_df0[pass_map_df0['progressive_pass'] == 0]
+            fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="Blues")
+            st.pyplot(fig0)
         
-            # Plotting the pass data
-            pitch000 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig000, ax000 = plt.subplots(figsize=(10, 6))
-            pitch000.draw(ax=ax000)
-        
-            for i in range(pass_map_df0.shape[0]):
-                start_x = pass_map_df0.iloc[i]['location_x']
-                start_y = pass_map_df0.iloc[i]['location_y']
-                end_x = pass_map_df0.iloc[i]['pass_end_location_x']
-                end_y = pass_map_df0.iloc[i]['pass_end_location_y']
-                outcome = pass_map_df0.iloc[i]['pass_outcome']
-        
-                # Set color based on pass outcome
-                if pd.isna(outcome):         # NaN outcome
-                    color = "black"
-                elif outcome == "Incomplete":
-                    color = "red"
-                elif outcome == "Out":
-                    color = "orange"
-                elif outcome == "Unknown":
-                    color = "blue"
-                elif outcome == "Injury Clearance":
-                    color = "green"
-                elif outcome == "Pass Offside":
-                    color = "purple" #["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
-        
-                # Draw arrow at the end
-                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y),
-                                        mutation_scale=15,  # Controls the size of the arrowhead
-                                        color=color, lw=1,zorder=1)
-                ax000.add_patch(arrow)
-                pitch000.kdeplot(end_x,end_y,cmap="Blues",
-                            shade=True,
-                            n_levels=10,
-                            alpha=0.5,
-                            zorder=0,ax=ax000 ,
-                                linewidths=0 )
-            st.pyplot(fig000)
-        
+        # Column 4 for pass_df1
         with col4:
-            st.subheader("Pass Mapping")
+            st.subheader("Pass Mapping - DataFrame 1")
             outcome_options1 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
-            pass_type_list1=['All']+pass_df1.pass_type.unique().tolist()
-            player_pass1=['All']+pass_df1.player.unique().tolist()
-            # Selectbox for pass outcome and progressive pass filter
+            player_pass1 = ['All'] + pass_df1['player'].unique().tolist()
+            pass_type_list1 = ['All'] + pass_df1['pass_type'].unique().tolist()
+            
             outcome_filter1 = st.selectbox("Select Pass Outcome", outcome_options1, key="outcome_filter1")
             progressive_filter1 = st.selectbox("Is Progressive Pass?", progressive_options1, key="progressive_filter1")
-            type_pass1=st.selectbox("Select the Pass Type",pass_type_list1)            
-            player_pass1 = st.selectbox("Select Player", player_pass1)
+            player_pass1 = st.selectbox("Select Player", player_pass1, key="player_pass1")
+            type_pass1 = st.selectbox("Select Pass Type", pass_type_list1, key="type_pass1")
             
-            # Filter pass data based on the selected outcomes and progressive pass filter
-            # Plotting the pass data
-            
-            
-            pass_map_df1 = pass_df1
-            if outcome_filter1 != "All":
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_outcome'] == outcome_filter1]
-            if player_pass1!= 'All':
-                pass_map_df1 = pass_map_df1[pass_map_df1['player'] == player_pass1]
-            if type_pass1!= 'All':
-                pass_map_df1 = pass_map_df1[pass_map_df1['pass_type'] == type_pass1] 
-            if progressive_filter1 == "Yes":
-                pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 1]
-            elif progressive_filter1 == "No":
-                pass_map_df1 = pass_map_df1[pass_map_df1['progressive_pass'] == 0]
-        
-            pitch111 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig111, ax111 = plt.subplots(figsize=(10, 6))
-            pitch111.draw(ax=ax111)
-        
-            for i in range(pass_map_df1.shape[0]):
-                start_x1 = pass_map_df1.iloc[i]['location_x']
-                start_y1 = pass_map_df1.iloc[i]['location_y']
-                end_x1 = pass_map_df1.iloc[i]['pass_end_location_x']
-                end_y1 = pass_map_df1.iloc[i]['pass_end_location_y']
-                outcome1 = pass_map_df1.iloc[i]['pass_outcome']
-        
-                # Set color based on pass outcome
-                if pd.isna(outcome1):         # NaN outcome
-                    color = "black"
-                elif outcome1 == "Incomplete":
-                    color = "red"
-                elif outcome1 == "Out":
-                    color = "orange"
-                elif outcome1 == "Unknown":
-                    color = "blue"
-                elif outcome1 == "Injury Clearance":
-                    color = "green"
-                elif outcome1 == "Pass Offside":
-                    color = "purple"
-                # Draw arrow at the end
-                arrow1 = FancyArrowPatch((start_x1, start_y1), (end_x1, end_y1),
-                                        mutation_scale=15,  # Controls the size of the arrowhead
-                                        color=color, lw=1,zorder=1)
-                ax111.add_patch(arrow1)
-                pitch111.kdeplot(end_x1,end_y1,cmap="Greens",
-                shade=True,
-                n_levels=10,
-                alpha=0.5,
-                zorder=0,ax=ax111 ,
-                    linewidths=0 )   
-            st.pyplot(fig111)
+            fig1 = plot_pass_map(pass_df1, outcome_filter1, progressive_filter1, player_pass1, type_pass1, kde_color="Greens")
+            st.pyplot(fig1)
