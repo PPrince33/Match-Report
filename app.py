@@ -513,7 +513,7 @@ if comp:
                                         mutation_scale=15,  # Controls the size of the arrowhead
                                         color=color, lw=1,zorder=1)
                 ax111.add_patch(arrow1)
-                pitch111.kdeplot(end_x1,end_y1.location_y,cmap="Greens",
+                pitch111.kdeplot(end_x1,end_y1,cmap="Greens",
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
