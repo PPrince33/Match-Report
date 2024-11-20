@@ -438,9 +438,10 @@ if comp:
             return fig
         
         # Streamlit layout
-        col3, col4 = st.columns(2)
         st.markdown("<h2 style='text-align: center;'>Pass Mapping</h2>", unsafe_allow_html=True)
 
+        col3, col4 = st.columns(2)
+        
         # Column 3 for pass_df0
         with col3:
             
