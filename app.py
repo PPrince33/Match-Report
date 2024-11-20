@@ -418,7 +418,7 @@ if comp:
                 color = outcome_colors.get(outcome, "black")  # default to black for NaN or 'Successful'
                 
                 # Draw pass arrow
-                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y), mutation_scale=15, color=color, lw=1, zorder=1,label=outcome_colors)
+                arrow = FancyArrowPatch((start_x, start_y), (end_x, end_y), mutation_scale=15, color=color, lw=1, zorder=1)
                 ax.add_patch(arrow)
         
             # KDE Plot
