@@ -427,7 +427,7 @@ if comp:
                 cmap=kde_color, shade=True, n_levels=10, alpha=0.5, zorder=0, ax=ax, linewidths=0
             )
             ax.set_title(f'{team_name}:{player_filter}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
-            
+            st.write("No. of passes after filter:", filtered_df.shape[0]) 
             return fig
         
         # Streamlit layout
@@ -450,7 +450,7 @@ if comp:
             
             fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="Blues",team_name=team_name0)
             st.pyplot(fig0)
-        
+            
         # Column 4 for pass_df1
         with col4:
         
