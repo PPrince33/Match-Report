@@ -460,7 +460,7 @@ if comp:
             player_pass0 = st.selectbox("Select Player", player_pass0)
             type_pass0 = st.selectbox("Select Pass Type", pass_type_list0)
             
-            fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="Blues",team_name0)
+            fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="Blues",team_name=team_name0)
             st.pyplot(fig0)
         
         # Column 4 for pass_df1
@@ -476,5 +476,5 @@ if comp:
             player_pass1 = st.selectbox("Select Player", player_pass1, key="player_pass1")
             type_pass1 = st.selectbox("Select Pass Type", pass_type_list1, key="type_pass1")
             
-            fig1 = plot_pass_map(pass_df1, outcome_filter1, progressive_filter1, player_pass1, type_pass1, kde_color="Greens",team_name1)
+            fig1 = plot_pass_map(pass_df1, outcome_filter1, progressive_filter1, player_pass1, type_pass1, kde_color="Greens",team_name=team_name1)
             st.pyplot(fig1)
