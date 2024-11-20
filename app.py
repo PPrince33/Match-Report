@@ -254,7 +254,7 @@ if comp:
         min_passes = st.sidebar.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
         
         col1, col2 = st.columns(2)
-        st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
+        
         # Display the DataFrames in the columns
         with col1:
             
@@ -271,6 +271,26 @@ if comp:
             plt.show()
             
             st.pyplot(fig0)
+
+        with col2:
+                           
+            pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig1, ax1 = plt.subplots(figsize=(10, 6))
+            pitch1.draw(ax=ax1)
+            for i in range(all_avg_loc1.shape[0]):
+                pitch1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
+                               color='#90EE90', edgecolors='black', s=600, ax=ax1)
+                pitch1.text(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
+                            s=all_avg_loc1['jersey_number'][i], color='black', weight='bold', 
+                            ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax1)
+            ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
+            plt.show()       
+            
+            st.pyplot(fig1) 
+
+        col1, col2 = st.columns(2)
+        st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
+        with col1:
 
             pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig00, ax00 = plt.subplots(figsize=(10, 6))
@@ -296,11 +316,7 @@ if comp:
                 n_levels=10,
                 alpha=0.5,
                 zorder=0,ax=ax00 ,
-                    linewidths=0 
-                
-            )
-                        
-            
+                    linewidths=0)
             plt.show()
             
             st.pyplot(fig00)
@@ -311,39 +327,7 @@ if comp:
             st.dataframe(pass_rate_player0)   
             
 
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-        
-        with col2:
-                           
-            pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
-            fig1, ax1 = plt.subplots(figsize=(10, 6))
-            pitch1.draw(ax=ax1)
-            for i in range(all_avg_loc1.shape[0]):
-                pitch1.scatter(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
-                               color='#90EE90', edgecolors='black', s=600, ax=ax1)
-                pitch1.text(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
-                            s=all_avg_loc1['jersey_number'][i], color='black', weight='bold', 
-                            ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax1)
-            ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
-            plt.show()       
-            
-            st.pyplot(fig1)       
-                    
-                    
+        with col2:             
             pitch11 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig11, ax11 = plt.subplots(figsize=(10, 6))
             pitch11.draw(ax=ax11)
