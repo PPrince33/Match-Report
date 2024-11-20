@@ -439,10 +439,11 @@ if comp:
         
         # Streamlit layout
         col3, col4 = st.columns(2)
-        
+        st.markdown("<h2 style='text-align: center;'>Pass Mapping</h2>", unsafe_allow_html=True)
+
         # Column 3 for pass_df0
         with col3:
-            st.subheader("Pass Mapping")
+            
             outcome_options0 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options0 = ["Both", "Yes", "No"]
             player_pass0 = ['All'] + pass_df0['player'].unique().tolist()
@@ -458,7 +459,7 @@ if comp:
         
         # Column 4 for pass_df1
         with col4:
-            st.subheader("Pass Mapping")
+        
             outcome_options1 = ["All", "Successful", "Incomplete", 'Pass Offside', "Out", "Unknown", "Injury Clearance"]
             progressive_options1 = ["Both", "Yes", "No"]
             player_pass1 = ['All'] + pass_df1['player'].unique().tolist()
