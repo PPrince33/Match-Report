@@ -466,3 +466,5 @@ if comp:
             
             fig1 = plot_pass_map(pass_df1, outcome_filter1, progressive_filter1, player_pass1, type_pass1, kde_color="Greens",team_name=team_name1)
             st.pyplot(fig1)
+
+        st.markdown("<h2 style='text-align: center;'>Shot Analysis</h2>", unsafe_allow_html=True)
