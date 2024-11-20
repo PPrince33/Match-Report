@@ -403,6 +403,7 @@ if comp:
         def plot_pass_map(pass_df, outcome_filter, progressive_filter, player_filter, pass_type_filter, kde_color):
             # Filter data based on user input
             filtered_df = pass_df
+            pass_df.pass_outcome.fillna('Successful',inplace=True)
             if outcome_filter != "All":
                 filtered_df = filtered_df[filtered_df['pass_outcome'] == outcome_filter]
             if player_filter != "All":
