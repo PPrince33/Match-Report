@@ -249,10 +249,10 @@ if comp:
             st.markdown(f"Substitutions")
             st.dataframe(sub1, height=150, width=700)
         
-        st.markdown("<h2 style='text-align: center;'>Average Formation or Position</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center;'>Average Formation</h2>", unsafe_allow_html=True)
         min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
         min_passes = st.sidebar.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
-
+        st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
         # Display the DataFrames in the columns
         with col1:
@@ -301,12 +301,12 @@ if comp:
                         
             
             plt.show()
-            st.subheader(f"Pass Network")
+            
             st.pyplot(fig00)
             st.write("No. of successfull passes:", successful_pass0_number)        
             st.write("No. of successfull progressive passes:", successful_progressive_pass0_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass0_rate}%", delta=None)
-            st.subheader(f"Players Pass Accuracy")
+            st.markdown(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player0)   
             
 
@@ -380,12 +380,12 @@ if comp:
             
             
             plt.show()
-            st.subheader(f"Pass Network")
+            
             st.pyplot(fig11)        
             st.write("No. of successfull passes:", successful_pass1_number)     
             st.write("No. of successfull progressive passes:", successful_progressive_pass1_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
-            st.subheader(f"Players Pass Accuracy")
+            st.markdown(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
 
 
