@@ -107,9 +107,9 @@ if comp:
         ax.barh(y=0, width=poss0, color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
         ax.barh(y=0, width=poss1, left=poss0, color='#90EE90', label=f'{team_name1} - {poss1 * 100:.1f}%')
         ax.axis('off')
-        ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
-        ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Georgia")
-        plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Georgia",y=1.1)
+        ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Monospace")
+        ax.text(poss0 + poss1 / 2, 0, f"{team_name1} - {poss1 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Monospace")
+        plt.suptitle("Possession", fontsize=14, fontweight='bold',fontname="Monospace",y=1.1)
         st.pyplot(fig) 
 
         if 'card_type'in startingXI0.columns:
@@ -265,8 +265,8 @@ if comp:
                                color='#DEEFF5', edgecolors='black', s=600, ax=ax0)
                 pitch0.text(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
                             s=all_avg_loc0['jersey_number'][i], color='black', weight='bold', 
-                            ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax0)
-            ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+                            ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax0)
+            ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
             plt.show()
             
             st.pyplot(fig0)
@@ -288,8 +288,8 @@ if comp:
                              color='#DEEFF5', edgecolors='black', s=600, linewidths=2)
                 ax00.text(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
-                          ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
-            ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+                          ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2)
+            ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
             pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="Blues",
                 shade=True,
                 n_levels=10,
@@ -336,8 +336,8 @@ if comp:
                                color='#90EE90', edgecolors='black', s=600, ax=ax1)
                 pitch1.text(all_avg_loc1['location_x'][i], all_avg_loc1['location_y'][i], 
                             s=all_avg_loc1['jersey_number'][i], color='black', weight='bold', 
-                            ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax1)
-            ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+                            ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax1)
+            ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
             plt.show()       
             
             st.pyplot(fig1)       
@@ -362,8 +362,8 @@ if comp:
                              color='#90EE90', edgecolors='black', s=600, linewidths=2)
                 ax11.text(pass_df1_avg_loc.iloc[i]['location_x'], pass_df1_avg_loc.iloc[i]['location_y'], 
                           s=pass_df1_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
-                          ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2)
-            ax11.set_title(f'{team_name1} - {formation1} (0 to {sub_min1} mins)', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+                          ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2)
+            ax11.set_title(f'{team_name1} - {formation1} (0 to {sub_min1} mins)', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
             pitch11.kdeplot(x=pass_df1.location_x,y=pass_df1.location_y,cmap="Greens",
                 shade=True,
                 n_levels=10,
