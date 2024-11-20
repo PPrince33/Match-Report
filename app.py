@@ -288,8 +288,9 @@ if comp:
             
             st.pyplot(fig1) 
 
-        col1, col2 = st.columns(2)
         st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
+        
         with col1:
 
             pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
