@@ -428,7 +428,7 @@ if comp:
             )
             ax.set_title(f'{team_name}:{player_filter}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
             st.write("No. of passes after filter:", filtered_df.shape[0]) 
-            st.write("No. of successful passes after filter:", filtered_df[filtered_df.pass_outcome='Successful'].shape[0]) 
+            st.write("No. of successful passes after filter:", filtered_df[filtered_df.pass_outcome=='Successful'].shape[0]) 
             return fig
         
         # Streamlit layout
