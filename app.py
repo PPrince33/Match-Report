@@ -427,7 +427,7 @@ if comp:
                 cmap=kde_color, shade=True, n_levels=10, alpha=0.5, zorder=0, ax=ax, linewidths=0
             )
             ax.set_title(f'{team_name}:{player_filter}', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
-            ax.legend(loc="upper left")
+            
             return fig
         
         # Streamlit layout
