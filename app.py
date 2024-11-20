@@ -237,19 +237,26 @@ if comp:
 
         
 
-
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader(f"{team_name0} XI")
+            st.dataframe(startingXI0, height=400, width=700)
+            st.subheader(f"Substitutions")
+            st.dataframe(sub0, height=150, width=700)
+        with col2:
+            st.subheader(f"{team_name1} XI")
+            st.dataframe(startingXI1, height=400, width=700)
+            st.subheader(f"Substitutions")
+            st.dataframe(sub1, height=150, width=700)
         
-    
+        st.markdown("<h2 style='text-align: center;'>Average Formation or Position</h2>", unsafe_allow_html=True)
         min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
         min_passes = st.sidebar.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
 
         col1, col2 = st.columns(2)
         # Display the DataFrames in the columns
         with col1:
-            st.subheader(f"{team_name0} XI")
-            st.dataframe(startingXI0, height=400, width=700)
-            st.subheader(f"Substitutions")
-            st.dataframe(sub0, height=150, width=700)
+            
             pitch0 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig0, ax0 = plt.subplots(figsize=(10, 6))
             pitch0.draw(ax=ax0)
@@ -261,7 +268,7 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax0)
             ax0.set_title(f'{team_name0} - {formation0}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()
-            st.subheader(f"Average Formation or Position")
+            
             st.pyplot(fig0)
 
             pitch00 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
@@ -320,10 +327,7 @@ if comp:
         
         
         with col2:
-            st.subheader(f"{team_name1} XI")
-            st.dataframe(startingXI1, height=400, width=700)
-            st.subheader(f"Substitutions")
-            st.dataframe(sub1, height=150, width=700)               
+                           
             pitch1 = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig1, ax1 = plt.subplots(figsize=(10, 6))
             pitch1.draw(ax=ax1)
@@ -335,7 +339,7 @@ if comp:
                             ha='center', va='center', fontsize=15, fontname="Georgia", zorder=2, ax=ax1)
             ax1.set_title(f'{team_name1} - {formation1}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
             plt.show()       
-            st.subheader(f"Average Formation or Position")
+            
             st.pyplot(fig1)       
                     
                     
