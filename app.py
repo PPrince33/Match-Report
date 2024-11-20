@@ -241,12 +241,12 @@ if comp:
         with col1:
             st.subheader(f"{team_name0} XI")
             st.dataframe(startingXI0, height=400, width=700)
-            st.subheader(f"Substitutions")
+            st.markdown(f"Substitutions")
             st.dataframe(sub0, height=150, width=700)
         with col2:
             st.subheader(f"{team_name1} XI")
             st.dataframe(startingXI1, height=400, width=700)
-            st.subheader(f"Substitutions")
+            st.markdown(f"Substitutions")
             st.dataframe(sub1, height=150, width=700)
         
         st.markdown("<h2 style='text-align: center;'>Average Formation or Position</h2>", unsafe_allow_html=True)
