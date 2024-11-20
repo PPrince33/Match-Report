@@ -251,7 +251,7 @@ if comp:
         
         st.markdown("<h2 style='text-align: center;'>Average Formation</h2>", unsafe_allow_html=True)
         min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
-        min_passes = st.sidebar.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
+        
         
         col1, col2 = st.columns(2)
         
@@ -289,6 +289,7 @@ if comp:
             st.pyplot(fig1) 
 
         st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
+        min_passes = st.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
         col1, col2 = st.columns(2)
         
         with col1:
