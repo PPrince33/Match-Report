@@ -252,8 +252,9 @@ if comp:
         st.markdown("<h2 style='text-align: center;'>Average Formation</h2>", unsafe_allow_html=True)
         min_passes_options = [1, 2, 3, 4, 5,6 ,7, 8, 9, 10, 11, 12, 13]
         min_passes = st.sidebar.selectbox("Select Minimum Passes (Pass Network)", min_passes_options)
-        st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
+        
         col1, col2 = st.columns(2)
+        st.markdown("<h2 style='text-align: center;'>Pass Analysis</h2>", unsafe_allow_html=True)
         # Display the DataFrames in the columns
         with col1:
             
