@@ -313,7 +313,7 @@ if comp:
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2)
             ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
-            pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="blues",
+            pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="Blues",
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
