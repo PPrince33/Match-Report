@@ -104,7 +104,7 @@ if comp:
         all_avg_loc1=event_df[(event_df.team==team_name1)&(event_df.possession_team==team_name1)].groupby('player')[['location_x','location_y']].mean().reset_index()
         all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
         fig, ax = plt.subplots(figsize=(18, 1))
-        ax.barh(y=0, width=poss0, color='blue', label=f'{team_name0} - {poss0 * 100:.1f}%')
+        ax.barh(y=0, width=poss0, color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
         ax.barh(y=0, width=poss1, left=poss0, color='#90EE90', label=f'{team_name1} - {poss1 * 100:.1f}%')
         ax.axis('off')
         ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Monospace")
@@ -263,7 +263,7 @@ if comp:
             pitch0.draw(ax=ax0)
             for i in range(all_avg_loc0.shape[0]):
                 pitch0.scatter(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
-                               color='blue', edgecolors='black', s=600, ax=ax0)
+                               color='#DEEFF5', edgecolors='black', s=600, ax=ax0)
                 pitch0.text(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
                             s=all_avg_loc0['jersey_number'][i], color='black', weight='bold', 
                             ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax0)
@@ -308,12 +308,12 @@ if comp:
                 pitch00.lines(start_x, start_y, end_x, end_y, ax=ax00, color="black", lw=size, zorder=1)
             for i in range(pass_df0_avg_loc.shape[0]):
                 ax00.scatter(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
-                             color='blue', edgecolors='black', s=600, linewidths=2)
+                             color='#DEEFF5', edgecolors='black', s=600, linewidths=2)
                 ax00.text(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2)
             ax00.set_title(f'{team_name0} - {formation0} (0 to {sub_min0} mins)', fontsize=14, fontweight='bold', fontname="Monospace", y=0.97)
-            pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="Blues",
+            pitch00.kdeplot(x=pass_df0.location_x,y=pass_df0.location_y,cmap="#DEEFF5s",
                 shade=True,
                 n_levels=10,
                 alpha=0.5,
@@ -385,7 +385,7 @@ if comp:
         outcome_colors = {
             "Incomplete": "red",
             "Out": "orange",
-            "Unknown": "blue",
+            "Unknown": "#DEEFF5",
             "Injury Clearance": "green",
             "Pass Offside": "purple",
             "Successful": "black"
@@ -449,7 +449,7 @@ if comp:
             player_pass0 = st.selectbox("Select Player", player_pass0)
             type_pass0 = st.selectbox("Select Pass Type", pass_type_list0)
             
-            fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="Blues",team_name=team_name0)
+            fig0 = plot_pass_map(pass_df0, outcome_filter0, progressive_filter0, player_pass0, type_pass0, kde_color="#DEEFF5s",team_name=team_name0)
             st.pyplot(fig0)
             
         # Column 4 for pass_df1
