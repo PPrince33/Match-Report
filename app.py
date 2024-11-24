@@ -104,7 +104,7 @@ if comp:
         all_avg_loc1=event_df[(event_df.team==team_name1)&(event_df.possession_team==team_name1)].groupby('player')[['location_x','location_y']].mean().reset_index()
         all_avg_loc1=pd.merge(startingXI1,all_avg_loc1,on='player',how='left')
         fig, ax = plt.subplots(figsize=(18, 1))
-        ax.barh(y=0, width=poss0, color='#DEEFF5', label=f'{team_name0} - {poss0 * 100:.1f}%')
+        ax.barh(y=0, width=poss0, color='blue', label=f'{team_name0} - {poss0 * 100:.1f}%')
         ax.barh(y=0, width=poss1, left=poss0, color='#90EE90', label=f'{team_name1} - {poss1 * 100:.1f}%')
         ax.axis('off')
         ax.text(poss0 / 2, 0, f"{team_name0} - {poss0 * 100:.1f}%",fontsize=14, ha='center', va='center', fontweight='bold', color='black',fontname="Monospace")
@@ -263,7 +263,7 @@ if comp:
             pitch0.draw(ax=ax0)
             for i in range(all_avg_loc0.shape[0]):
                 pitch0.scatter(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
-                               color='#DEEFF5', edgecolors='black', s=600, ax=ax0)
+                               color='blue', edgecolors='black', s=600, ax=ax0)
                 pitch0.text(all_avg_loc0['location_x'][i], all_avg_loc0['location_y'][i], 
                             s=all_avg_loc0['jersey_number'][i], color='black', weight='bold', 
                             ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2, ax=ax0)
@@ -308,7 +308,7 @@ if comp:
                 pitch00.lines(start_x, start_y, end_x, end_y, ax=ax00, color="black", lw=size, zorder=1)
             for i in range(pass_df0_avg_loc.shape[0]):
                 ax00.scatter(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
-                             color='#DEEFF5', edgecolors='black', s=600, linewidths=2)
+                             color='blue', edgecolors='black', s=600, linewidths=2)
                 ax00.text(pass_df0_avg_loc.iloc[i]['location_x'], pass_df0_avg_loc.iloc[i]['location_y'], 
                           s=pass_df0_avg_loc.iloc[i]['Jersey No.'], color='black', weight='bold', 
                           ha='center', va='center', fontsize=15, fontname="Monospace", zorder=2)
