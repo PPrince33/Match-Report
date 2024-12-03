@@ -14,7 +14,7 @@ comp_df['Tournament'] = comp_df.competition_name + ' ' + comp_df.season_name
 comp_list = comp_df.Tournament.unique().tolist()
 
 # Streamlit title
-st.title("Match Report by Precious")
+st.title("Match Report by Precious",fontname="Monospace")
 comp = st.selectbox("Select Competition:", comp_list)
 
 if comp:
