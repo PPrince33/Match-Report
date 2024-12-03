@@ -436,6 +436,46 @@ if comp:
             return fig
         
         # Streamlit layout
+    
+        
+        # Assuming grouped_data, team_name0, and team_name1 are already defined
+        plt.figure(figsize=(14, 8))
+        
+        bar_width = 0.3
+        minutes = grouped_data['minute']
+        team_name0_pass = grouped_data[f'{team_name0}'].fillna(0)  # Replace NaN with 0
+        team_name1_pass = grouped_data[f'{team_name1}'].fillna(0)  # Replace NaN with 0
+        
+        # Create bars for each team with black borders and starting from 0
+        plt.bar(
+            minutes - bar_width / 2,
+            team_name0_pass,
+            width=bar_width,
+            label=f'{team_name0}',
+            color='#DEEFF5',
+            edgecolor='black'
+        )
+        
+        plt.bar(
+            minutes + bar_width / 2,
+            team_name1_pass,
+            width=bar_width,
+            label=f'{team_name1}',
+            color='#90EE90',
+            edgecolor='black'
+        )
+        
+        # Set all minutes as x-ticks
+        plt.xticks(ticks=minutes, labels=minutes, rotation=90)
+        
+        # Remove the y-axis
+        plt.yticks([])
+        
+        plt.title(f'Successful Passes per Minute: {team_name0} vs {team_name1}', fontname="Monospace")
+        plt.xlabel('Minute')
+        
+        # Adjust layout and show plot in Streamlit
+        st.pyplot(plt)
         st.markdown("<h2 style='text-align: center;'>Pass Mapping</h2>", unsafe_allow_html=True)
 
         col3, col4 = st.columns(2)
