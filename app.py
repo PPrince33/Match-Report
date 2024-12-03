@@ -452,8 +452,7 @@ if comp:
             team_name0_pass,
             width=bar_width,
             label=f'{team_name0}',
-            color='#DEEFF5',
-            edgecolor='black'
+            color='#DEEFF5'
         )
         
         plt.bar(
@@ -461,8 +460,7 @@ if comp:
             team_name1_pass,
             width=bar_width,
             label=f'{team_name1}',
-            color='#90EE90',
-            edgecolor='black'
+            color='#90EE90'
         )
         
         # Set all minutes as x-ticks
