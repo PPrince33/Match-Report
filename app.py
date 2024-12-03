@@ -466,7 +466,7 @@ if comp:
         )
         
         # Set all minutes as x-ticks
-        plt.xticks(ticks=minutes, labels=minutes)
+        plt.xticks(ticks=minutes, labels=minutes,fontsize=8,rotation=90)
         
         # Remove the y-axis
         plt.yticks([])
