@@ -325,7 +325,7 @@ if comp:
             st.write("No. of successfull passes:", successful_pass0_number)        
             st.write("No. of successfull progressive passes:", successful_progressive_pass0_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass0_rate}%", delta=None)
-            st.metric(label="Average Passes per Minute",value=round(pass_df0['Pass_Result'].sum()/event_df[(event_df.type=='Pass')]['minute'].max()))
+            st.write(label="Average Passes per Minute",round(pass_df0['Pass_Result'].sum()/event_df[(event_df.type=='Pass')]['minute'].max()))
             st.markdown(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player0)   
             
@@ -373,7 +373,7 @@ if comp:
             st.write("No. of successfull passes:", successful_pass1_number)     
             st.write("No. of successfull progressive passes:", successful_progressive_pass1_number)
             st.metric(label="Pass Accuracy", value=f"{successful_pass1_rate}%", delta=None)
-            st.metric(label="Average Passes per Minute",value=round(pass_df1['Pass_Result'].sum()/event_df[(event_df.type=='Pass')]['minute'].max()))
+            st.write(label="Average Passes per Minute",round(pass_df1['Pass_Result'].sum()/event_df[(event_df.type=='Pass')]['minute'].max()))
             st.markdown(f"Players Pass Accuracy")
             st.dataframe(pass_rate_player1)
 
