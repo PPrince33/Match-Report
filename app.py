@@ -469,7 +469,7 @@ if comp:
         # Remove the y-axis
         plt.yticks([])
         
-        plt.title(f'Successful Passes per Minute: {team_name0} vs {team_name1}', fontname="Monospace")
+        plt.title(f'Successful Passes per Minute: {team_name0} vs {team_name1}', fontweight='bold',fontname="Monospace")
         plt.xlabel('Minute')
         
         # Adjust layout and show plot in Streamlit
