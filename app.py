@@ -466,7 +466,7 @@ if comp:
         # Set all minutes as x-ticks
         plt.xticks(ticks=minutes, labels=minutes,fontsize=8,rotation=90)
         
-        
+        plt.grid(axis='y', linestyle='--', alpha=0.4)
         
         plt.title(f'Successful Passes per Minute: {team_name0} vs {team_name1}', fontweight='bold',fontname="Monospace")
         plt.xlabel('Minute')
