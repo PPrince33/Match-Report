@@ -470,7 +470,7 @@ if comp:
         
         plt.title(f'Successful Passes per Minute: {team_name0} vs {team_name1}', fontweight='bold',fontname="Monospace")
         plt.xlabel('Minute')
-        
+        plt.ylabel('Number of Successful Passes')
         # Adjust layout and show plot in Streamlit
         st.pyplot(plt)
         st.markdown("<h2 style='text-align: center;'>Pass Mapping</h2>", unsafe_allow_html=True)
