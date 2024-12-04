@@ -440,8 +440,7 @@ if comp:
         
         # Assuming grouped_data, team_name0, and team_name1 are already defined
         plt.figure(figsize=(14, 8))
-        plt.patch.set_facecolor('black')  # Set figure background color
-        plt.set_facecolor('black')
+        plt.gcf().set_facecolor('black') 
         grouped_data = event_df[event_df['type'] == 'Pass'].groupby(['minute', 'team'])['Pass_Result'].sum().unstack().reset_index()
         bar_width = 0.3
         minutes = grouped_data['minute']
