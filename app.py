@@ -504,7 +504,7 @@ if comp:
                 final_shot_df = pd.concat([final_shot_df, full_detail_shot_df], axis=0, ignore_index=True)
         
         # Add penalty shots directly
-        final_shot_df = pd.concat([final_shot_df, shot_df[shot_df.shot_type == 'Penalty']], axis=0, ignore_index=True)
+        ##############################################final_shot_df = pd.concat([final_shot_df, shot_df[shot_df.shot_type == 'Penalty']], axis=0, ignore_index=True)
         
         # Extract player location x and y
         final_shot_df['player_location_x'] = final_shot_df['player_location'].apply(
