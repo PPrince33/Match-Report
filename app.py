@@ -582,6 +582,161 @@ if comp:
         )
         final_shot_df0.Tournament.unique().tolist()
         final_shot_df1.Tournament.unique().tolist()
-        selected_shot='Bayer Leverkusen:Granit Xhaka (27:46)'
-        shot_mapping=final_shot_df0[final_shot_df0.shot_id==selected_shot].reset_index(drop=True)
+        selected_shot0=final_shot_df0.shot_id.unique().tolist()
+        selected_shot1=final_shot_df1.shot_id.unique().tolist()
+
+        col1, col2 = st.columns(2)
+        
+        # Column 3 for pass_df0
+        with col1:
+            # Select a shot ID using Streamlit
+            selected_shot = st.selectbox("Select a Shot ID", options=selected_shot0)
+            
+            # Filter DataFrame for the selected shot
+            shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
+            
+            # Define the team colors
+            team_name0_color = '#DEEFF5'  # Light blue
+            team_name1_color = '#90EE90'  # Light green
+            
+            # Assign colors based on the team
+            shot_mapping0['color'] = shot_mapping0['player_team'].apply(
+                lambda team: team_name0_color if team == team_name0 else team_name1_color
+            )
+            
+            # Create a pitch
+            pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            
+            # Create a figure and axis
+            fig, ax = plt.subplots(figsize=(10, 7))  # Adjust figure size as needed
+            
+            # Draw the pitch
+            pitch.draw(ax=ax)
+            
+            # Plot scatter points for each row in the DataFrame
+            for i in range(shot_mapping0.shape[0]):
+                ax.scatter(
+                    shot_mapping0['player_location_x'].iloc[i],  # X-coordinate
+                    shot_mapping0['player_location_y'].iloc[i],  # Y-coordinate
+                    color=shot_mapping0['color'].iloc[i],  # Color based on the team
+                    edgecolors='black', zorder=3,  # Black border
+                    s=80,  # Size of the marker
+                )
+            for i in range(shot_mapping0.shape[0]):
+                ax.scatter(
+                    shot_mapping0['location_x'].iloc[i],  # X-coordinate
+                    shot_mapping0['location_y'].iloc[i],  # Y-coordinate
+                    color='red',  # Color based on the team
+                    edgecolors='black',  # Black border
+                    s=80, zorder=3  # Size of the marker
+                )
+            
+            for i in range(shot_mapping0.shape[0]):
+                # Define the vertices of the triangle
+                triangle_vertices = [
+                    (shot_mapping0['location_x'].iloc[1], shot_mapping0['location_y'].iloc[1]),
+                    (120, 36),
+                    (120, 44)
+                ]
+                
+                # Create and add the triangle to the plot
+                triangle = Polygon(
+                    triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
+                )
+                ax.add_patch(triangle)
+                ax.plot(
+                    [shot_mapping0['location_x'].iloc[i], shot_mapping0['shot_end_location_x'].iloc[i]],  # X-coordinates
+                    [shot_mapping0['location_y'].iloc[i], shot_mapping0['shot_end_location_y'].iloc[i]],  # Y-coordinates
+                    color='blue',  # Line color
+                    linewidth=1,  # Line thickness
+                    zorder=2, linestyle='--'
+                )
+            
+            # Set title and limits
+            ax.set_title(f'{selected_shot}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            ax.set_xlim(min(shot_mapping0['player_location_x']) - 10, 130)
+            
+            # Display the plot using Streamlit
+            st.pyplot(fig)
+
+         with col2:
+            # Select a shot ID using Streamlit
+            selected_shot1 = st.selectbox("Select a Shot ID", options=selected_shot1)
+            
+            # Filter DataFrame for the selected shot
+            shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot1].reset_index(drop=True)
+            
+            # Define the team colors
+            team_name0_color = '#DEEFF5'  # Light blue
+            team_name1_color = '#90EE90'  # Light green
+            
+            # Assign colors based on the team
+            shot_mapping1['color'] = shot_mapping1['player_team'].apply(
+                lambda team: team_name0_color if team == team_name0 else team_name1_color
+            )
+            
+            # Create a pitch
+            pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            
+            # Create a figure and axis
+            fig, ax = plt.subplots(figsize=(10, 7))  # Adjust figure size as needed
+            
+            # Draw the pitch
+            pitch.draw(ax=ax)
+            
+            # Plot scatter points for each row in the DataFrame
+            for i in range(shot_mapping0.shape[0]):
+                ax.scatter(
+                    shot_mapping0['player_location_x'].iloc[i],  # X-coordinate
+                    shot_mapping0['player_location_y'].iloc[i],  # Y-coordinate
+                    color=shot_mapping0['color'].iloc[i],  # Color based on the team
+                    edgecolors='black', zorder=3,  # Black border
+                    s=80,  # Size of the marker
+                )
+            for i in range(shot_mapping0.shape[0]):
+                ax.scatter(
+                    shot_mapping0['location_x'].iloc[i],  # X-coordinate
+                    shot_mapping0['location_y'].iloc[i],  # Y-coordinate
+                    color='red',  # Color based on the team
+                    edgecolors='black',  # Black border
+                    s=80, zorder=3  # Size of the marker
+                )
+            
+            for i in range(shot_mapping0.shape[0]):
+                # Define the vertices of the triangle
+                triangle_vertices = [
+                    (shot_mapping0['location_x'].iloc[1], shot_mapping0['location_y'].iloc[1]),
+                    (120, 36),
+                    (120, 44)
+                ]
+                
+                # Create and add the triangle to the plot
+                triangle = Polygon(
+                    triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
+                )
+                ax.add_patch(triangle)
+                ax.plot(
+                    [shot_mapping0['location_x'].iloc[i], shot_mapping0['shot_end_location_x'].iloc[i]],  # X-coordinates
+                    [shot_mapping0['location_y'].iloc[i], shot_mapping0['shot_end_location_y'].iloc[i]],  # Y-coordinates
+                    color='blue',  # Line color
+                    linewidth=1,  # Line thickness
+                    zorder=2, linestyle='--'
+                )
+            
+            # Set title and limits
+            ax.set_title(f'{selected_shot}', fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            ax.set_xlim(min(shot_mapping0['player_location_x']) - 10, 130)
+            
+            # Display the plot using Streamlit
+            st.pyplot(fig)
+
+
+        
+
+
+
+
+
+
+
         
