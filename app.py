@@ -7,6 +7,7 @@ import streamlit as st
 from statsbombpy import sb
 from mplsoccer import Pitch
 import streamlit as st
+from matplotlib.patches import Polygon
 
 # Load competitions data
 comp_df = sb.competitions()
@@ -469,3 +470,161 @@ if comp:
             st.pyplot(fig1)
 
         st.markdown("<h2 style='text-align: center;'>Shot Analysis</h2>", unsafe_allow_html=True)
+
+#-----------------------------------------------------------------------------------------------------------------------------------------
+
+        # Title for the app
+        st.markdown("<h2 style='text-align: center;'>Shot Analysis</h2>", unsafe_allow_html=True)
+        
+        # Initialize final_shot_df
+        final_shot_df = pd.DataFrame()
+        shot_df = event_df[event_df.type == 'Shot']
+        shot_df = shot_df.dropna(how='all', axis=1).reset_index(drop=True)
+        
+        for i in range(len(shot_df)):
+            shot_surrounding_data = shot_df.at[i, 'shot_freeze_frame']
+            if shot_surrounding_data and isinstance(shot_surrounding_data, list):  # Ensure it's a non-empty list
+                formatted_shot_surrounding_data = [
+                    {
+                        "player_location": item["location"],
+                        "player_name": item["player"]["name"],
+                        "position_name": item["position"]["name"],
+                        "teammate": item["teammate"]
+                    }
+                    for item in shot_surrounding_data
+                ]
+                formatted_shot_surrounding_df = pd.DataFrame(formatted_shot_surrounding_data)
+        
+                full_detail_shot_df = pd.concat(
+                    [formatted_shot_surrounding_df, pd.concat([shot_df.loc[[i]]] * len(formatted_shot_surrounding_df), ignore_index=True)],
+                    axis=1
+                )
+                final_shot_df = pd.concat([final_shot_df, full_detail_shot_df], axis=0, ignore_index=True)
+        
+        # Add penalty shots directly
+        final_shot_df = pd.concat([final_shot_df, shot_df[shot_df.shot_type == 'Penalty']], axis=0, ignore_index=True)
+        
+        # Extract player location x and y
+        final_shot_df['player_location_x'] = final_shot_df['player_location'].apply(
+            lambda loc: loc[0] if isinstance(loc, (list, tuple)) and len(loc) > 0 else None
+        )
+        final_shot_df['player_location_y'] = final_shot_df['player_location'].apply(
+            lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None
+        )
+        
+        # Create unique shot ID
+        final_shot_df['shot_id'] = (
+            final_shot_df['team'].astype(str) + ':' +
+            final_shot_df['player'].astype(str) + ' (' +
+            final_shot_df['minute'].astype(str) + ':' +
+            final_shot_df['second'].astype(str) + ')'
+        )
+        
+        # Merge jersey number information
+        full_jersey_df = pd.concat([full_lineup_expanded0, full_lineup_expanded1])
+        full_jersey_df = full_jersey_df[['player_name', 'jersey_number']]
+        final_shot_df = pd.merge(final_shot_df, full_jersey_df, on='player_name', how='left')
+        
+        # Handle missing jersey numbers and convert to integers
+        final_shot_df['jersey_number'] = final_shot_df['jersey_number'].fillna(0).astype(int)
+        
+        # Split data by team
+        final_shot_df0 = final_shot_df[final_shot_df.team == team_name0]
+        final_shot_df1 = final_shot_df[final_shot_df.team == team_name1]
+        
+        # Add player team information
+        final_shot_df0.loc[:, 'player_team'] = np.where(
+            final_shot_df0['teammate'] == False, team_name1, final_shot_df0['team']
+        )
+        final_shot_df1.loc[:, 'player_team'] = np.where(
+            final_shot_df1['teammate'] == False, team_name0, final_shot_df1['team']
+        )
+        
+        # Unique shot IDs
+        selected_shot0 = final_shot_df0['shot_id'].unique().tolist()
+        selected_shot1 = final_shot_df1['shot_id'].unique().tolist()
+        
+        # Streamlit columns
+        col1, col2 = st.columns(2)
+        
+        # Function to plot shot mapping
+        def plot_shot_mapping(shot_mapping, team_name0, team_name1, title):
+            # Define team colors
+            team_name0_color = '#DEEFF5'  # Light blue
+            team_name1_color = '#90EE90'  # Light green
+            
+            # Assign colors based on the team
+            shot_mapping['color'] = shot_mapping['player_team'].apply(
+                lambda team: team_name0_color if team == team_name0 else team_name1_color
+            )
+            
+            # Create a pitch
+            pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
+            fig, ax = plt.subplots(figsize=(10, 7))  # Adjust figure size as needed
+            pitch.draw(ax=ax)
+        
+            # Plot scatter points
+            for i in range(shot_mapping.shape[0]):
+                ax.scatter(
+                    shot_mapping['player_location_x'].iloc[i],  # X-coordinate
+                    shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
+                    color=shot_mapping['color'].iloc[i],  # Color based on the team
+                    edgecolors='black', zorder=3,  # Black border
+                    s=80  # Size of the marker
+                )
+                ax.scatter(
+                    shot_mapping['location_x'].iloc[i],  # X-coordinate
+                    shot_mapping['location_y'].iloc[i],  # Y-coordinate
+                    color='red',  # Color for specific players
+                    edgecolors='black', zorder=3, s=80
+                )
+            
+                # Add triangles and lines
+                triangle_vertices = [
+                    (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
+                    (120, 36),
+                    (120, 44)
+                ]
+                triangle = Polygon(
+                    triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
+                )
+                ax.add_patch(triangle)
+                ax.plot(
+                    [shot_mapping['location_x'].iloc[i], shot_mapping['shot_end_location_x'].iloc[i]],  # X-coordinates
+                    [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
+                    color='blue', linewidth=1, zorder=2, linestyle='--'
+                )
+        
+            # Set title and limits
+            ax.set_title(title, fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 130)
+            return fig
+        
+        # Column 1
+        with col1:
+            selected_shot = st.selectbox("Select a Shot ID (Team 0)", options=selected_shot0)
+            shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
+            fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, f"Shot ID: {selected_shot}")
+            st.pyplot(fig0)
+        
+        # Column 2
+        with col2:
+            selected_shot = st.selectbox("Select a Shot ID (Team 1)", options=selected_shot1)
+            shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
+            fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, f"Shot ID: {selected_shot}")
+            st.pyplot(fig1)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
