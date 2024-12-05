@@ -598,7 +598,7 @@ if comp:
                 )
         
             # Set limits
-            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 130)
+            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 122)
             ax.axis('off')  # Turn off the axes for a cleaner look
             
             # Apply rotation if specified
