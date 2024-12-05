@@ -563,23 +563,13 @@ if comp:
             pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig, ax = plt.subplots(figsize=(10, 7))  # Adjust figure size as needed
             pitch.draw(ax=ax)
-        
-            # Plot scatter points
-            for i in range(shot_mapping.shape[0]):
-                ax.scatter(
-                    shot_mapping['player_location_x'].iloc[i],  # X-coordinate
-                    shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
-                    color=shot_mapping['color'].iloc[i],  # Color based on the team
-                    edgecolors='black', zorder=3,  # Black border
-                    s=80  # Size of the marker
-                )
+            if shot_mapping.shape[0]==1:
                 ax.scatter(
                     shot_mapping['location_x'].iloc[i],  # X-coordinate
                     shot_mapping['location_y'].iloc[i],  # Y-coordinate
                     color='red',  # Color for specific players
                     edgecolors='black', zorder=3, s=80
                 )
-            
                 # Add triangles and lines
                 triangle_vertices = [
                     (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
@@ -595,9 +585,41 @@ if comp:
                     [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
                     color='blue', linewidth=1, zorder=2, linestyle='--'
                 )
-        
-            # Set limits
-            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
+            else:
+            # Plot scatter points
+                for i in range(shot_mapping.shape[0]):
+                    ax.scatter(
+                        shot_mapping['player_location_x'].iloc[i],  # X-coordinate
+                        shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
+                        color=shot_mapping['color'].iloc[i],  # Color based on the team
+                        edgecolors='black', zorder=3,  # Black border
+                        s=80  # Size of the marker
+                    )
+                    ax.scatter(
+                        shot_mapping['location_x'].iloc[i],  # X-coordinate
+                        shot_mapping['location_y'].iloc[i],  # Y-coordinate
+                        color='red',  # Color for specific players
+                        edgecolors='black', zorder=3, s=80
+                    )
+                
+                    # Add triangles and lines
+                    triangle_vertices = [
+                        (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
+                        (120, 36),
+                        (120, 44)
+                    ]
+                    triangle = Polygon(
+                        triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
+                    )
+                    ax.add_patch(triangle)
+                    ax.plot(
+                        [shot_mapping['location_x'].iloc[i], shot_mapping['shot_end_location_x'].iloc[i]],  # X-coordinates
+                        [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
+                        color='blue', linewidth=1, zorder=2, linestyle='--'
+                    )
+            
+                # Set limits
+                ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
             ax.axis('off')  # Turn off the axes for a cleaner look
             
             # Apply rotation if specified
