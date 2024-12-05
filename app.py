@@ -622,9 +622,15 @@ if comp:
             # Convert to image and rotate 90 degrees counterclockwise
             image0 = Image.open(buf)
             image0 = image0.rotate(90, expand=True)
-            st.image(image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
+            
+            # Crop the top part of the image (adjust the crop box as needed)
+            width, height = image0.size
+            crop_box = (0, height // 5, width, height)  # Crop the top 1/5 of the image
+            cropped_image0 = image0.crop(crop_box)
+            
+            st.image(cropped_image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
         
-        # Column 2 (Rotated Image)
+        # Column 2 (Rotated and Cropped Image)
         with col2:
             selected_shot = st.selectbox("Select a Shot ID (Team 1)", options=selected_shot1)
             shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
@@ -638,4 +644,10 @@ if comp:
             # Convert to image and rotate 90 degrees counterclockwise
             image1 = Image.open(buf)
             image1 = image1.rotate(90, expand=True)
-            st.image(image1, caption=f"Shot Visualization {team_name1}", use_column_width=True)
+            
+            # Crop the top part of the image (adjust the crop box as needed)
+            width, height = image1.size
+            crop_box = (0, height // 5, width, height)  # Crop the top 1/5 of the image
+            cropped_image1 = image1.crop(crop_box)
+            
+            st.image(cropped_image1, caption=f"Shot Visualization {team_name1}", use_column_width=True)
