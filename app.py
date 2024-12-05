@@ -647,7 +647,10 @@ if comp:
             
             # Crop the top part of the image (adjust the crop box as needed)
             width, height = image1.size
-            crop_box = (0, 0, width, height - height // 5) # Crop the top 1/5 of the image
+            top_crop = height // 5  # Crop 1/5 of the image from the top
+            bottom_crop = height // 5  # Crop 1/5 of the image from the bottom
+            crop_box = (0, top_crop, width, height - bottom_crop) 
+            # Crop the top 1/5 of the image
             cropped_image1 = image1.crop(crop_box)
             
             st.image(cropped_image1, caption=f"Shot Visualization {team_name1}", use_column_width=True)
