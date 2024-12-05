@@ -624,8 +624,11 @@ if comp:
             image0 = image0.rotate(90, expand=True)
             
             # Crop the top part of the image (adjust the crop box as needed)
-            width, height = image0.size
-            crop_box = (0, 0, width, height - height // 5)  # Crop the top 1/5 of the image
+            width, height = image1.size
+            top_crop = height // 4  # Crop 1/5 of the image from the top
+            bottom_crop = height // 4  # Crop 1/5 of the image from the bottom
+            crop_box = (0, top_crop, width, height - bottom_crop) 
+            # Crop the top 1/5 of the image # Crop the top 1/5 of the image
             cropped_image0 = image0.crop(crop_box)
             
             st.image(cropped_image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
@@ -647,8 +650,8 @@ if comp:
             
             # Crop the top part of the image (adjust the crop box as needed)
             width, height = image1.size
-            top_crop = height // 5  # Crop 1/5 of the image from the top
-            bottom_crop = height // 5  # Crop 1/5 of the image from the bottom
+            top_crop = height // 4  # Crop 1/5 of the image from the top
+            bottom_crop = height // 4  # Crop 1/5 of the image from the bottom
             crop_box = (0, top_crop, width, height - bottom_crop) 
             # Crop the top 1/5 of the image
             cropped_image1 = image1.crop(crop_box)
