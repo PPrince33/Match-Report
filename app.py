@@ -598,7 +598,7 @@ if comp:
                 )
         
             # Set limits
-            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 122)
+            ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
             ax.axis('off')  # Turn off the axes for a cleaner look
             
             # Apply rotation if specified
@@ -616,7 +616,7 @@ if comp:
             
             # Save the figure to a buffer
             buf = io.BytesIO()
-            fig0.savefig(buf, format="png", facecolor='white')
+            fig0.savefig(buf, format="jpg", facecolor='white')
             buf.seek(0)
             
             # Convert to image and rotate 90 degrees counterclockwise
@@ -632,7 +632,7 @@ if comp:
             
             # Save the figure to a buffer
             buf = io.BytesIO()
-            fig1.savefig(buf, format="png", facecolor='white')
+            fig1.savefig(buf, format="jpg", facecolor='white')
             buf.seek(0)
             
             # Convert to image and rotate 90 degrees counterclockwise
