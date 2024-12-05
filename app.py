@@ -609,7 +609,7 @@ if comp:
         col1, col2 = st.columns(2)
         # Column 1 (Rotated Image)
         with col1:
-            selected_shot = st.selectbox("Select a Shot ID ", options=selected_shot0)
+            selected_shot = st.selectbox("Select a Shot", options=selected_shot0)
             shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
             fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, rotate=True)
             
@@ -634,7 +634,7 @@ if comp:
         
         # Column 2 (Rotated and Cropped Image)
         with col2:
-            selected_shot = st.selectbox("Select a Shot ID (Team 1)", options=selected_shot1)
+            selected_shot = st.selectbox("Select a Shot", options=selected_shot1)
             shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
             fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, rotate=True)
             
