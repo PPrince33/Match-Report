@@ -624,7 +624,7 @@ if comp:
             image0 = image0.rotate(90, expand=True)
             
             # Crop the top part of the image (adjust the crop box as needed)
-            width, height = image1.size
+            width, height = image0.size
             top_crop = height // 4  # Crop 1/5 of the image from the top
             bottom_crop = height // 4  # Crop 1/5 of the image from the bottom
             crop_box = (0, top_crop, width, height - bottom_crop) 
