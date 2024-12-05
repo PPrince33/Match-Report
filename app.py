@@ -550,7 +550,7 @@ if comp:
         col1, col2 = st.columns(2)
         
         # Function to plot shot mapping
-        def plot_shot_mapping(shot_mapping, team_name0, team_name1, title):
+        def plot_shot_mapping(shot_mapping, team_name0, team_name1, rotate=False):
             # Define team colors
             team_name0_color = '#DEEFF5'  # Light blue
             team_name1_color = '#90EE90'  # Light green
@@ -597,57 +597,45 @@ if comp:
                     color='blue', linewidth=1, zorder=2, linestyle='--'
                 )
         
-            # Set title and limits
-            ax.set_title(title, fontsize=14, fontweight='bold', fontname="Georgia", y=0.97)
+            # Set limits
             ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 130)
+            ax.axis('off')  # Turn off the axes for a cleaner look
+            
+            # Apply rotation if specified
+            if rotate:
+                fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
+                fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
+            
             return fig
-        
-       
-        
-        
-        
-        
+        col1, col2 = st.columns(2)
         # Column 1 (Rotated Image)
         with col1:
-            selected_shot = st.selectbox("Select a Shot ID (Team 0)", options=selected_shot0)
+            selected_shot = st.selectbox("Select a Shot ID ", options=selected_shot0)
             shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
-            fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, f"{selected_shot}")
+            fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, rotate=True)
             
             # Save the figure to a buffer
             buf = io.BytesIO()
-            fig0.savefig(buf, format="png", facecolor='black')
+            fig0.savefig(buf, format="png", facecolor='white')
             buf.seek(0)
             
             # Convert to image and rotate 90 degrees counterclockwise
             image0 = Image.open(buf)
             image0 = image0.rotate(90, expand=True)
-            st.image(image0, caption="Shot Visualization (Team 0)", use_column_width=True)
+            st.image(image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
         
         # Column 2 (Rotated Image)
         with col2:
             selected_shot = st.selectbox("Select a Shot ID (Team 1)", options=selected_shot1)
             shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
-            fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, f"{selected_shot}")
+            fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, rotate=True)
             
             # Save the figure to a buffer
             buf = io.BytesIO()
-            fig1.savefig(buf, format="png", facecolor='black')
+            fig1.savefig(buf, format="png", facecolor='white')
             buf.seek(0)
             
             # Convert to image and rotate 90 degrees counterclockwise
             image1 = Image.open(buf)
             image1 = image1.rotate(90, expand=True)
             st.image(image1, caption="Shot Visualization (Team 1)", use_column_width=True)
-        
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
