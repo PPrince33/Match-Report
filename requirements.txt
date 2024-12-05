@@ -6,3 +6,5 @@ statsbombpy
 mplsoccer
 matplotlib
 Pillow
+Image
+io
