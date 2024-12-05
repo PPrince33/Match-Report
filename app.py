@@ -510,5 +510,78 @@ if comp:
             st.pyplot(fig1)
 
         st.markdown("<h2 style='text-align: center;'>Shot Analysis</h2>", unsafe_allow_html=True)
-
-
+        
+        # Initialize final_shot_df
+        # Initialize final_shot_df
+        final_shot_df = pd.DataFrame()
+        shot_df = event_df[event_df.type == 'Shot']
+        shot_df = shot_df.dropna(how='all', axis=1).reset_index(drop=True)
+        
+        for i in range(len(shot_df)):
+            # Check if 'shot_freeze_frame' is non-null and not empty
+            shot_surrounding_data = shot_df.at[i, 'shot_freeze_frame']
+            if shot_surrounding_data and isinstance(shot_surrounding_data, list):  # Ensure it's a non-empty list
+                # Format shot surrounding data
+                formatted_shot_surrounding_data = [
+                    {
+                        "player_location": item["location"],
+                        "player_name": item["player"]["name"],
+                        "position_name": item["position"]["name"],
+                        "teammate": item["teammate"]
+                    }
+                    for item in shot_surrounding_data
+                ]
+                formatted_shot_surrounding_df = pd.DataFrame(formatted_shot_surrounding_data)
+        
+                # Expand the current shot data to match the length of formatted_shot_surrounding_df
+                full_detail_shot_df = pd.concat(
+                    [formatted_shot_surrounding_df, pd.concat([shot_df.loc[[i]]] * len(formatted_shot_surrounding_df), ignore_index=True)],
+                    axis=1
+                )
+        
+                # Append to the final DataFrame
+                final_shot_df = pd.concat([final_shot_df, full_detail_shot_df], axis=0, ignore_index=True)
+        
+        # Add penalty shots directly
+        final_shot_df = pd.concat([final_shot_df, shot_df[shot_df.shot_type == 'Penalty']], axis=0, ignore_index=True)
+        
+        # Extract player location x and y
+        final_shot_df['player_location_x'] = final_shot_df['player_location'].apply(
+            lambda loc: loc[0] if isinstance(loc, (list, tuple)) and len(loc) > 0 else None
+        )
+        final_shot_df['player_location_y'] = final_shot_df['player_location'].apply(
+            lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None
+        )
+        
+        # Create unique shot ID
+        final_shot_df['shot_id'] = (
+            final_shot_df['team'].astype(str) + ':' +
+            final_shot_df['player'].astype(str) + ' (' +
+            final_shot_df['minute'].astype(str) + ':' +
+            final_shot_df['second'].astype(str) + ')'
+        )
+        
+        # Merge jersey number information
+        full_jersey_df = pd.concat([full_lineup_expanded0, full_lineup_expanded1])
+        full_jersey_df = full_jersey_df[['player_name', 'jersey_number']]
+        final_shot_df = pd.merge(final_shot_df, full_jersey_df, on='player_name', how='left')
+        
+        # Handle missing jersey numbers and convert to integers
+        final_shot_df['jersey_number'] = final_shot_df['jersey_number'].fillna(0).astype(int)
+        
+        # Split data by team
+        final_shot_df0 = final_shot_df[final_shot_df.team == team_name0]
+        final_shot_df1 = final_shot_df[final_shot_df.team == team_name1]
+        
+        # Add player team information with .loc to avoid SettingWithCopyWarning
+        final_shot_df0.loc[:, 'player_team'] = np.where(
+            final_shot_df0['teammate'] == False, team_name1, final_shot_df0['team']
+        )
+        final_shot_df1.loc[:, 'player_team'] = np.where(
+        final_shot_df1['teammate'] == False, team_name0, final_shot_df1['team']
+        )
+        final_shot_df0.Tournament.unique().tolist()
+        final_shot_df1.Tournament.unique().tolist()
+        selected_shot='Bayer Leverkusen:Granit Xhaka (27:46)'
+        shot_mapping=final_shot_df0[final_shot_df0.shot_id==selected_shot].reset_index(drop=True)
+        
