@@ -8,6 +8,8 @@ from statsbombpy import sb
 from mplsoccer import Pitch
 import streamlit as st
 from matplotlib.patches import Polygon
+import io
+from PIL import Image
 
 # Load competitions data
 comp_df = sb.competitions()
@@ -469,7 +471,7 @@ if comp:
             fig1 = plot_pass_map(pass_df1, outcome_filter1, progressive_filter1, player_pass1, type_pass1, kde_color="Greens",team_name=team_name1)
             st.pyplot(fig1)
 
-        st.markdown("<h2 style='text-align: center;'>Shot Analysis</h2>", unsafe_allow_html=True)
+        
 
 #-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -600,31 +602,52 @@ if comp:
             ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 130)
             return fig
         
-        # Column 1
+       
+        
+        
+        
+        
+        # Column 1 (Rotated Image)
         with col1:
             selected_shot = st.selectbox("Select a Shot ID (Team 0)", options=selected_shot0)
             shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
-            fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, f"Shot ID: {selected_shot}")
-            st.pyplot(fig0)
+            fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, f"{selected_shot}")
+            
+            # Save the figure to a buffer
+            buf = io.BytesIO()
+            fig0.savefig(buf, format="png", facecolor='black')
+            buf.seek(0)
+            
+            # Convert to image and rotate 90 degrees counterclockwise
+            image0 = Image.open(buf)
+            image0 = image0.rotate(90, expand=True)
+            st.image(image0, caption="Shot Visualization (Team 0)", use_column_width=True)
         
-        # Column 2
+        # Column 2 (Rotated Image)
         with col2:
             selected_shot = st.selectbox("Select a Shot ID (Team 1)", options=selected_shot1)
             shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
-            fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, f"Shot ID: {selected_shot}")
-            st.pyplot(fig1)
+            fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, f"{selected_shot}")
+            
+            # Save the figure to a buffer
+            buf = io.BytesIO()
+            fig1.savefig(buf, format="png", facecolor='black')
+            buf.seek(0)
+            
+            # Convert to image and rotate 90 degrees counterclockwise
+            image1 = Image.open(buf)
+            image1 = image1.rotate(90, expand=True)
+            st.image(image1, caption="Shot Visualization (Team 1)", use_column_width=True)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
