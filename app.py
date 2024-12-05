@@ -621,7 +621,7 @@ if comp:
             
             # Convert to image and rotate 90 degrees counterclockwise
             image0 = Image.open(buf)
-            image0 = image0.rotate(90, expand=True)
+            image0 = image0.rotate(180, expand=True)
             st.image(image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
         
         # Column 2 (Rotated Image)
@@ -637,5 +637,5 @@ if comp:
             
             # Convert to image and rotate 90 degrees counterclockwise
             image1 = Image.open(buf)
-            image1 = image1.rotate(90, expand=True)
+            image1 = image1.rotate(180, expand=True)
             st.image(image1, caption="Shot Visualization (Team 1)", use_column_width=True)
