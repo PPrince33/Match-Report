@@ -575,12 +575,15 @@ if comp:
                         )
                                         # Add triangles and lines
                 triangle_vertices = [
-                    (shot_mapping['location_x'], shot_mapping['location_y']),
+                    (shot_mapping['location_x'][0], shot_mapping['location_y'][0]),
                     (120, 36),
                     (120, 44)
                 ]
                 
-                
+                triangle = Polygon(
+                        triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
+                    )
+                ax.add_patch(triangle)
                 ax.plot(
                     [shot_mapping['location_x'], shot_mapping['shot_end_location_x']],  # X-coordinates
                     [shot_mapping['location_y'], shot_mapping['shot_end_location_y']],  # Y-coordinates
