@@ -587,6 +587,11 @@ if comp:
                 )
                 ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
             ax.axis('off')  # Turn off the axes for a cleaner look
+            if rotate:
+                fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
+                fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
+            
+            return fig
             else:
             # Plot scatter points
                 for i in range(shot_mapping.shape[0]):
