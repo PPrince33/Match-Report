@@ -566,12 +566,14 @@ if comp:
             pitch.draw(ax=ax)
             if shot_mapping.shape[0]==1:
                 ax.scatter(
-                    shot_mapping['location_x'],  # X-coordinate
-                    shot_mapping['location_y'],  # Y-coordinate
-                    color='red',  # Color for specific players
-                    edgecolors='black', zorder=3, s=80
-                )
-                # Add triangles and lines
+                            shot_mapping['location_x'],  # X-coordinate
+                            shot_mapping['location_y'],  # Y-coordinate
+                            color='red',  # Color for specific players
+                            edgecolors='black', 
+                            zorder=3, 
+                            s=1000 * (shot_mapping['shot_statsbomb_xg'].iloc[0] if pd.notnull(shot_mapping['shot_statsbomb_xg'].iloc[0]) else 50)
+                        )
+                                        # Add triangles and lines
                 triangle_vertices = [
                     (shot_mapping['location_x'], shot_mapping['location_y']),
                     (120, 36),
@@ -605,7 +607,7 @@ if comp:
                         shot_mapping['location_x'].iloc[i],  # X-coordinate
                         shot_mapping['location_y'].iloc[i],  # Y-coordinate
                         color='red',  # Color for specific players
-                        edgecolors='black', zorder=3, s=80
+                        edgecolors='black', zorder=3, s=1000 * (shot_mapping['shot_statsbomb_xg'].iloc[i] if pd.notnull(shot_mapping['shot_statsbomb_xg'].iloc[i]) else 50)
                     )
                     ax.text(shot_mapping.iloc[i]['player_location_x'], shot_mapping.iloc[i]['player_location_y'], 
                           s=shot_mapping.iloc[i]['jersey_number'], color='black', weight='bold', 
