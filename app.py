@@ -576,9 +576,7 @@ if comp:
                     (120, 36),
                     (120, 44)
                 ]
-                triangle = Polygon(
-                    triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
-                )
+                
                 ax.add_patch(triangle)
                 ax.plot(
                     [shot_mapping['location_x'], shot_mapping['shot_end_location_x']],  # X-coordinates
