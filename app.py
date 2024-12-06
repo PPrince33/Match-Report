@@ -502,15 +502,31 @@ if comp:
                     axis=1
                 )
                 final_shot_df = pd.concat([final_shot_df, full_detail_shot_df], axis=0, ignore_index=True)
-        
-        # Add penalty shots directly
-        ##############################################final_shot_df = pd.concat([final_shot_df, shot_df[shot_df.shot_type == 'Penalty']], axis=0, ignore_index=True)
+            else:
+                # Handle shots without 'shot_freeze_frame' (e.g., penalties)
+                final_shot_df = pd.concat([final_shot_df, shot_df.loc[[i]]], ignore_index=True)
         
         # Extract player location x and y
         final_shot_df['player_location_x'] = final_shot_df['player_location'].apply(
             lambda loc: loc[0] if isinstance(loc, (list, tuple)) and len(loc) > 0 else None
         )
         final_shot_df['player_location_y'] = final_shot_df['player_location'].apply(
+            lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None
+        )
+        
+        # Extract location x and y
+        final_shot_df['location_x'] = final_shot_df['location'].apply(
+            lambda loc: loc[0] if isinstance(loc, (list, tuple)) and len(loc) > 0 else None
+        )
+        final_shot_df['location_y'] = final_shot_df['location'].apply(
+            lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None
+        )
+        
+        # Extract shot_end_location x and y
+        final_shot_df['shot_end_location_x'] = final_shot_df['shot_end_location'].apply(
+            lambda loc: loc[0] if isinstance(loc, (list, tuple)) and len(loc) > 0 else None
+        )
+        final_shot_df['shot_end_location_y'] = final_shot_df['shot_end_location'].apply(
             lambda loc: loc[1] if isinstance(loc, (list, tuple)) and len(loc) > 1 else None
         )
         
@@ -553,60 +569,44 @@ if comp:
             # Define team colors
             team_name0_color = '#DEEFF5'  # Light blue
             team_name1_color = '#90EE90'  # Light green
-            
+        
             # Assign colors based on the team
             shot_mapping['color'] = shot_mapping['player_team'].apply(
                 lambda team: team_name0_color if team == team_name0 else team_name1_color
             )
-            
+        
             # Create a pitch
             pitch = Pitch(pitch_type='statsbomb', pitch_color='white', line_color='black')
             fig, ax = plt.subplots(figsize=(10, 7))  # Adjust figure size as needed
             pitch.draw(ax=ax)
-            if shot_mapping.shape[0]==1:
+        
+            if shot_mapping.shape[0] >= 1:
+                # Plot the shooter
+                shooter_x = shot_mapping['location_x'].iloc[0]
+                shooter_y = shot_mapping['location_y'].iloc[0]
                 ax.scatter(
-                    shot_mapping['location_x'].iloc[i],  # X-coordinate
-                    shot_mapping['location_y'].iloc[i],  # Y-coordinate
-                    color='red',  # Color for specific players
+                    shooter_x,
+                    shooter_y,
+                    color='red',
                     edgecolors='black', zorder=3, s=80
                 )
-                # Add triangles and lines
-                triangle_vertices = [
-                    (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
-                    (120, 36),
-                    (120, 44)
-                ]
-                triangle = Polygon(
-                    triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
-                )
-                ax.add_patch(triangle)
-                ax.plot(
-                    [shot_mapping['location_x'].iloc[i], shot_mapping['shot_end_location_x'].iloc[i]],  # X-coordinates
-                    [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
-                    color='blue', linewidth=1, zorder=2, linestyle='--'
-                )
-            else:
-            # Plot scatter points
+                # Plot teammates and opponents
                 for i in range(shot_mapping.shape[0]):
-                    ax.scatter(
-                        shot_mapping['player_location_x'].iloc[i],  # X-coordinate
-                        shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
-                        color=shot_mapping['color'].iloc[i],  # Color based on the team
-                        edgecolors='black', zorder=3,  # Black border
-                        s=400  # Size of the marker
-                    )
-                    ax.scatter(
-                        shot_mapping['location_x'].iloc[i],  # X-coordinate
-                        shot_mapping['location_y'].iloc[i],  # Y-coordinate
-                        color='red',  # Color for specific players
-                        edgecolors='black', zorder=3, s=80
-                    )
-                    ax.text(shot_mapping.iloc[i]['player_location_x'], shot_mapping.iloc[i]['player_location_y'], 
-                          s=shot_mapping.iloc[i]['jersey_number'], color='black', weight='bold', 
-                          ha='center', va='center', fontsize=10, fontname="Monospace", zorder=4)
-                    # Add triangles and lines
+                    if not pd.isna(shot_mapping['player_location_x'].iloc[i]) and not pd.isna(shot_mapping['player_location_y'].iloc[i]):
+                        ax.scatter(
+                            shot_mapping['player_location_x'].iloc[i],  # X-coordinate
+                            shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
+                            color=shot_mapping['color'].iloc[i],  # Color based on the team
+                            edgecolors='black', zorder=3,  # Black border
+                            s=400  # Size of the marker
+                        )
+                        ax.text(shot_mapping['player_location_x'].iloc[i], shot_mapping['player_location_y'].iloc[i],
+                                s=shot_mapping['jersey_number'].iloc[i], color='black', weight='bold',
+                                ha='center', va='center', fontsize=10, fontname="Monospace", zorder=4)
+                # Add triangle and line
+                if not pd.isna(shooter_x) and not pd.isna(shooter_y):
                     triangle_vertices = [
-                        (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
+                        (shooter_x, shooter_y),
                         (120, 36),
                         (120, 44)
                     ]
@@ -614,70 +614,62 @@ if comp:
                         triangle_vertices, closed=True, color='lightcoral', edgecolor='black', alpha=0.2, zorder=1
                     )
                     ax.add_patch(triangle)
-                    ax.plot(
-                        [shot_mapping['location_x'].iloc[i], shot_mapping['shot_end_location_x'].iloc[i]],  # X-coordinates
-                        [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
-                        color='blue', linewidth=1, zorder=2, linestyle='--'
-                    )
-            
+                    if not pd.isna(shot_mapping['shot_end_location_x'].iloc[0]) and not pd.isna(shot_mapping['shot_end_location_y'].iloc[0]):
+                        ax.plot(
+                            [shooter_x, shot_mapping['shot_end_location_x'].iloc[0]],  # X-coordinates
+                            [shooter_y, shot_mapping['shot_end_location_y'].iloc[0]],  # Y-coordinates
+                            color='blue', linewidth=1, zorder=2, linestyle='--'
+                        )
                 # Set limits
-                ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
+                valid_player_x = shot_mapping['player_location_x'].dropna()
+                if not valid_player_x.empty:
+                    min_x = valid_player_x.min()
+                    ax.set_xlim(min_x - 10, 121)
             ax.axis('off')  # Turn off the axes for a cleaner look
-            
+        
             # Apply rotation if specified
             if rotate:
                 fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
                 fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
-            
+        
             return fig
-        col1, col2 = st.columns(2)
+        
         # Column 1 (Rotated Image)
         with col1:
-            selected_shot = st.selectbox("Select a Shot", options=selected_shot0)
-            shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot].reset_index(drop=True)
+            selected_shot0_choice = st.selectbox("Select a Shot for " + team_name0, options=selected_shot0, key='shot0')
+            shot_mapping0 = final_shot_df0[final_shot_df0['shot_id'] == selected_shot0_choice].reset_index(drop=True)
             fig0 = plot_shot_mapping(shot_mapping0, team_name0, team_name1, rotate=True)
-            
             # Save the figure to a buffer
             buf = io.BytesIO()
             fig0.savefig(buf, format="jpg", facecolor='white')
             buf.seek(0)
-            
             # Convert to image and rotate 90 degrees counterclockwise
             image0 = Image.open(buf)
             image0 = image0.rotate(90, expand=True)
-            
-            # Crop the top part of the image (adjust the crop box as needed)
+            # Crop the image
             width, height = image0.size
-            top_crop = height // 4  # Crop 1/5 of the image from the top
-            bottom_crop = height // 4  # Crop 1/5 of the image from the bottom
-            crop_box = (0, top_crop, width, height - bottom_crop) 
-            # Crop the top 1/5 of the image # Crop the top 1/5 of the image
+            top_crop = height // 4
+            bottom_crop = height // 4
+            crop_box = (0, top_crop, width, height - bottom_crop)
             cropped_image0 = image0.crop(crop_box)
-            
             st.image(cropped_image0, caption=f"Shot Visualization {team_name0}", use_column_width=True)
         
         # Column 2 (Rotated and Cropped Image)
         with col2:
-            selected_shot = st.selectbox("Select a Shot", options=selected_shot1)
-            shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot].reset_index(drop=True)
+            selected_shot1_choice = st.selectbox("Select a Shot for " + team_name1, options=selected_shot1, key='shot1')
+            shot_mapping1 = final_shot_df1[final_shot_df1['shot_id'] == selected_shot1_choice].reset_index(drop=True)
             fig1 = plot_shot_mapping(shot_mapping1, team_name0, team_name1, rotate=True)
-            
             # Save the figure to a buffer
             buf = io.BytesIO()
             fig1.savefig(buf, format="jpg", facecolor='white')
             buf.seek(0)
-            
             # Convert to image and rotate 90 degrees counterclockwise
             image1 = Image.open(buf)
             image1 = image1.rotate(90, expand=True)
-            
-            # Crop the top part of the image (adjust the crop box as needed)
+            # Crop the image
             width, height = image1.size
-            top_crop = height // 4  # Crop 1/5 of the image from the top
-            bottom_crop = height // 4  # Crop 1/5 of the image from the bottom
-            crop_box = (0, top_crop, width, height - bottom_crop) 
-            # Crop the top 1/5 of the image
+            top_crop = height // 4
+            bottom_crop = height // 4
+            crop_box = (0, top_crop, width, height - bottom_crop)
             cropped_image1 = image1.crop(crop_box)
-            
             st.image(cropped_image1, caption=f"Shot Visualization {team_name1}", use_column_width=True)
-
