@@ -593,13 +593,13 @@ if comp:
                         shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
                         color=shot_mapping['color'].iloc[i],  # Color based on the team
                         edgecolors='black', zorder=3,  # Black border
-                        s=80  # Size of the marker
+                        s=800  # Size of the marker
                     )
                     ax.scatter(
                         shot_mapping['location_x'].iloc[i],  # X-coordinate
                         shot_mapping['location_y'].iloc[i],  # Y-coordinate
                         color='red',  # Color for specific players
-                        edgecolors='black', zorder=3, s=800
+                        edgecolors='black', zorder=3, s=80
                     )
                     ax.text(shot_mapping.iloc[i]['player_location_x'], shot_mapping.iloc[i]['player_location_y'], 
                           s=shot_mapping.iloc[i]['jersey_number'], color='black', weight='bold', 
