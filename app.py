@@ -577,7 +577,7 @@ if comp:
                     (120, 44)
                 ]
                 
-                ax.add_patch(triangle)
+                
                 ax.plot(
                     [shot_mapping['location_x'], shot_mapping['shot_end_location_x']],  # X-coordinates
                     [shot_mapping['location_y'], shot_mapping['shot_end_location_y']],  # Y-coordinates
