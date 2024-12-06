@@ -565,14 +565,14 @@ if comp:
             pitch.draw(ax=ax)
             if shot_mapping.shape[0]==1:
                 ax.scatter(
-                    shot_mapping['location_x'].iloc[i],  # X-coordinate
-                    shot_mapping['location_y'].iloc[i],  # Y-coordinate
+                    shot_mapping['location_x'],  # X-coordinate
+                    shot_mapping['location_y'],  # Y-coordinate
                     color='red',  # Color for specific players
                     edgecolors='black', zorder=3, s=80
                 )
                 # Add triangles and lines
                 triangle_vertices = [
-                    (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
+                    (shot_mapping['location_x'], shot_mapping['location_y']),
                     (120, 36),
                     (120, 44)
                 ]
@@ -581,8 +581,8 @@ if comp:
                 )
                 ax.add_patch(triangle)
                 ax.plot(
-                    [shot_mapping['location_x'].iloc[i], shot_mapping['shot_end_location_x'].iloc[i]],  # X-coordinates
-                    [shot_mapping['location_y'].iloc[i], shot_mapping['shot_end_location_y'].iloc[i]],  # Y-coordinates
+                    [shot_mapping['location_x'], shot_mapping['shot_end_location_x']],  # X-coordinates
+                    [shot_mapping['location_y'], shot_mapping['shot_end_location_y']],  # Y-coordinates
                     color='blue', linewidth=1, zorder=2, linestyle='--'
                 )
                 ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
