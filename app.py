@@ -593,7 +593,7 @@ if comp:
                         shot_mapping['player_location_y'].iloc[i],  # Y-coordinate
                         color=shot_mapping['color'].iloc[i],  # Color based on the team
                         edgecolors='black', zorder=3,  # Black border
-                        s=800  # Size of the marker
+                        s=400  # Size of the marker
                     )
                     ax.scatter(
                         shot_mapping['location_x'].iloc[i],  # X-coordinate
