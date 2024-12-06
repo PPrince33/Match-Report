@@ -603,7 +603,7 @@ if comp:
                     )
                     ax.text(shot_mapping.iloc[i]['player_location_x'], shot_mapping.iloc[i]['player_location_y'], 
                           s=shot_mapping.iloc[i]['jersey_number'], color='black', weight='bold', 
-                          ha='center', va='center', fontsize=15, fontname="Monospace", zorder=4)
+                          ha='center', va='center', fontsize=10, fontname="Monospace", zorder=4)
                     # Add triangles and lines
                     triangle_vertices = [
                         (shot_mapping['location_x'].iloc[1], shot_mapping['location_y'].iloc[1]),
