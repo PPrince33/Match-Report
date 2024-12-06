@@ -518,7 +518,7 @@ if comp:
         final_shot_df['shot_id'] = (
             final_shot_df['player'].astype(str) + ' (' +
             final_shot_df['minute'].astype(str) + ':' +
-            final_shot_df['second'].astype(str) + ')- ' + 
+            final_shot_df['second'].astype(str) + ') Shot Outcome:' + 
             final_shot_df['shot_outcome'].astype(str)
         )
         
