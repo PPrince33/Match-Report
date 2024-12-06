@@ -586,12 +586,12 @@ if comp:
                     color='blue', linewidth=1, zorder=2, linestyle='--'
                 )
                 ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
-            ax.axis('off')  # Turn off the axes for a cleaner look
-            if rotate:
-                fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
-                fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
-            
-            return fig
+                ax.axis('off')  # Turn off the axes for a cleaner look
+                if rotate:
+                    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
+                    fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
+                
+                return fig
             else:
             # Plot scatter points
                 for i in range(shot_mapping.shape[0]):
@@ -629,14 +629,14 @@ if comp:
             
                 # Set limits
                 ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
-            ax.axis('off')  # Turn off the axes for a cleaner look
-            
-            # Apply rotation if specified
-            if rotate:
-                fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
-                fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
-            
-            return fig
+                ax.axis('off')  # Turn off the axes for a cleaner look
+                
+                # Apply rotation if specified
+                if rotate:
+                    fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
+                    fig.patch.set_alpha(0)  # Transparent background for cleaner rotation
+                
+                return fig
         col1, col2 = st.columns(2)
         # Column 1 (Rotated Image)
         with col1:
