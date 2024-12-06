@@ -583,7 +583,7 @@ if comp:
                     [shot_mapping['location_y'], shot_mapping['shot_end_location_y']],  # Y-coordinates
                     color='blue', linewidth=1, zorder=2, linestyle='--'
                 )
-                ax.set_xlim(min(shot_mapping['player_location_x']) - 10, 121)
+                ax.set_xlim(min(90, 121)
                 ax.axis('off')  # Turn off the axes for a cleaner look
                 if rotate:
                     fig.subplots_adjust(left=0, right=1, top=1, bottom=0)  # Ensure no padding
