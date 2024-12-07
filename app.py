@@ -668,8 +668,8 @@ if comp:
             xg_value0 = np.round(shot_mapping0['shot_statsbomb_xg'][0], 2)
 
             st.image(
-                cropped_image1, 
-                caption=f"Shot Visualization {team_name1} \n xG: {xg_value0}",
+                cropped_image0, 
+                caption=f"Shot Visualization {team_name0} \n xG: {xg_value0}",
                 use_column_width=True
             )
         # Column 2 (Rotated and Cropped Image)
