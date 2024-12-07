@@ -665,7 +665,7 @@ if comp:
             # Crop the top 1/5 of the image # Crop the top 1/5 of the image
             cropped_image0 = image0.crop(crop_box)
             
-            st.image(cropped_image0, caption=f"Shot Visualization {team_name0} \n xG:{shot_mapping0['shot_statsbomb_xg'][0]}", use_column_width=True)
+            st.image(cropped_image0, caption=f"Shot Visualization {team_name0} \n xG: round({shot_mapping0['shot_statsbomb_xg'][0]},2)", use_column_width=True)
         
         # Column 2 (Rotated and Cropped Image)
         with col2:
@@ -690,6 +690,6 @@ if comp:
             # Crop the top 1/5 of the image
             cropped_image1 = image1.crop(crop_box)
             
-            st.image(cropped_image1, caption=f"Shot Visualization {team_name1} \n xG:{shot_mapping1['shot_statsbomb_xg'][0]}", use_column_width=True)
+            st.image(cropped_image1, caption=f"Shot Visualization {team_name1} \n xG: round({shot_mapping1['shot_statsbomb_xg'][0]},2)", use_column_width=True)
 
 
