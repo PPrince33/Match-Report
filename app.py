@@ -669,7 +669,7 @@ if comp:
 
             st.image(
                 cropped_image0, 
-                caption=f"Shot Visualization {team_name0} \nxG: {xg_value0}",
+                caption=f"Shot Visualization {team_name0} (xG: {xg_value0})",
                 use_column_width=True
             )
         # Column 2 (Rotated and Cropped Image)
@@ -699,6 +699,6 @@ if comp:
 
             st.image(
                 cropped_image1, 
-                caption=f"Shot Visualization {team_name1} \nxG: {xg_value1}",
+                caption=f"Shot Visualization {team_name1} (xG: {xg_value1})",
                 use_column_width=True
             )
