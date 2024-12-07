@@ -518,8 +518,7 @@ if comp:
         final_shot_df['shot_id'] = (
             final_shot_df['player'].astype(str) + ' (' +
             final_shot_df['minute'].astype(str) + ':' +
-            final_shot_df['second'].astype(str) + ') Shot Outcome:' + 
-            final_shot_df['shot_outcome'].astype(str)
+            final_shot_df['second'].astype(str) + ')'
         )
         
         # Merge jersey number information
@@ -669,7 +668,7 @@ if comp:
 
             st.image(
                 cropped_image0, 
-                caption=f"Shot Visualization {team_name0} (xG: {xg_value0})",
+                caption=f"Shot Visualization {team_name0} (xG: {xg_value0},Shot Outcome: {shot_mapping0['shot_outcome'][0]})",
                 use_column_width=True
             )
         # Column 2 (Rotated and Cropped Image)
@@ -699,6 +698,6 @@ if comp:
 
             st.image(
                 cropped_image1, 
-                caption=f"Shot Visualization {team_name1} (xG: {xg_value1})",
+                caption=f"Shot Visualization {team_name1} (xG: {xg_value1},Shot Outcome: {shot_mapping1['shot_outcome'][0]})",
                 use_column_width=True
             )
