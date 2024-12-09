@@ -711,7 +711,10 @@ if comp:
                             )
 
 
-        shot_summary.iloc[:, 0:] = shot_summary.iloc[:, 0:].astype(int)
+        shot_summary['Total Shots'] = shot_summary['Total Shots'].astype(int)
+        shot_summary['Total xG'] = shot_summary['Total xG'].apply(lambda x: f"{x:.2f}")
+        
+        # Display the formatted table in Streamlit
         st.table(shot_summary)
 
 
