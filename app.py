@@ -701,15 +701,14 @@ if comp:
                 caption=f"Shot Visualization {team_name1} (xG: {xg_value1}, Shot Outcome: {shot_mapping1['shot_outcome'][0]})",
                 use_column_width=True
             )
-        st.table(shot_df.groupby('team').agg({'type': 'count', 'shot_statsbomb_xg': 'sum'}).rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'}).transpose().reset_index().rename(columns={'index':'Particulars'}))
         shot_summary = (
         shot_df.groupby('team')
-    .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
-    .rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'})
-    .transpose()
-    .reset_index()
-    .rename(columns={'index': 'Particulars'})
-)
+                                .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
+                                .rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'})
+                                .transpose()
+                                .reset_index()
+                                .rename(columns={'index': 'Particulars'})
+                            )
 
 
         shot_summary.iloc[:, 1:] = shot_summary.iloc[:, 1:].astype(int)
