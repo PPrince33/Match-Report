@@ -711,8 +711,36 @@ if comp:
                             )
 
 
-        shot_summary.iloc[:, 1:] = shot_summary.iloc[:, 1:].astype(int)
+        shot_summary.iloc[:, 0:] = shot_summary.iloc[:, 0:].astype(int)
         st.table(shot_summary)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
