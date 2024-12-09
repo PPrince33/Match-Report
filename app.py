@@ -701,22 +701,28 @@ if comp:
                 caption=f"Shot Visualization {team_name1} (xG: {xg_value1}, Shot Outcome: {shot_mapping1['shot_outcome'][0]})",
                 use_column_width=True
             )
+        # Assuming 'shot_df' DataFrame exists
         shot_summary = (
-        shot_df.groupby('team')
-                                .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
-                                .rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'})
-                                .transpose()
-                                .reset_index()
-                                .rename(columns={'index': 'Particulars'})
-                            )
-
-
-        shot_summary['Total Shots'] = shot_summary['Total Shots'].astype(int)
-        shot_summary['Total xG'] = shot_summary['Total xG'].apply(lambda x: f"{x:.2f}")
+            shot_df.groupby('team')
+            .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
+            .rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'})
+            .transpose()
+            .reset_index()
+            .rename(columns={'index': 'Particulars'})
+        )
         
-        # Display the formatted table in Streamlit
+        # Fix formatting for 'Total Shots' and 'Total xG' based on 'Particulars'
+        for col in shot_summary.columns[1:]:  # Loop through all team columns
+            shot_summary.loc[shot_summary['Particulars'] == 'Total Shots', col] = shot_summary.loc[
+                shot_summary['Particulars'] == 'Total Shots', col
+            ].astype(int)
+        
+            shot_summary.loc[shot_summary['Particulars'] == 'Total xG', col] = shot_summary.loc[
+                shot_summary['Particulars'] == 'Total xG', col
+            ].apply(lambda x: f"{float(x):.2f}")
+        
+        # Display the table in Streamlit
         st.table(shot_summary)
-
 
 
 
