@@ -702,3 +702,20 @@ if comp:
                 use_column_width=True
             )
         st.table(shot_df.groupby('team').agg({'type': 'count', 'shot_statsbomb_xg': 'sum'}).rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'}).transpose().reset_index().rename(columns={'index':'Particulars'}))
+        shot_summary = (
+        shot_df.groupby('team')
+    .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
+    .rename(columns={'type': 'Total Shots', 'shot_statsbomb_xg': 'Total xG'})
+    .transpose()
+    .reset_index()
+    .rename(columns={'index': 'Particulars'})
+)
+
+
+        shot_summary.iloc[:, 1:] = shot_summary.iloc[:, 1:].astype(int)
+        st.table(shot_summary)
+
+
+
+
+
