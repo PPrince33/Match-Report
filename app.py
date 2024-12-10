@@ -701,7 +701,6 @@ if comp:
                 caption=f"Shot Visualization {team_name1} (xG: {xg_value1}, Shot Outcome: {shot_mapping1['shot_outcome'][0]})",
                 use_column_width=True
             )
-        # Assuming 'shot_df' DataFrame exists
         shot_summary = (
             shot_df.groupby('team')
             .agg({'type': 'count', 'shot_statsbomb_xg': 'sum'})
@@ -711,18 +710,30 @@ if comp:
             .rename(columns={'index': 'Particulars'})
         )
         
-        shot_outcome_df = shot_df.groupby(['team', 'shot_outcome']).size().unstack(fill_value=0).reset_index().transpose()
+        # Group and pivot shot outcomes
+        shot_outcome_df = (
+            shot_df.groupby(['team', 'shot_outcome'])
+            .size()
+            .unstack(fill_value=0)
+            .reset_index()
+            .transpose()
+        )
         shot_outcome_df.columns = shot_outcome_df.iloc[0]  # Use the first row as column names
         shot_outcome_df = shot_outcome_df[1:].reset_index()  # Drop the first row and reset index
-        shot_outcome_df=shot_outcome_df.rename(columns={'shot_outcome':'Particulars'})
-        shot_summary=pd.concat([shot_summary,shot_outcome_df]).reset_index(drop=True)
+        shot_outcome_df = shot_outcome_df.rename(columns={'shot_outcome': 'Particulars'})
+        
+        # Combine both tables
+        shot_summary = pd.concat([shot_summary, shot_outcome_df]).reset_index(drop=True)
+        
+        # Format values: Convert all except 'Total xG' to integers
         for col in shot_summary.columns[1:]:
-                if shot_summary['Particulars'].str.contains('Total xG').any():
-                    shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col] = (
-                        shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col].astype(int)
-                    )
-                else:
-                    shot_summary[col] = shot_summary[col].astype(int)
+            if shot_summary['Particulars'].str.contains('Total xG').any():
+                shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col] = (
+                    shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col].astype(int)
+                )
+            else:
+                shot_summary[col] = shot_summary[col].astype(int)
+
         st.table(shot_summary)
 
 
