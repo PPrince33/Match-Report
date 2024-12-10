@@ -734,18 +734,34 @@ if comp:
             else:
                 shot_summary[col] = shot_summary[col].astype(int)
 
+        st.markdown(
+            """
+            <style>
+                .centered-dataframe {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            </style>
+            """,
+            unsafe_allow_html=True,
+        )
+        
+        # Use the centered class to wrap st.dataframe
+        st.markdown('<div class="centered-dataframe">', unsafe_allow_html=True)
         st.dataframe(shot_summary)
-
-
-
-
-
-
-
-
-
-
-
+        st.markdown('</div>', unsafe_allow_html=True)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
 
 
