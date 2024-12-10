@@ -716,7 +716,13 @@ if comp:
         shot_outcome_df = shot_outcome_df[1:].reset_index()  # Drop the first row and reset index
         shot_outcome_df=shot_outcome_df.rename(columns={'shot_outcome':'Particulars'})
         shot_summary=pd.concat([shot_summary,shot_outcome_df]).reset_index(drop=True)
-        
+        for col in shot_summary.columns[1:]:
+                if shot_summary['Particulars'].str.contains('Total xG').any():
+                    shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col] = (
+                        shot_summary.loc[shot_summary['Particulars'] != 'Total xG', col].astype(int)
+                    )
+                else:
+                    shot_summary[col] = shot_summary[col].astype(int)
         st.table(shot_summary)
 
 
