@@ -711,17 +711,12 @@ if comp:
             .rename(columns={'index': 'Particulars'})
         )
         
-        # Fix formatting for 'Total Shots' and 'Total xG' based on 'Particulars'
-        for col in shot_summary.columns[1:]:  # Loop through all team columns
-            shot_summary.loc[shot_summary['Particulars'] == 'Total Shots', col] = shot_summary.loc[
-                shot_summary['Particulars'] == 'Total Shots', col
-            ].astype(int)
+        shot_outcome_df = shot_df.groupby(['team', 'shot_outcome']).size().unstack(fill_value=0).reset_index().transpose()
+        shot_outcome_df.columns = shot_outcome_df.iloc[0]  # Use the first row as column names
+        shot_outcome_df = shot_outcome_df[1:].reset_index()  # Drop the first row and reset index
+        shot_outcome_df=shot_outcome_df.rename(columns={'shot_outcome':'Particulars'})
+        shot_summary=pd.concat([shot_summary,shot_outcome_df]).reset_index(drop=True)
         
-            shot_summary.loc[shot_summary['Particulars'] == 'Total xG', col] = shot_summary.loc[
-                shot_summary['Particulars'] == 'Total xG', col
-            ].apply(lambda x: f"{float(x):.2f}")
-        
-        # Display the table in Streamlit
         st.table(shot_summary)
 
 
