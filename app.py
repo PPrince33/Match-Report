@@ -669,7 +669,7 @@ if comp:
             st.image(
                 cropped_image0, 
                 caption=f"Shot Visualization {team_name0} (xG: {xg_value0}, Shot Outcome: {shot_mapping0['shot_outcome'][0]})",
-                use_column_width=True
+                use_container_width=True
             )
         # Column 2 (Rotated and Cropped Image)
         with col2:
@@ -699,7 +699,7 @@ if comp:
             st.image(
                 cropped_image1, 
                 caption=f"Shot Visualization {team_name1} (xG: {xg_value1}, Shot Outcome: {shot_mapping1['shot_outcome'][0]})",
-                use_column_width=True
+                use_container_width=True
             )
         shot_summary = (
             shot_df.groupby('team')
