@@ -535,10 +535,10 @@ if comp:
         
         # Add player team information
         final_shot_df0.loc[:, 'player_team'] = np.where(
-            final_shot_df0['teammate'] == False, team_name1, final_shot_df0['team']
+            final_shot_df0['teammate'] == False, team_name1, team_name0
         )
         final_shot_df1.loc[:, 'player_team'] = np.where(
-            final_shot_df1['teammate'] == False, team_name0, final_shot_df1['team']
+            final_shot_df1['teammate'] == False, team_name0, team_name1
         )
         
         # Unique shot IDs
