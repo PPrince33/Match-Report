@@ -735,7 +735,7 @@ if comp:
                 shot_summary[col] = shot_summary[col].astype(int)
 
         
-        st.dataframe(shot_summary)
+        st.table(shot_summary)
         
         
         
